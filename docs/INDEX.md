@@ -1,0 +1,155 @@
+# WCP AI Agent Prototype - Documentation Index
+
+**Purpose**: Central navigation hub for all project documentation.
+
+**Last Updated**: 2025-01-27  
+**Project Status**: Prototype
+
+---
+
+## 🗺️ Quick Navigation
+
+### 🚀 Getting Started
+- [**README.md**](../README.md) - Project overview, features, and quick start
+- [**QUICK-START**](showcase/QUICK-START.md) - 5-minute setup guide
+- [**Installation Guide**](#installation) - Detailed setup instructions
+
+### 🎯 Showcase & Demo
+- [**PROJECT OVERVIEW**](showcase/PROJECT-OVERVIEW.md) - Comprehensive project overview
+- [**SHOWCASE GUIDE**](showcase/SHOWCASE.md) - Demo scenarios and talking points
+- [**SHOWCASE QUICK START**](showcase/SHOWCASE-QUICK-START.md) - Quick demo reference
+
+### 🏗️ Architecture & Development
+- [**CONTEXT**](../CONTEXT.md) - Architecture decisions and philosophy
+- [**AGENTS.md**](../AGENTS.md) - Developer implementation guide
+- [**WORKFLOW.md**](../WORKFLOW.md) - User workflows and validation
+- [**PROJECT MAPPING**](PROJECT-MAPPING.md) - Complete file and feature mapping
+
+### 📋 Development Resources
+- [**TODO.md**](../TODO.md) - Pending features and improvements
+- [**EVALS.md**](../EVALS.md) - Evaluation criteria and test scenarios
+- [**CHANGELOG.md**](../CHANGELOG.md) - Version history
+- [**PROMPT VALIDATION**](PROMPT-VALIDATION.md) - Mandatory validation system
+
+### 📚 Technical Documentation
+- [**DOCUMENTATION MAINTENANCE**](DOCUMENTATION-MAINTENANCE.md) - Documentation workflow
+- [**TOOL CALL LIMITS**](TOOL-CALL-LIMITS.md) - Optimization guidelines
+- [**QUICK PROMPT VALIDATION**](PROMPT-VALIDATION-QUICK.md) - 5-minute validation
+
+---
+
+## 📂 Documentation Structure
+
+```
+docs/
+├── INDEX.md                    # This file - documentation hub
+├── PROJECT-MAPPING.md          # Complete project mapping
+├── PROMPT-VALIDATION.md        # Mandatory validation system
+├── PROMPT-VALIDATION-QUICK.md  # Quick validation checklist
+├── DOCUMENTATION-MAINTENANCE.md # Documentation workflow
+├── TOOL-CALL-LIMITS.md         # Tool optimization
+└── showcase/                   # Showcase and demo materials
+    ├── README.md               # Showcase overview
+    ├── PROJECT-OVERVIEW.md     # Comprehensive project overview
+    ├── SHOWCASE.md             # Demo guide
+    ├── QUICK-START.md          # 5-minute setup
+    └── SHOWCASE-QUICK-START.md # Quick demo reference
+```
+
+---
+
+## 🚀 Installation
+
+### Prerequisites
+- Node.js (v20.0.0 or higher)
+- npm or yarn
+- OpenAI API key
+
+### Quick Setup
+
+```bash
+# 1. Clone and install
+git clone <repository-url>
+cd wcp-ai-agent
+npm install
+
+# 2. Configure environment
+cp .env.example .env
+# Edit .env with your OPENAI_API_KEY
+
+# 3. Run the demo
+npm run showcase
+```
+
+### Web Interface Setup
+
+```bash
+# Start API server
+npm run serve
+
+# Start frontend (new terminal)
+cd frontend
+npm install
+npm run dev
+```
+
+---
+
+## 🎯 Key Documentation Paths
+
+| Purpose | Document | Path |
+|---------|----------|------|
+| Project Overview | README.md | `/README.md` |
+| Quick Start | QUICK-START.md | `/docs/showcase/QUICK-START.md` |
+| Demo Guide | SHOWCASE.md | `/docs/showcase/SHOWCASE.md` |
+| Architecture | CONTEXT.md | `/CONTEXT.md` |
+| Development | AGENTS.md | `/AGENTS.md` |
+| Workflows | WORKFLOW.md | `/WORKFLOW.md` |
+| Full Mapping | PROJECT-MAPPING.md | `/docs/PROJECT-MAPPING.md` |
+
+---
+
+## 📖 Reading Order for New Developers
+
+1. **Start Here**: [README.md](../README.md) - Understand the project
+2. **Quick Setup**: [QUICK-START.md](showcase/QUICK-START.md) - Get running in 5 minutes
+3. **Architecture**: [CONTEXT.md](../CONTEXT.md) - Understand design decisions
+4. **Development**: [AGENTS.md](../AGENTS.md) - Learn development patterns
+5. **Workflows**: [WORKFLOW.md](../WORKFLOW.md) - Understand user flows
+
+---
+
+## 📝 Contributing to Documentation
+
+### Documentation Rules
+1. **Mandatory**: Complete [PROMPT VALIDATION](PROMPT-VALIDATION.md) before any changes
+2. **Mandatory**: Follow [DOCUMENTATION MAINTENANCE](DOCUMENTATION-MAINTENANCE.md) workflow
+3. Update CHANGELOG.md for all documentation changes
+4. Keep documentation in sync with code changes
+
+### Style Guide
+- Use clear, concise language
+- Include code examples where helpful
+- Add navigation links at the top of each file
+- Use consistent formatting (Markdown tables, code blocks, etc.)
+- Update the "Last Updated" field when making changes
+
+---
+
+## 🔍 Finding Information
+
+### By Role
+- **Developers**: See [AGENTS.md](../AGENTS.md), [WORKFLOW.md](../WORKFLOW.md)
+- **Recruiters**: See [showcase/PROJECT-OVERVIEW.md](showcase/PROJECT-OVERVIEW.md)
+- **Users**: See [README.md](../README.md), [showcase/QUICK-START.md](showcase/QUICK-START.md)
+
+### By Topic
+- **Architecture**: [CONTEXT.md](../CONTEXT.md), [PROJECT-MAPPING.md](PROJECT-MAPPING.md)
+- **Features**: [README.md](../README.md), [showcase/SHOWCASE.md](showcase/SHOWCASE.md)
+- **Development**: [AGENTS.md](../AGENTS.md), [TODO.md](../TODO.md)
+- **Testing**: [EVALS.md](../EVALS.md), [WORKFLOW.md](../WORKFLOW.md)
+
+---
+
+**Last Updated**: 2025-01-27  
+**Maintained as part of the WCP AI Agent Prototype**

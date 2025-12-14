@@ -32,7 +32,7 @@ I built this for a client who needed to automate payroll compliance. Even though
 **Want to run it fast?** → Read [`QUICK-START.md`](QUICK-START.md) (5-minute setup)  
 **Want the roadmap?** → Read [`ROADMAP.md`](ROADMAP.md) (planned work by phase)  
 **Want to develop?** → Read [`AGENTS.md`](AGENTS.md) (developer guide)  
-**Looking for a file?** → Check [`INDEX.md`](INDEX.md) (complete file mapping)  
+**Looking for a file?** → Check [`docs/INDEX.md`](docs/INDEX.md) (complete documentation navigation)  
 **Want architecture?** → Read [`CONTEXT.md`](CONTEXT.md) (design decisions)  
 **Want workflows?** → Read [`WORKFLOW.md`](WORKFLOW.md) (user scenarios)
 
@@ -69,7 +69,7 @@ The WCP AI Agent Prototype is designed to demonstrate a production-minded AI age
 
 ### Future Features
 
-See **ROADMAP.md** for the consolidated phased roadmap, and **TODO.md** for the detailed backlog.
+See **docs/INDEX.md** for complete documentation navigation, **ROADMAP.md** for the consolidated phased roadmap, and **TODO.md** for the detailed backlog.
 
 **High Priority:**
 - **PDF Parsing**: Integrate `pdf-parse` for real PDF document processing
@@ -135,19 +135,19 @@ cp .env.example .env
 - **ROADMAP.md** - Consolidated phased roadmap (planned features)
 - **CONTEXT.md** - Architecture decisions and philosophy
 - **AGENTS.md** - Developer implementation guide
+- **docs/INDEX.md** - Documentation navigation hub
+- **docs/README.md** - Documentation overview
+- **docs/PROJECT-MAPPING.md** - Complete project mapping
 - **docs/PROMPT-VALIDATION.md** - ⚠️ **MANDATORY**: Prompt validation system
-- **docs/PROMPT-VALIDATION-QUICK.md** - Quick 5-minute validation checklist
 - **docs/DOCUMENTATION-MAINTENANCE.md** - ⚠️ **MANDATORY**: Automatic documentation maintenance guide
 - **docs/TOOL-CALL-LIMITS.md** - ⚠️ **RECOMMENDED**: Tool call optimization guidelines
-- **OPERATIONS.md** - Deployment and operations guide (optional)
+- **docs/showcase/** - Showcase materials
+- **docs/guides/** - User guides
+- **docs/reference/** - Reference documentation
 - **CLAUDE.md** - Quick reference for developers
-- **DOCUMENTATION.md** - Documentation navigation guide
-- **DOCUMENTATION-OVERVIEW.md** - Overview of all documentation files
-- **WORKFLOW.md** - User workflows and validation guide
 - **CHANGELOG.md** - Version history
 - **EVALS.md** - Evaluation and testing guide
 - **TODO.md** - Pending features and improvements
-- **INDEX.md** - Project-wide navigation index
 
 ## 🎬 Quick Demo
 
@@ -301,18 +301,27 @@ wcp-agent/
 │   └── scripts/
 │       └── showcase.ts              # Showcase demo script (6 scenarios)
 ├── docs/
-│   ├── PROMPT-VALIDATION.md          # Validation system
-│   ├── PROMPT-VALIDATION-QUICK.md    # Quick validation checklist
-│   ├── DOCUMENTATION-MAINTENANCE.md  # Documentation maintenance guide
-│   ├── MVP-TEMPLATE-REBUILD-PLAN.md  # MVP refactoring plan
-│   ├── PROJECT-MAPPING.md            # Complete project mapping
-│   ├── AI Payroll Compliance Agent — Technical Specification.md  # Technical spec
-│   ├── DOCUMENTATION-BLUEPRINT.md    # Documentation architecture
-│   └── development-plan/             # Development phases and roadmaps
-│       ├── OVERVIEW.md               # Overview of all phases
-│       ├── PHASE-0-MVP.md            # Phase 0: MVP requirements
-│       ├── PHASE-1-CORE-IMPROVEMENTS.md  # Phase 1: Core improvements
-│       ├── PHASE-2-ENHANCED-FEATURES.md  # Phase 2: Enhanced features
+│   ├── INDEX.md                    # Documentation navigation hub
+│   ├── README.md                   # Documentation overview
+│   ├── PROJECT-MAPPING.md          # Complete project mapping
+│   ├── PROMPT-VALIDATION.md       # Validation system
+│   ├── DOCUMENTATION-MAINTENANCE.md # Documentation workflow
+│   ├── TOOL-CALL-LIMITS.md         # Tool optimization
+│   ├── showcase/                   # Showcase materials
+│   ├── guides/                     # User guides
+│   └── reference/                  # Reference documentation
+│       ├── MVP-TEMPLATE-REBUILD-PLAN.md  # MVP refactoring plan
+│       ├── AI Payroll Compliance Agent — Technical Specification.md  # Technical spec
+│       ├── DOCUMENTATION-BLUEPRINT.md    # Documentation architecture
+│       └── development-plan/             # Development phases and roadmaps
+│           ├── OVERVIEW.md               # Overview of all phases
+│           ├── PHASE-0-MVP.md            # Phase 0: MVP requirements
+│           ├── PHASE-1-CORE-IMPROVEMENTS.md  # Phase 1: Core improvements
+│           ├── PHASE-2-ENHANCED-FEATURES.md  # Phase 2: Enhanced features
+│           ├── PHASE-3-ADVANCED-FEATURES.md  # Phase 3: Advanced features
+│           ├── PHASE-4-PRODUCTION-READY.md   # Phase 4: Production guide
+│           ├── IMPLEMENTATION-GUIDE.md   # Implementation patterns
+│           └── TESTING-GUIDE.md          # Testing best practices
 │       ├── PHASE-3-ADVANCED-FEATURES.md  # Phase 3: Advanced features
 │       ├── PHASE-4-PRODUCTION-READY.md   # Phase 4: Production guide
 │       ├── IMPLEMENTATION-GUIDE.md   # Implementation patterns
@@ -413,7 +422,7 @@ Current implemented tests:
 
 ### Test Scenarios
 
-See **WORKFLOW.md** for detailed workflow validation scenarios and **EVALS.md** for evaluation criteria and test scenarios. See **TODO.md** for planned test suite implementation.
+See **WORKFLOW.md** for detailed workflow validation scenarios and **EVALS.md** for evaluation criteria and test scenarios. See **docs/INDEX.md** for complete documentation navigation and **TODO.md** for planned test suite implementation.
 
 ## 🔧 Development
 
@@ -444,6 +453,8 @@ npm run dev
 4. **Write Tests** - Write tests DURING implementation, not after (see **EVALS.md** for test requirements)
 5. **Update Documentation** - Update documentation DURING implementation, not after
 6. **Validate Workflows** - Use **WORKFLOW.md** for workflow validation scenarios
+
+**📚 Complete Documentation**: See **docs/INDEX.md** for all project documentation.
 
 ### Error Handling
 
@@ -479,6 +490,6 @@ For more detailed information, see:
 - **WORKFLOW.md** - Detailed workflow validation scenarios (WCP Processing, Validation, Decision, Error Handling)
 - **EVALS.md** - Evaluation criteria and test scenarios (functionality, code quality, architecture, performance)
 - **TODO.md** - Future roadmap and prioritization (PDF parsing, RAG lookup, batch processing, production deployment)
-- **INDEX.md** - Complete file mapping and codebase structure (core files, directories, design principles)
+- **docs/INDEX.md** - Complete documentation navigation
 - **CONTEXT.md** - Architecture decisions and philosophy (detailed technical concepts and design rationale)
 - **AGENTS.md** - Developer guide with patterns and conventions (implementation details and best practices)

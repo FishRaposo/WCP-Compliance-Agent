@@ -23,6 +23,7 @@ import { z } from "zod";
 
 // Internal dependencies
 import { extractWCPTool, validateWCPTool } from "../tools/wcp-tools.js";
+import { WCPDecision, Finding } from "../../types/index.js";
 
 /**
  * WCP Decision Schema

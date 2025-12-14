@@ -14,6 +14,9 @@
 import { createTool } from "@mastra/core/tools";
 import { z } from "zod";
 
+// Internal dependencies
+import { WCPData, DBWDRates, Finding } from "../../types/index.js";
+
 /**
  * DBWD (Davis-Bacon Wage Determinations) Rates
  * 

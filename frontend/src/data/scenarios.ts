@@ -1,10 +1,4 @@
-export interface ShowcaseScenario {
-  name: string;
-  description: string;
-  input: string;
-  expectedStatus: "Approved" | "Revise" | "Reject";
-  expectedFindings?: string[];
-}
+import { ShowcaseScenario } from '../types';
 
 export const scenarios: ShowcaseScenario[] = [
   {

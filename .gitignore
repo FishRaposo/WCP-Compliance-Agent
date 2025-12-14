@@ -48,3 +48,6 @@ coverage/
 
 #Templates
 _templates/
+
+#Archive
+_archive/
