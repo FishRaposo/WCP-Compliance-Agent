@@ -1,0 +1,88 @@
+/**
+ * Jest Configuration - EXAMPLE/MOCKUP
+ * 
+ * This is a mockup/example file showing the Jest configuration for the project.
+ * 
+ * Status: Not yet implemented (Phase 0 MVP)
+ * 
+ * To implement:
+ * 1. Install Jest: npm install --save-dev jest @types/jest ts-jest @jest/globals
+ * 2. Copy this file to jest.config.js
+ * 3. Adjust configuration as needed
+ * 4. Run tests: npm test
+ * 
+ * @file jest.config.js.example
+ * @see TODO.md - Item 0: Test Suite Implementation
+ */
+
+export default {
+  // Use ts-jest preset for TypeScript support
+  preset: 'ts-jest/presets/default-esm',
+  
+  // Test environment
+  testEnvironment: 'node',
+  
+  // Treat .ts files as ES modules
+  extensionsToTreatAsEsm: ['.ts'],
+  
+  // Module name mapper for ES module imports
+  moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1',
+  },
+  
+  // Test file patterns
+  testMatch: [
+    '**/tests/**/*.test.ts',
+    '**/tests/**/*.spec.ts',
+  ],
+  
+  // Files to collect coverage from
+  collectCoverageFrom: [
+    'src/**/*.ts',
+    '!src/**/*.d.ts',
+    '!src/index.ts', // Exclude test scripts
+    '!showcase/scripts/showcase.ts', // Exclude showcase script
+  ],
+  
+  // Coverage thresholds (Phase 0 MVP: >50%, Phase 1+: >80%)
+  coverageThreshold: {
+    global: {
+      branches: 50,
+      functions: 50,
+      lines: 50,
+      statements: 50,
+    },
+  },
+  
+  // Coverage reporters
+  coverageReporters: [
+    'text',
+    'text-summary',
+    'html',
+    'lcov',
+  ],
+  
+  // Setup files
+  setupFilesAfterEnv: ['<rootDir>/tests/setup.ts'],
+  
+  // Test timeout (in milliseconds)
+  testTimeout: 10000,
+  
+  // Transform configuration
+  transform: {
+    '^.+\\.ts$': ['ts-jest', {
+      useESM: true,
+    }],
+  },
+  
+  // Module file extensions
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
+  
+  // Ignore patterns
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/dist/',
+    '/_archive/',
+  ],
+};
+

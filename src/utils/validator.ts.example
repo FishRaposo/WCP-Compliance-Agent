@@ -1,0 +1,174 @@
+/**
+ * Input Validator Utility - EXAMPLE/MOCKUP
+ * 
+ * This is a mockup/example file showing the input validator utility structure.
+ * 
+ * Status: Not yet implemented (Phase 0 MVP)
+ * 
+ * To implement:
+ * 1. Copy this file to src/utils/validator.ts
+ * 2. Implement validation functions
+ * 3. Import and use in tools
+ * 4. Add tests for validation
+ * 
+ * @file src/utils/validator.ts.example
+ * @see TODO.md - Item 1: Error Handling and Input Validation
+ */
+
+import { z } from 'zod';
+import { ValidationError } from './error-handler.js';
+
+/**
+ * WCP Input Schema
+ * 
+ * Validates raw WCP text input.
+ */
+export const WCPInputSchema = z.object({
+  content: z.string().min(1, 'Content cannot be empty'),
+});
+
+/**
+ * Extracted WCP Schema
+ * 
+ * Validates extracted WCP data.
+ */
+export const ExtractedWCPSchema = z.object({
+  role: z.string().min(1, 'Role cannot be empty'),
+  hours: z.number().min(0, 'Hours cannot be negative').max(168, 'Hours must be between 0 and 168'),
+  wage: z.number().min(0, 'Wage cannot be negative'),
+});
+
+/**
+ * Validation Input Schema
+ * 
+ * Validates input for validateWCPTool.
+ */
+export const ValidationInputSchema = z.object({
+  role: z.string().min(1, 'Role cannot be empty'),
+  hours: z.number().min(0, 'Hours cannot be negative').max(168, 'Hours must be between 0 and 168'),
+  wage: z.number().min(0, 'Wage cannot be negative'),
+});
+
+/**
+ * Validate Input Against Schema
+ * 
+ * Validates input data against a Zod schema and throws ValidationError if invalid.
+ * 
+ * @param schema - Zod schema to validate against
+ * @param data - Data to validate
+ * @returns Validated data
+ * @throws ValidationError if validation fails
+ */
+export function validateInput<T>(schema: z.ZodSchema<T>, data: unknown): T {
+  try {
+    return schema.parse(data);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      throw new ValidationError('Input validation failed', {
+        errors: error.errors,
+        received: data,
+      });
+    }
+    throw error;
+  }
+}
+
+/**
+ * Validate Non-Empty String
+ * 
+ * Validates that a string is not empty.
+ * 
+ * @param value - String to validate
+ * @param fieldName - Name of the field (for error messages)
+ * @returns Validated string
+ * @throws ValidationError if string is empty
+ */
+export function validateNonEmptyString(value: unknown, fieldName: string): string {
+  if (typeof value !== 'string') {
+    throw new ValidationError(`${fieldName} must be a string`, {
+      received: typeof value,
+    });
+  }
+  if (value.trim().length === 0) {
+    throw new ValidationError(`${fieldName} cannot be empty`, {
+      received: value,
+    });
+  }
+  return value;
+}
+
+/**
+ * Validate Positive Number
+ * 
+ * Validates that a number is positive (>= 0).
+ * 
+ * @param value - Number to validate
+ * @param fieldName - Name of the field (for error messages)
+ * @returns Validated number
+ * @throws ValidationError if number is negative
+ */
+export function validatePositiveNumber(value: unknown, fieldName: string): number {
+  if (typeof value !== 'number' || isNaN(value)) {
+    throw new ValidationError(`${fieldName} must be a valid number`, {
+      received: typeof value,
+    });
+  }
+  if (value < 0) {
+    throw new ValidationError(`${fieldName} cannot be negative`, {
+      received: value,
+    });
+  }
+  return value;
+}
+
+/**
+ * Validate Hours Range
+ * 
+ * Validates that hours are within valid range (0-168).
+ * 
+ * @param hours - Hours to validate
+ * @returns Validated hours
+ * @throws ValidationError if hours are out of range
+ */
+export function validateHours(hours: number): number {
+  if (hours < 0) {
+    throw new ValidationError('Hours cannot be negative', { hours });
+  }
+  if (hours > 168) {
+    throw new ValidationError('Hours must be between 0 and 168 (maximum hours per week)', { hours });
+  }
+  return hours;
+}
+
+/**
+ * Validate Wage
+ * 
+ * Validates that wage is non-negative.
+ * 
+ * @param wage - Wage to validate
+ * @returns Validated wage
+ * @throws ValidationError if wage is negative
+ */
+export function validateWage(wage: number): number {
+  if (wage < 0) {
+    throw new ValidationError('Wage cannot be negative', { wage });
+  }
+  return wage;
+}
+
+/**
+ * Validate Role
+ * 
+ * Validates that role is not empty.
+ * 
+ * @param role - Role to validate
+ * @returns Validated role
+ * @throws ValidationError if role is empty
+ */
+export function validateRole(role: string): string {
+  if (!role || role.trim().length === 0) {
+    throw new ValidationError('Role cannot be empty', { role });
+  }
+  return role.trim();
+}
+
