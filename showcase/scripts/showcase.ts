@@ -18,7 +18,7 @@
  * 
  * @file showcase/scripts/showcase.ts
  * @see README.md - Project overview and showcase information
- * @see docs/showcase/README.md - Showcase folder documentation
+ * @see showcase/README.md - Showcase folder documentation
  */
 
 // External dependencies

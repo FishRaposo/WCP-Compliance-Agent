@@ -337,6 +337,7 @@ export const myAgent = new Agent({
   ],
   model: openai("gpt-4o-mini"),
   tools: { myTool },
+  outputSchema: MyDecisionSchema,
 });
 ```
 

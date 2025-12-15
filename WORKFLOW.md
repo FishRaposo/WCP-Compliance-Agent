@@ -288,7 +288,7 @@ npm run test
 ts-node --esm src/index.ts
 ```
 
-**⚠️ Note**: The test script has basic error handling (try-catch block). However, comprehensive error handling with specific error types and validation is still planned (see **TODO.md**).
+**⚠️ Note**: The test script has basic error handling (try-catch block). However, comprehensive error handling with specific error types and validation is still being implemented (see **TODO.md**).
 
 ### Expected Outputs
 
