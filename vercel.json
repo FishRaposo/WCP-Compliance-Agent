@@ -14,11 +14,6 @@
       "dest": "api/index.ts"
     }
   ],
-  "functions": {
-    "api/index.ts": {
-      "maxDuration": 10
-    }
-  },
   "env": {
     "NODE_ENV": "production"
   }
