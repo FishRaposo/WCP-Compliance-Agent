@@ -37,12 +37,12 @@ describe('API Server - System Tests', () => {
     mockServer = createMockServer();
   });
 
-  afterAll((done) => {
+  afterAll(() => {
     // Stop server
     if (mockServer) {
-      mockServer.close(() => done());
-    } else {
-      done();
+      return new Promise<void>((resolve) => {
+        mockServer.close(() => resolve());
+      });
     }
   });
 

@@ -152,7 +152,7 @@ describe('Error Handling Workflow', () => {
     // Mock agent for error testing
     const createMockAgent = (status: string, findings: any[] = []) => {
       return {
-        generate: jest.fn(async () => ({
+        generate: vi.fn(async () => ({
           object: {
             status,
             explanation: `Decision: ${status}`,
@@ -176,7 +176,7 @@ describe('Error Handling Workflow', () => {
       const mockAgent = createMockAgent("Reject", [
         { type: 'Invalid Format', detail: 'Missing required fields' }
       ]);
-      const getAgent = jest.fn(async () => mockAgent);
+      const getAgent = vi.fn(async () => mockAgent);
 
       const response = await generateWcpDecision({
         content: 'Invalid format',
@@ -196,7 +196,7 @@ describe('Error Handling Workflow', () => {
       const mockAgent = createMockAgent("Reject", [
         { type: 'Unknown Role', detail: 'Role UnknownRole not found in DBWD rates' }
       ]);
-      const getAgent = jest.fn(async () => mockAgent);
+      const getAgent = vi.fn(async () => mockAgent);
 
       const response = await generateWcpDecision({
         content: 'Role: UnknownRole, Hours: 40, Wage: $50.00',

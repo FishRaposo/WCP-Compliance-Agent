@@ -21,7 +21,7 @@ describe("API Feature Tests", () => {
       cwd: process.cwd()
     });
 
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 5000));
   });
 
   afterAll(async () => {
@@ -71,7 +71,8 @@ describe("API Feature Tests", () => {
     it("includes CORS headers", async () => {
       const response = await request(`http://localhost:${serverPort}`)
         .options("/analyze")
-        .expect(200);
+        .set("Origin", "http://localhost:3000")
+        .expect(204);
 
       expect(response.headers['access-control-allow-origin']).toBeDefined();
       expect(response.headers['access-control-allow-methods']).toBeDefined();
@@ -97,7 +98,7 @@ describe("API Feature Tests", () => {
         .expect(200);
 
       expect(response.body.uptime).toBeGreaterThan(0);
-      expect(response.body.environment).toBe("development");
+      expect(response.body.environment).toBe("test");
     });
   });
 

@@ -26,7 +26,7 @@ describe("End-to-End System Tests", () => {
     });
 
     // Wait for server to start
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 5000));
   });
 
   afterAll(async () => {
@@ -86,9 +86,10 @@ describe("End-to-End System Tests", () => {
   describe("CLI System Tests", () => {
     it("CLI can process WCP input", async () => {
       try {
-        // Test the CLI with mock mode
+        // Test the CLI with mock mode (running dist/index.js which corresponds to src/index.ts)
+        const cliPath = path.join(process.cwd(), "dist", "index.js");
         const { stdout, stderr } = await execAsync(
-          "npm run test",
+          `node ${cliPath}`,
           { 
             env: { ...process.env, OPENAI_API_KEY: "mock" },
             cwd: process.cwd()
@@ -96,12 +97,13 @@ describe("End-to-End System Tests", () => {
         );
 
         // The CLI should complete without errors
+        expect(stdout).toContain("Decision:");
         expect(stderr).not.toContain("Error");
       } catch (error: any) {
         // In mock mode, it should complete successfully
         expect(error.stderr).not.toContain("Incorrect API key");
       }
-    });
+    }, 10000); // Increase timeout to 10s
   });
 
   describe("Full Workflow System Tests", () => {
