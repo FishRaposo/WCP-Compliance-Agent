@@ -7,7 +7,7 @@
  * @file tests/system/test_wcp_system.test.ts
  */
 
-import { describe, it, expect, jest } from "@jest/globals";
+import { describe, it, expect, vi } from "vitest";
 import { generateWcpDecision } from "../../src/entrypoints/wcp-entrypoint.js";
 
 describe("WCP System Tests - Complete Workflow", () => {
@@ -15,7 +15,7 @@ describe("WCP System Tests - Complete Workflow", () => {
   // Mock agent that simulates the complete workflow
   const createMockAgent = (status: string, findings: any[] = []) => {
     return {
-      generate: jest.fn(async () => ({
+      generate: vi.fn(async () => ({
         object: {
           status,
           explanation: `Decision: ${status}`,
@@ -36,7 +36,7 @@ describe("WCP System Tests - Complete Workflow", () => {
 
   it("processes valid WCP and returns Approved status", async () => {
     const mockAgent = createMockAgent("Approved");
-    const getAgent = jest.fn(async () => mockAgent);
+    const getAgent = vi.fn(async () => mockAgent);
 
     const response = await generateWcpDecision({
       content: "Role: Electrician, Hours: 40, Wage: $55.00",
@@ -54,7 +54,7 @@ describe("WCP System Tests - Complete Workflow", () => {
     const mockAgent = createMockAgent("Revise", [
       { type: "Overtime", detail: "Hours 45 > 40 (DBWD requires 1.5x pay)" }
     ]);
-    const getAgent = jest.fn(async () => mockAgent);
+    const getAgent = vi.fn(async () => mockAgent);
 
     const response = await generateWcpDecision({
       content: "Role: Electrician, Hours: 45, Wage: $55.00",
@@ -73,7 +73,7 @@ describe("WCP System Tests - Complete Workflow", () => {
     const mockAgent = createMockAgent("Reject", [
       { type: "Underpay", detail: "Wage $30 < $51.69 base (plus $34.63 fringe)" }
     ]);
-    const getAgent = jest.fn(async () => mockAgent);
+    const getAgent = vi.fn(async () => mockAgent);
 
     const response = await generateWcpDecision({
       content: "Role: Electrician, Hours: 40, Wage: $30.00",
@@ -92,7 +92,7 @@ describe("WCP System Tests - Complete Workflow", () => {
     const mockAgent = createMockAgent("Reject", [
       { type: "Unknown Role", detail: "Role 'Plumber' not found in DBWD rates" }
     ]);
-    const getAgent = jest.fn(async () => mockAgent);
+    const getAgent = vi.fn(async () => mockAgent);
 
     const response = await generateWcpDecision({
       content: "Role: Plumber, Hours: 40, Wage: $50.00",
@@ -107,7 +107,7 @@ describe("WCP System Tests - Complete Workflow", () => {
 
   it("includes health metrics in response", async () => {
     const mockAgent = createMockAgent("Approved");
-    const getAgent = jest.fn(async () => mockAgent);
+    const getAgent = vi.fn(async () => mockAgent);
 
     const response = await generateWcpDecision({
       content: "Role: Laborer, Hours: 40, Wage: $30.00",

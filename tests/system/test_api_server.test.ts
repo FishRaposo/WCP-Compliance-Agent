@@ -9,7 +9,7 @@
  * @see AGENTS.md for test patterns
  */
 
-import { describe, it, expect, beforeAll, afterAll } from '@jest/globals';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import type { Server } from 'http';
 
 // Mock Express server for testing

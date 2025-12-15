@@ -9,7 +9,7 @@
  * @see WORKFLOW.md for error handling workflows
  */
 
-import { describe, it, expect, jest } from '@jest/globals';
+import { describe, it, expect, vi } from 'vitest';
 import { 
   WCPError, 
   ValidationError, 

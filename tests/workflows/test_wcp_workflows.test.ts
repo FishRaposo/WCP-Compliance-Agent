@@ -7,7 +7,7 @@
  * @file tests/workflows/test_wcp_workflows.test.ts
  */
 
-import { describe, it, expect, jest } from "@jest/globals";
+import { describe, it, expect, vi } from "vitest";
 import { generateWcpDecision } from "../../src/entrypoints/wcp-entrypoint.js";
 
 describe("WCP Workflow Tests - User Scenarios", () => {
@@ -15,7 +15,7 @@ describe("WCP Workflow Tests - User Scenarios", () => {
   // Mock agent that simulates different workflow outcomes
   const createMockAgent = (status: string, findings: any[] = [], trace: string[] = []) => {
     return {
-      generate: jest.fn(async () => ({
+      generate: vi.fn(async () => ({
         object: {
           status,
           explanation: `Decision: ${status}`,
@@ -42,7 +42,7 @@ describe("WCP Workflow Tests - User Scenarios", () => {
         "Validated: No violations found",
         "Decided: Approved - compliant with DBWD"
       ]);
-      const getAgent = jest.fn(async () => mockAgent);
+      const getAgent = vi.fn(async () => mockAgent);
 
       const response = await generateWcpDecision({
         content: "Role: Electrician, Hours: 40, Wage: $55.00",
@@ -65,7 +65,7 @@ describe("WCP Workflow Tests - User Scenarios", () => {
         "Validated: Overtime violation detected",
         "Decided: Revise - overtime pay required"
       ]);
-      const getAgent = jest.fn(async () => mockAgent);
+      const getAgent = vi.fn(async () => mockAgent);
 
       const response = await generateWcpDecision({
         content: "Role: Electrician, Hours: 45, Wage: $55.00",
@@ -87,7 +87,7 @@ describe("WCP Workflow Tests - User Scenarios", () => {
         "Validated: Underpayment violation detected",
         "Decided: Reject - significant underpayment"
       ]);
-      const getAgent = jest.fn(async () => mockAgent);
+      const getAgent = vi.fn(async () => mockAgent);
 
       const response = await generateWcpDecision({
         content: "Role: Electrician, Hours: 40, Wage: $30.00",
@@ -112,7 +112,7 @@ describe("WCP Workflow Tests - User Scenarios", () => {
         "Validated: Unknown role detected",
         "Decided: Reject - role not in DBWD database"
       ]);
-      const getAgent = jest.fn(async () => mockAgent);
+      const getAgent = vi.fn(async () => mockAgent);
 
       const response = await generateWcpDecision({
         content: "Role: Plumber, Hours: 40, Wage: $50.00",
@@ -134,7 +134,7 @@ describe("WCP Workflow Tests - User Scenarios", () => {
         "Validated: Multiple violations detected",
         "Decided: Reject - overtime and underpayment"
       ]);
-      const getAgent = jest.fn(async () => mockAgent);
+      const getAgent = vi.fn(async () => mockAgent);
 
       const response = await generateWcpDecision({
         content: "Role: Electrician, Hours: 50, Wage: $30.00",
@@ -157,7 +157,7 @@ describe("WCP Workflow Tests - User Scenarios", () => {
         "Validated: No violations found for Laborer",
         "Decided: Approved - Laborer compliant with DBWD"
       ]);
-      const getAgent = jest.fn(async () => mockAgent);
+      const getAgent = vi.fn(async () => mockAgent);
 
       const response = await generateWcpDecision({
         content: "Role: Laborer, Hours: 40, Wage: $30.00",
@@ -177,7 +177,7 @@ describe("WCP Workflow Tests - User Scenarios", () => {
         "Validated: Overtime violation for Laborer",
         "Decided: Revise - Laborer overtime pay required"
       ]);
-      const getAgent = jest.fn(async () => mockAgent);
+      const getAgent = vi.fn(async () => mockAgent);
 
       const response = await generateWcpDecision({
         content: "Role: Laborer, Hours: 50, Wage: $30.00",
@@ -195,7 +195,7 @@ describe("WCP Workflow Tests - User Scenarios", () => {
     
     it("handles different content formats", async () => {
       const mockAgent = createMockAgent("Approved");
-      const getAgent = jest.fn(async () => mockAgent);
+      const getAgent = vi.fn(async () => mockAgent);
 
       // Test with different spacing and formatting
       const response = await generateWcpDecision({

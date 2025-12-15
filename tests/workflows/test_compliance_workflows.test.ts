@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, afterAll } from "@jest/globals";
+import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { generateWcpDecision } from "../../src/entrypoints/wcp-entrypoint.js";
 
 describe("Compliance Workflow Tests", () => {

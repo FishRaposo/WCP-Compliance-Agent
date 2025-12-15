@@ -1,15 +1,15 @@
-import { describe, it, expect, jest } from "@jest/globals";
+import { describe, it, expect, vi } from "vitest";
 import { generateWcpDecision } from "../../src/entrypoints/wcp-entrypoint.js";
 
 describe("wcp entrypoint integration (no live LLM)", () => {
   it("requests the wcpAgent and calls generate with the expected options", async () => {
-    const generate = jest.fn(async () => ({
+    const generate = vi.fn(async () => ({
       object: { status: "Approved" },
       text: "ok",
       toolResults: [],
     }));
 
-    const getAgent = jest.fn(async () => ({ generate }));
+    const getAgent = vi.fn(async () => ({ generate }));
 
     const response = await generateWcpDecision({
       content: "Role: Electrician, Hours: 40, Wage: $55.00",

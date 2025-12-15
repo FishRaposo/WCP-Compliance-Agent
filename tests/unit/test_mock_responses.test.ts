@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from "@jest/globals";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { generateMockWcpDecision, isMockMode } from "../../src/utils/mock-responses.js";
 
 describe("Mock Responses Unit Tests", () => {

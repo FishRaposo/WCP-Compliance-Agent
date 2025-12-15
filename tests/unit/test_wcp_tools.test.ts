@@ -1,4 +1,4 @@
-import { describe, it, expect } from "@jest/globals";
+import { describe, it, expect } from "vitest";
 import { extractWCPTool, validateWCPTool } from "../../src/mastra/tools/wcp-tools.js";
 
 const mockRuntimeContext = {} as any;

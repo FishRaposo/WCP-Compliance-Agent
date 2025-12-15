@@ -9,7 +9,7 @@
  * @see WORKFLOW.md for workflow definitions
  */
 
-import { describe, it, expect, jest } from '@jest/globals';
+import { describe, it, expect, vi } from 'vitest';
 import { processWCP, processWCPsBulk } from '../../src/services/wcp-service.js';
 import { validateWCPFormat } from '../../src/services/wcp-service.js';
 import { getWCPStats } from '../../src/services/wcp-service.js';
@@ -19,7 +19,7 @@ import { generateWcpDecision } from '../../src/entrypoints/wcp-entrypoint.js';
 // Mock agent that simulates different workflow outcomes
 const createMockAgent = (status: string, findings: any[] = [], trace: string[] = []) => {
   return {
-    generate: jest.fn(async () => ({
+    generate: vi.fn(async () => ({
       object: {
         status,
         explanation: `Decision: ${status}`,
@@ -43,7 +43,7 @@ describe('WCP Processing Workflow', () => {
 
     it('should process valid WCP (Approved workflow)', async () => {
       const mockAgent = createMockAgent("Approved");
-      const getAgent = jest.fn(async () => mockAgent);
+      const getAgent = vi.fn(async () => mockAgent);
 
       const response = await generateWcpDecision({
         content: 'Role: Electrician, Hours: 40, Wage: $55.00',
@@ -62,7 +62,7 @@ describe('WCP Processing Workflow', () => {
       const mockAgent = createMockAgent("Revise", [
         { type: 'Overtime', detail: 'Hours 45 > 40 (DBWD requires 1.5x pay)' }
       ]);
-      const getAgent = jest.fn(async () => mockAgent);
+      const getAgent = vi.fn(async () => mockAgent);
 
       const response = await generateWcpDecision({
         content: 'Role: Electrician, Hours: 45, Wage: $55.00',
@@ -80,7 +80,7 @@ describe('WCP Processing Workflow', () => {
       const mockAgent = createMockAgent("Reject", [
         { type: 'Underpay', detail: 'Wage $30 < $51.69 base (plus $34.63 fringe)' }
       ]);
-      const getAgent = jest.fn(async () => mockAgent);
+      const getAgent = vi.fn(async () => mockAgent);
 
       const response = await generateWcpDecision({
         content: 'Role: Electrician, Hours: 40, Wage: $30.00',
@@ -99,7 +99,7 @@ describe('WCP Processing Workflow', () => {
     it('should process multiple WCPs in parallel', async () => {
       // Mock agent for bulk processing
       const mockAgent = createMockAgent("Approved");
-      const getAgent = jest.fn(async () => mockAgent);
+      const getAgent = vi.fn(async () => mockAgent);
 
       const requests = [
         { content: 'Role: Electrician, Hours: 40, Wage: $55.00' },
