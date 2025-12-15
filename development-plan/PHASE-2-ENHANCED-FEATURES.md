@@ -11,18 +11,19 @@
 
 ## 🎯 Goals
 
-1. **PDF Parsing**: Integrate PDF parsing for real PDF document processing
-2. **Additional DBWD Roles**: Add support for additional DBWD roles (Plumber, etc.)
-3. **Enhanced Input Parsing**: Improve input parsing with better regex and LLM support
-4. **Evaluation Framework**: Implement evaluation framework for testing and validation
-5. **Performance Optimization**: Optimize performance for production use
-6. **Documentation Updates**: Update documentation with new features
+1. **Document Processing**: Add PDF parsing, CSV parsing, and OCR support for real document processing
+2. **Expanded Data Extraction**: Extract full WCP data model (11 fields vs current 3)
+3. **Additional DBWD Roles**: Add support for additional DBWD roles (Plumber, etc.)
+4. **Enhanced Input Parsing**: Improve input parsing with better regex and LLM support
+5. **Evaluation Framework**: Implement evaluation framework for testing and validation
+6. **Performance Optimization**: Optimize performance for production use
+7. **Documentation Updates**: Update documentation with new features
 
 ---
 
 ## 📋 Requirements
 
-### 1. PDF Parsing Integration
+### 1. Document Processing
 
 #### PDF Parsing Implementation
 - [ ] Install `pdf-parse` package (already in optionalDependencies)
@@ -33,6 +34,43 @@
 - [ ] Add PDF error handling (corrupted PDFs, unreadable PDFs)
 - [ ] Add PDF fallback to text extraction if PDF parsing fails
 - [ ] Add PDF parsing tests
+
+#### CSV Parsing Implementation
+- [ ] Install `csv-parser` or `papaparse` package
+- [ ] Create CSV parsing function for structured WCP data
+- [ ] Support various CSV formats (different column headers)
+- [ ] Handle CSV encoding issues
+- [ ] Add CSV validation and error handling
+- [ ] Add CSV parsing tests
+
+#### OCR Support (Optional)
+- [ ] Install `tesseract.js` for OCR capabilities
+- [ ] Create OCR preprocessing for scanned PDFs
+- [ ] Add image preprocessing for better OCR accuracy
+- [ ] Add OCR confidence scoring
+- [ ] Add OCR fallback mechanisms
+
+### 2. Expanded Data Extraction
+
+#### Full WCP Data Model Implementation
+- [ ] Update `TWCPReport` schema to match specification (11 fields)
+- [ ] Extract employee names (not just roles)
+- [ ] Extract job titles with DBWD classification mapping
+- [ ] Extract locality information (county/zip)
+- [ ] Extract hours by day (not just total)
+- [ ] Extract separate base and fringe rates
+- [ ] Detect and extract signatures
+- [ ] Extract project and subcontractor information
+- [ ] Handle multiple employees per WCP
+- [ ] Validate required fields presence
+
+#### Data Extraction Features
+- [ ] Support table extraction from PDFs
+- [ ] Support form field extraction
+- [ ] Handle various WCP formats
+- [ ] Add data validation and normalization
+- [ ] Add extraction confidence scoring
+- [ ] Add extraction audit logging
 
 #### PDF Parsing Features
 - [ ] Support various PDF formats

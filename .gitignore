@@ -48,6 +48,8 @@ coverage/
 
 #Templates
 _templates/
-
 #Archive
 _archive/
+
+# Private documents (not committed)
+_private/

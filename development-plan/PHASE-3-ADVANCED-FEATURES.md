@@ -7,32 +7,96 @@
 **Timeline**: 4-6 weeks  
 **Dependencies**: Phase 2 (Enhanced Features) should be completed
 
+**💼 Enterprise Edition**: Phase 3 features are part of the Enterprise Edition offering, providing advanced capabilities for large-scale deployments.
+
 ---
 
 ## 🎯 Goals
 
 1. **RAG-Based DBWD Lookup**: Replace hardcoded DBWD rates with RAG-based lookup from vector DB
-2. **Multi-Document Workflow Chaining**: Support workflow chaining for batch processing of multiple WCP documents
-3. **Batch Processing Support**: Add batch processing capabilities for large-scale processing
-4. **Advanced Monitoring**: Add advanced monitoring and metrics collection
-5. **Caching Strategies**: Implement caching strategies for performance optimization
-6. **Advanced Evaluation Scorers** (Optional Enhancement): Enhance Phase 2 evaluation scorers with advanced metrics and workflow integration
-7. **Documentation Updates**: Update documentation with new features
+2. **Persistence Layer**: Add database integration for storing WCPs, decisions, and audit trails
+3. **Advanced Validation**: Implement signature validation and arithmetic checks
+4. **Multi-Document Workflow**: Support workflow chaining for batch processing
+5. **Batch Processing**: Add batch processing capabilities for large-scale processing
+6. **Citation System**: Add DBWD citation support for decisions
+7. **Advanced Monitoring**: Add advanced monitoring and metrics collection
+8. **Caching Strategies**: Implement caching strategies for performance optimization
+9. **Documentation Updates**: Update documentation with new features
 
 ---
 
 ## 📋 Requirements
 
-### 1. RAG-Based DBWD Rate Lookup
+### 1. Persistence Layer
+
+#### Database Implementation
+- [ ] Set up PostgreSQL database (Supabase or managed instance)
+- [ ] Create database schema matching specification
+- [ ] Implement `docs` table for document storage
+- [ ] Implement `wcp_reports` table for normalized WCP data
+- [ ] Implement `dbwd_records` table for RAG chunks
+- [ ] Implement `decisions` table for decision storage
+- [ ] Implement `audit_traces` table for full audit trails
+- [ ] Add database connection pooling
+- [ ] Add database migrations
+- [ ] Add database backup strategy
+
+#### Database Features
+- [ ] Support tenant isolation (multi-tenancy prep)
+- [ ] Support document versioning
+- [ ] Support audit trail immutability
+- [ ] Support data retention policies
+- [ ] Add database indexing for performance
+- [ ] Add database monitoring
+
+### 2. RAG-Based DBWD Rate Lookup
 
 #### RAG Implementation
-- [ ] Set up vector DB (e.g., Pinecone, Weaviate, or similar)
+- [ ] Set up vector DB (e.g., Pinecone, Weaviate, or pgvector)
 - [ ] Create DBWD PDF chunking pipeline
 - [ ] Create DBWD embedding pipeline
 - [ ] Create RAG tool for DBWD rate lookup
 - [ ] Update `validateWCPTool` to use RAG lookup
+- [ ] Add locality-based rate lookup
+- [ ] Add date-based rate validation
 - [ ] Add RAG error handling
 - [ ] Add RAG tests
+
+#### RAG Features
+- [ ] Support multiple DBWD sources
+- [ ] Support vector DB querying
+- [ ] Support embedding generation
+- [ ] Support similarity search
+- [ ] Support caching for frequently accessed rates
+- [ ] Support RAG configuration
+- [ ] Support RAG logging
+- [ ] Return citations with rate lookups
+
+### 3. Advanced Validation
+
+#### Signature Validation
+- [ ] Implement signature detection in documents
+- [ ] Validate required signer roles
+- [ ] Support digital signature verification
+- [ ] Add signature validation rules
+- [ ] Add signature audit logging
+
+#### Arithmetic Checks
+- [ ] Implement total vs sum validation
+- [ ] Implement daily hours aggregation
+- [ ] Implement wage calculation validation
+- [ ] Implement overtime calculation verification
+- [ ] Add arithmetic error reporting
+
+### 4. Citation System
+
+#### Citation Implementation
+- [ ] Add citation field to decision schema
+- [ ] Implement DBWD reference extraction
+- [ ] Add snippet extraction for citations
+- [ ] Support clause-level citations
+- [ ] Add citation formatting
+- [ ] Add citation validation
 
 #### RAG Features
 - [ ] Support multiple DBWD sources

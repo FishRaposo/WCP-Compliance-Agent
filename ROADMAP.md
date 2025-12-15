@@ -2,9 +2,36 @@
 
 **Purpose**: Consolidated roadmap for the WCP AI Agent Prototype. This file is the single source of truth for planned work, synthesized from `TODO.md` and `development-plan/*`.
 
-**Last Updated**: 2025-12-14  
+**Last Updated**: 2025-12-15  
 **Project Version**: 1.0.0  
 **Current Status**: Prototype (core workflow implemented; production hardening in progress)
+
+---
+
+## 📋 Specification Coverage
+
+**Technical Specification Coverage**: 39% (13/33 requirements implemented)
+
+### Current Prototype Capabilities (Phase 0)
+- ✅ Basic text input parsing (role, hours, wage)
+- ✅ Simple compliance validation (overtime, underpayment)
+- ✅ LLM-powered decisions (APPROVED/REVISE/REJECT)
+- ✅ REST API endpoints
+- ✅ Mock mode for testing
+
+### Path to Production
+
+#### Open Source (Free)
+- **Phase 0**: MVP (✅ Complete)
+- **Phase 1**: Infrastructure & Reliability
+- **Phase 2**: Document Processing & Expanded Extraction
+
+#### Enterprise Edition (Paid)
+- **Phase 3**: Advanced Features (RAG-DBWD, persistence, citations)
+- **Phase 4**: Production-Ready (Multi-tenant, advanced security)
+- **Phase 5**: Future Vision (Custom consulting engagements)
+
+See `docs/REQUIREMENTS-TRACEABILITY.md` for detailed mapping.
 
 ---
 
