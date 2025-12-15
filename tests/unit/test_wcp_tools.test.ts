@@ -17,12 +17,6 @@ describe("extractWCPTool", () => {
     });
   });
 
-  it("defaults missing fields to Unknown/0", async () => {
-    const result = await extractWCPTool.execute({
-      context: { content: "No structured fields" },
-      runtimeContext: undefined as any,
-    });
-
   it("throws error when hours are missing", async () => {
     await expect(extractWCPTool.execute({
       context: { content: "Role: Electrician, Wage: $55.00" },

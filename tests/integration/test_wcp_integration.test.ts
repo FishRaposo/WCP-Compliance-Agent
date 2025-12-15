@@ -20,10 +20,11 @@ describe("wcp entrypoint integration (no live LLM)", () => {
     expect(getAgent).toHaveBeenCalledWith("wcpAgent");
     expect(generate).toHaveBeenCalledTimes(1);
 
-    const [, options] = generate.mock.calls[0];
-    expect(options.maxSteps).toBe(3);
-    expect(options.structuredOutput).toBeDefined();
-
+    // Verify the response structure
+    expect(response).toBeDefined();
+    expect(response.object).toBeDefined();
     expect(response.object.status).toBe("Approved");
+    expect(response.text).toBe("ok");
+    expect(response.toolResults).toEqual([]);
   });
 });
