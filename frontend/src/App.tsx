@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Bot, CheckCircle, AlertTriangle, XCircle, FileText, Activity, Zap, Play, Info } from 'lucide-react';
 import { cn } from './lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Analytics } from '@vercel/analytics/react';
 import { scenarios, ShowcaseScenario } from './data/scenarios';
 
 // Types matching the backend schema
@@ -320,6 +321,7 @@ function App() {
           </section>
         </main>
       </div>
+      <Analytics />
     </div>
   );
 }
