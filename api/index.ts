@@ -47,6 +47,40 @@ app.post('/analyze', async (c) => {
   }
 });
 
+// API health check
+app.get('/api/health', (c) => {
+  return c.json({ 
+    status: "healthy",
+    timestamp: new Date().toISOString(),
+    version: process.env.npm_package_version || "0.1.0"
+  });
+});
+
+// API analyze endpoint (alternative path)
+app.post('/api/analyze', async (c) => {
+  try {
+    const body = await c.req.json();
+    const { content } = body;
+    
+    if (!content) {
+      return c.json({ 
+        success: false, 
+        error: {
+          message: 'Content field is required',
+          code: 'VALIDATION_ERROR',
+          statusCode: 400
+        }
+      }, 400);
+    }
+    
+    const result = await generateWcpDecision({ content });
+    return c.json(result.object);
+  } catch (error) {
+    console.error('Error in /api/analyze:', error);
+    return c.json(formatApiError(error), 500);
+  }
+});
+
 // Root endpoint
 app.get('/', (c) => {
   return c.json({
