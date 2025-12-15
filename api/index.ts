@@ -2,8 +2,8 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 
 // Import from source for Vercel, it will handle TypeScript compilation
-import { generateWcpDecision } from '../src/entrypoints/wcp-entrypoint.js';
-import { formatApiError } from '../src/utils/errors.js';
+import { generateWcpDecision } from '../src/entrypoints/wcp-entrypoint';
+import { formatApiError } from '../src/utils/errors';
 
 const app = new Hono();
 
@@ -25,6 +25,18 @@ app.get('/health', (c) => {
 // WCP Analysis endpoint
 app.post('/analyze', async (c) => {
   try {
+    // Check if OPENAI_API_KEY is set
+    if (!process.env.OPENAI_API_KEY) {
+      return c.json({ 
+        success: false, 
+        error: {
+          message: 'OpenAI API key not configured',
+          code: 'CONFIG_ERROR',
+          statusCode: 500
+        }
+      }, 500);
+    }
+
     const body = await c.req.json();
     const { content } = body;
     
@@ -43,7 +55,10 @@ app.post('/analyze', async (c) => {
     return c.json(result.object);
   } catch (error) {
     console.error('Error in /analyze:', error);
-    return c.json(formatApiError(error), 500);
+    
+    // Ensure we always return valid JSON
+    const errorResponse = formatApiError(error);
+    return c.json(errorResponse, (errorResponse.error?.statusCode || 500) as any);
   }
 });
 
@@ -89,6 +104,23 @@ app.get('/', (c) => {
     endpoints: {
       health: '/health',
       analyze: '/analyze (POST)'
+    }
+  });
+});
+
+// Debug endpoint
+app.get('/debug', (c) => {
+  return c.json({
+    timestamp: new Date().toISOString(),
+    env: {
+      NODE_ENV: process.env.NODE_ENV,
+      OPENAI_API_KEY_SET: !!process.env.OPENAI_API_KEY,
+      VERCEL: !!process.env.VERCEL,
+      CI: !!process.env.CI
+    },
+    imports: {
+      wcpEntrypoint: typeof generateWcpDecision,
+      formatApiError: typeof formatApiError
     }
   });
 });
