@@ -63,25 +63,45 @@ export const extractWCPTool = createTool({
   execute: async ({ context }) => {
     const { content } = context;
     
+    // Input validation
+    if (!content) {
+      throw new Error("Input content is empty");
+    }
+
     // Extract role using regex: "Role: Electrician" → "Electrician"
-    // Case-insensitive match, defaults to "Unknown" if not found
-    const roleMatch = content.match(/Role:\s*(\w+)/i) || ["", "Unknown"];
+    const roleMatch = content.match(/Role:\s*(\w+)/i);
+    if (!roleMatch) {
+      throw new Error("Could not extract role from content");
+    }
+    const role = roleMatch[1];
     
     // Extract hours using regex: "Hours: 45" → 45
-    // Matches digits only, defaults to "0" if not found
-    const hoursMatch = content.match(/Hours:\s*(\d+)/i) || ["", "0"];
+    const hoursMatch = content.match(/Hours:\s*(\d+)/i);
+    if (!hoursMatch) {
+      throw new Error("Could not extract hours from content");
+    }
+    const hours = parseFloat(hoursMatch[1]);
     
     // Extract wage using regex: "Wage: $50" or "Wage: 50" → 50
-    // Handles optional dollar sign, supports decimals, defaults to "0" if not found
-    const wageMatch = content.match(/Wage:\s*\$?(\d+\.?\d*)/i) || ["", "0"];
+    const wageMatch = content.match(/Wage:\s*\$?(\d+\.?\d*)/i);
+    if (!wageMatch) {
+      throw new Error("Could not extract wage from content");
+    }
+    const wage = parseFloat(wageMatch[1]);
+
+    // Validate parsed values
+    if (isNaN(hours) || hours < 0) {
+      throw new Error(`Invalid hours value: ${hoursMatch[1]}`);
+    }
+
+    if (isNaN(wage) || wage < 0) {
+      throw new Error(`Invalid wage value: ${wageMatch[1]}`);
+    }
     
-    // Return structured data
-    // Note: In production, would validate parsed values and handle errors
-    // TODO: Add input validation (see TODO.md - Item 1)
     return {
-      role: roleMatch[1],
-      hours: parseFloat(hoursMatch[1]),
-      wage: parseFloat(wageMatch[1]),
+      role,
+      hours,
+      wage,
     };
   },
 });

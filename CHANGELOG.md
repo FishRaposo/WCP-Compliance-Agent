@@ -28,6 +28,13 @@ See `docs/DOCUMENTATION-MAINTENANCE.md` for complete update guidelines and check
 
 ## [Unreleased]
 
+### Changed
+- Added input validation to `extractWCPTool` in `src/mastra/tools/wcp-tools.ts` (Item 1 from TODO.md)
+  - Replaced default values ("Unknown", 0) with strict error throwing for missing data
+  - Added validation for failed regex matches
+  - Added validation for numeric values (NaN check, negative check)
+  - Updated `tests/unit/test_wcp_tools.test.ts` to test for validation errors
+
 ### Added
 - Unified Frontend System with integrated showcase scenarios (2025-12-14)
   - Created `frontend/src/data/scenarios.ts` with 6 pre-defined showcase scenarios

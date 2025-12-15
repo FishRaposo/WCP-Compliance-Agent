@@ -77,7 +77,7 @@
 
 ### 1. Error Handling and Input Validation
 
-- **Status**: Partially Complete (~30%)
+- **Status**: Partially Complete (~50%)
 - **Priority**: 🔥 **Critical**
 - **Overview**: Add comprehensive error handling and input validation for all tools and agents
 - **Progress**: Basic try-catch blocks exist in src/index.ts and showcase/scripts/showcase.ts, but missing response validation and specific error types
@@ -93,10 +93,10 @@
 - ⚠️ **Limited error specificity**: Error handling is generic - could be more specific for different error types
 
 **src/mastra/tools/wcp-tools.ts Issues**:
-- ❌ **extractWCPTool returns invalid data**: Returns "Unknown" for role and 0 for hours/wage if regex doesn't match - should validate or throw error
-- ❌ **No NaN validation**: parseFloat can return NaN if input is invalid - no validation
-- ❌ **No empty string validation**: No validation for empty strings or null/undefined input
-- ❌ **No validation for invalid regex matches**: Should validate that regex matches succeeded
+- ✅ **extractWCPTool validation**: Now throws errors for missing data, failed matches, and invalid numbers (FIXED)
+- ✅ **NaN validation**: Added checks for isNaN (FIXED)
+- ✅ **Empty string validation**: Added check for empty content (FIXED)
+- ✅ **Regex match validation**: Added checks for match failure (FIXED)
 - ❌ **validateWCPTool doesn't validate negative numbers**: No validation for negative hours or wages
 - ❌ **validateWCPTool doesn't validate impossible values**: No validation for hours > 168 (impossible per week)
 - ❌ **Unknown role handling issue**: Unknown role returns { base: 0, fringe: 0 } which might cause incorrect validation (wage < 0 will always trigger underpay)
@@ -108,9 +108,9 @@
 - [ ] Add validation for `response.object` being null/undefined (showcase/scripts/showcase.ts has this but index.ts doesn't)
 - [ ] Add specific error types/handling for different failure scenarios (API errors, validation errors, etc.)
 - [ ] Add error handling for API failures (OpenAI API rate limits, network failures)
-- [ ] Add input validation for `extractWCPTool` (empty string, null, undefined, invalid format)
-- [ ] Add NaN validation for parseFloat results in `extractWCPTool`
-- [ ] Add validation for invalid regex matches in `extractWCPTool` (should throw error or return error status)
+- [x] Add input validation for `extractWCPTool` (empty string, null, undefined, invalid format)
+- [x] Add NaN validation for parseFloat results in `extractWCPTool`
+- [x] Add validation for invalid regex matches in `extractWCPTool` (should throw error or return error status)
 - [ ] Add input validation for `validateWCPTool` (negative numbers, invalid hours >168, invalid wages)
 - [ ] Add error handling for unknown roles in `validateWCPTool` (should return finding instead of defaulting to 0)
 - [ ] Add error handling for malformed input
