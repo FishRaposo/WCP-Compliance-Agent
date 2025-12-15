@@ -14,7 +14,16 @@
     "serve": "node dist/server.js",
     "test": "ts-node --esm src/index.ts",
     "test:jest": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
-    "showcase": "ts-node --esm showcase/scripts/showcase.ts"
+    "test:all": "ts-node utils/run-tests.ts",
+    "test:unit": "ts-node utils/run-tests.ts --unit",
+    "test:integration": "ts-node utils/run-tests.ts --integration",
+    "test:system": "ts-node utils/run-tests.ts --system",
+    "test:workflow": "ts-node utils/run-tests.ts --workflow",
+    "test:coverage": "ts-node utils/run-tests.ts --coverage",
+    "showcase": "ts-node --esm showcase/scripts/showcase.ts",
+    "validate": "ts-node utils/validate-scaffold.ts",
+    "scaffold": "ts-node utils/scaffold-new-feature.ts",
+    "dev:utils": "npm run test:all -- --watch"
   },
   "keywords": [
     "mastra",

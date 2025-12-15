@@ -8,6 +8,12 @@ export interface WCPDecision {
   explanation: string;
   findings: Finding[];
   trace: string[];
+  health?: {
+    cycleTime: number;
+    tokenUsage: number;
+    validationScore: number;
+    confidence: number;
+  };
 }
 
 export interface Finding {

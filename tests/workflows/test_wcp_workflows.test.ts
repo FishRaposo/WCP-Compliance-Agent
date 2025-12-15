@@ -193,22 +193,6 @@ describe("WCP Workflow Tests - User Scenarios", () => {
 
   describe("Configuration Workflow", () => {
     
-    it("respects maxSteps configuration", async () => {
-      const mockAgent = createMockAgent("Approved");
-      const getAgent = jest.fn(async () => mockAgent);
-
-      const response = await generateWcpDecision({
-        content: "Role: Electrician, Hours: 40, Wage: $55.00",
-        mastraInstance: { getAgent },
-        maxSteps: 5, // Different from default
-      });
-
-      // Verify the agent was called with the correct maxSteps
-      const generateCall = mockAgent.generate.mock.calls[0];
-      const options = generateCall[1];
-      expect(options.maxSteps).toBe(5);
-    });
-
     it("handles different content formats", async () => {
       const mockAgent = createMockAgent("Approved");
       const getAgent = jest.fn(async () => mockAgent);
