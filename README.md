@@ -59,6 +59,8 @@ The WCP AI Agent Prototype is designed to demonstrate a production-minded AI age
 ## ✨ Features
 
 ### Core Features
+
+#### Phase 0 (MVP) - ✅ Complete
 - **WCP Text Input Parsing**: Extract role, hours, and wage from text input using regex-based parsing
 - **DBWD Rate Validation**: Validate against hardcoded DBWD rates (Electrician, Laborer)
 - **LLM-Powered Decision Making**: Make compliance decisions (Approved/Revise/Reject) using OpenAI GPT-4o-mini
@@ -66,6 +68,22 @@ The WCP AI Agent Prototype is designed to demonstrate a production-minded AI age
 - **Type Safety**: Zod schemas throughout for type-safe data validation
 - **Bounded Execution**: maxSteps=3 prevents infinite loops
 - **Full Auditability**: Step-by-step traces for compliance auditing
+
+#### Phase 1 (Core Improvements) - ✅ Complete
+- **Configuration Management**: Centralized configuration system with dedicated config directory
+  - Agent configuration (model, maxSteps, timeout, temperature)
+  - Database configuration (SQLite with LibSQL support)
+  - Application configuration (environment, features, API, observability)
+- **Core Utilities**: Production-ready infrastructure utilities
+  - **Retry Logic**: Exponential backoff for API failures
+  - **Enhanced Validation**: Comprehensive input validation for all WCP data types
+  - **Health Checks**: System, OpenAI, and database health monitoring
+  - **Performance Monitoring**: Track and log performance metrics
+  - **Metrics Collection**: Collect and report system metrics
+- **Mastra Integrations**: 
+  - PinoLogger for structured logging (@mastra/loggers)
+  - LibSQL for database storage (@mastra/libsql)
+- **Expanded Test Suite**: 197 tests across 18 test files (all passing)
 
 ### Future Features
 
@@ -128,6 +146,49 @@ cd frontend && npm run dev
 ### Prerequisites
 - Node.js (v20.0.0 or higher)
 - OpenAI API key (get at: https://platform.openai.com/api-keys)
+
+### Environment Variables
+
+Create a `.env` file in the project root with the following variables:
+
+**Required:**
+```bash
+OPENAI_API_KEY=sk-...  # Your OpenAI API key
+```
+
+**Optional (Phase 1 Configuration):**
+```bash
+# Agent Configuration
+OPENAI_MODEL=gpt-4o-mini      # LLM model to use (default: gpt-4o-mini)
+MAX_STEPS=3                    # Maximum agent steps (default: 3)
+AGENT_TIMEOUT=30000           # Agent timeout in ms (default: 30000)
+OPENAI_TEMPERATURE=0.7        # LLM temperature (default: 0.7)
+OPENAI_MAX_TOKENS=2000        # Max tokens (default: 2000)
+
+# Database Configuration
+DATABASE_URL=file:./data/local.db  # SQLite database URL (default: file:./data/local.db)
+DB_MAX_CONNECTIONS=10              # Max connections (default: 10)
+DB_LOGGING=false                   # Enable query logging (default: false)
+
+# Application Configuration
+NODE_ENV=development          # Environment: development|staging|production|test
+PORT=3000                     # API server port (default: 3000)
+HOST=localhost                # API server host (default: localhost)
+ENABLE_CORS=true              # Enable CORS (default: true)
+
+# Feature Flags
+FEATURE_PDF_PARSING=false         # Enable PDF parsing (default: false)
+FEATURE_RAG_LOOKUP=false          # Enable RAG-based DBWD lookup (default: false)
+FEATURE_BATCH_PROCESSING=false    # Enable batch processing (default: false)
+FEATURE_OBSERVABILITY=false       # Enable observability (default: false, auto-enabled in production)
+
+# Observability (Optional)
+OBSERVABILITY_ENABLED=false   # Enable observability (default: false, auto-enabled in production)
+LANGFUSE_PUBLIC_KEY=          # Langfuse public key (optional)
+AI_TRACING=false             # Enable AI tracing (default: false, auto-enabled in production)
+```
+
+See `.env.example` for a template with all available options.
 
 ### Platform Support
 - **Node.js**: ✅ Fully supported (version 20.0.0+)
