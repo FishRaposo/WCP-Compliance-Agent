@@ -271,11 +271,11 @@ wcp-ai-agent/
 
 ### Showcase Documentation (`showcase/` - 5 files)
 
-1. **docs/showcase/README.md** - Showcase folder overview
-2. **docs/showcase/PROJECT-OVERVIEW.md** - Comprehensive project overview for recruiters
-3. **docs/showcase/SHOWCASE.md** - Demo guide and talking points
-4. **docs/showcase/QUICK-START.md** - 5-minute setup guide
-5. **docs/showcase/SHOWCASE-QUICK-START.md** - Quick reference for showcase
+1. **showcase/README.md** - Showcase folder overview
+2. **showcase/PROJECT-OVERVIEW.md** - Comprehensive project overview for recruiters
+3. **showcase/SHOWCASE.md** - Demo guide and talking points
+4. **showcase/QUICK-START.md** - 5-minute setup guide
+5. **showcase/SHOWCASE-QUICK-START.md** - Quick reference for showcase
 
 ### Archive Documentation (`_archive/documentation/` - 3 files)
 

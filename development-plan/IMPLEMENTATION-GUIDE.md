@@ -38,6 +38,10 @@ export class WCPError extends Error {
   ) {
     super(message);
     this.name = 'WCPError';
+    // Maintains proper stack trace for where error was thrown
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, WCPError);
+    }
   }
 }
 
@@ -53,6 +57,25 @@ export class APIError extends WCPError {
     super(message, 'API_ERROR', 502, details);
     this.name = 'APIError';
   }
+}
+
+export class ConfigurationError extends WCPError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, 'CONFIGURATION_ERROR', 500, details);
+    this.name = 'ConfigurationError';
+  }
+}
+
+// Error response format for API responses
+export interface ErrorResponse {
+  error: {
+    code: string;
+    message: string;
+    statusCode: number;
+    details?: Record<string, unknown>;
+    timestamp: string;
+    traceId?: string;
+  };
 }
 
 // Usage in tools
@@ -138,11 +161,14 @@ export function validateInput<T>(schema: z.ZodSchema<T>, data: unknown): T {
 ```typescript
 // src/utils/env-validator.ts
 import { z } from 'zod';
+import { ConfigurationError } from './error-handler.js';
 
 const EnvSchema = z.object({
   OPENAI_API_KEY: z.string().min(1, 'OPENAI_API_KEY is required').startsWith('sk-', 'Invalid API key format'),
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).default('info'),
+  OPENAI_MODEL: z.string().default('gpt-4o-mini'),
+  AGENT_MAX_STEPS: z.string().default('3').transform((val) => parseInt(val, 10)),
 });
 
 export type Env = z.infer<typeof EnvSchema>;
@@ -152,10 +178,17 @@ export function validateEnv(): Env {
     return EnvSchema.parse(process.env);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      const missingVars = error.errors.map(e => e.path.join('.')).join(', ');
-      throw new Error(
+      const missingVars = error.errors
+        .map(e => `${e.path.join('.')}: ${e.message}`)
+        .join(', ');
+      
+      throw new ConfigurationError(
         `Missing or invalid environment variables: ${missingVars}\n` +
-        `Please check your .env file or create one from .env.example`
+        `Please check your .env file or create one from .env.example`,
+        {
+          errors: error.errors,
+          received: process.env,
+        }
       );
     }
     throw error;
@@ -174,6 +207,70 @@ import { validateEnv } from './utils/env-validator.js';
     // Continue with application startup
     // ...
   } catch (error) {
+    console.error('Failed to start application:', error);
+    process.exit(1);
+  }
+})();
+```
+
+### Pattern 4: Application Configuration
+
+**Application Configuration Pattern**:
+```typescript
+// src/config/app-config.ts
+import { z } from 'zod';
+import { validateEnv } from '../utils/env-validator.js';
+import { ConfigurationError } from '../utils/error-handler.js';
+
+const AppConfigSchema = z.object({
+  openai: z.object({
+    apiKey: z.string(),
+    model: z.string().default('gpt-4o-mini'),
+  }),
+  agent: z.object({
+    maxSteps: z.number().default(3),
+  }),
+  logging: z.object({
+    level: z.enum(['debug', 'info', 'warn', 'error']).default('info'),
+  }),
+  environment: z.enum(['development', 'production', 'test']).default('development'),
+});
+
+export type AppConfig = z.infer<typeof AppConfigSchema>;
+
+export function loadConfig(): AppConfig {
+  try {
+    const env = validateEnv();
+    
+    return AppConfigSchema.parse({
+      openai: {
+        apiKey: env.OPENAI_API_KEY,
+        model: env.OPENAI_MODEL,
+      },
+      agent: {
+        maxSteps: env.AGENT_MAX_STEPS,
+      },
+      logging: {
+        level: env.LOG_LEVEL,
+      },
+      environment: env.NODE_ENV,
+    });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      throw new ConfigurationError('Invalid application configuration', {
+        errors: error.errors,
+      });
+    }
+    throw error;
+  }
+}
+
+// Usage
+import { loadConfig } from './config/app-config.js';
+
+const config = loadConfig();
+console.log(`Using model: ${config.openai.model}`);
+```
     console.error('Failed to start application:', error);
     process.exit(1);
   }
