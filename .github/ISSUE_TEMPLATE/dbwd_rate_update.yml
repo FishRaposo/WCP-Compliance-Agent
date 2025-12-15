@@ -76,7 +76,7 @@ body:
     attributes:
       label: Source of Rates
       description: Where did these rates come from?
-      placeholder: DBWD website update on 2024-01-01, link: https://dbwd.gov.gov/rates
+      placeholder: "DBWD website update on 2024-01-01, link: https://dbwd.gov.gov/rates"
     validations:
       required: true
 

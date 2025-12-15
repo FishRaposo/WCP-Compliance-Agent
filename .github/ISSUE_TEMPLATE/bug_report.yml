@@ -42,7 +42,7 @@ body:
     attributes:
       label: Bug Description
       description: A clear and concise description of what the bug is
-      placeholder: When I submit a WCP with overtime hours, it should be REVISE but it's returning APPROVED
+      placeholder: "When I submit a WCP with overtime hours, it should be REVISE but it's returning APPROVED"
     validations:
       required: true
 
@@ -63,7 +63,7 @@ body:
     attributes:
       label: Expected Behavior
       description: What you expected to happen
-      placeholder: The WCP with 45 hours should return REVISE status with an Overtime finding
+      placeholder: "The WCP with 45 hours should return REVISE status with an Overtime finding"
     validations:
       required: true
 
@@ -72,7 +72,7 @@ body:
     attributes:
       label: Actual Behavior
       description: What actually happened
-      placeholder: The WCP returned APPROVED status with no findings
+      placeholder: "The WCP returned APPROVED status with no findings"
     validations:
       required: true
 
@@ -81,7 +81,7 @@ body:
     attributes:
       label: WCP Input Example
       description: If applicable, provide the exact WCP input that causes the issue
-      placeholder: Role: Electrician, Hours: 45, Wage: $55.00
+      placeholder: "Role: Electrician, Hours: 45, Wage: $55.00"
     validations:
       required: false
 
