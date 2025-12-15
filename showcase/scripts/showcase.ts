@@ -21,6 +21,9 @@
  * @see showcase/README.md - Showcase folder documentation
  */
 
+// Load environment variables first
+import 'dotenv/config';
+
 // External dependencies
 import chalk from "chalk";
 
@@ -45,7 +48,7 @@ interface ShowcaseScenario {
   /** WCP input text to process (e.g., "Role: Electrician, Hours: 40, Wage: $55.00") */
   input: string;
   /** Expected compliance decision status */
-  expectedStatus: "Approved" | "Revise" | "Reject";
+  expectedStatus: "APPROVED" | "REVISE" | "REJECT";
   /** Optional: Expected violation types (e.g., ["Overtime", "Underpay"]) */
   expectedFindings?: string[];
 }
@@ -63,40 +66,40 @@ const scenarios: ShowcaseScenario[] = [
     name: "✅ Approved - Valid WCP",
     description: "A valid WCP with no violations - should be approved",
     input: "Role: Electrician, Hours: 40, Wage: $55.00",
-    expectedStatus: "Approved",
+    expectedStatus: "APPROVED",
   },
   {
     name: "⚠️ Revise - Overtime Issue",
     description: "WCP with overtime hours (>40) - requires revision",
     input: "Role: Electrician, Hours: 45, Wage: $55.00",
-    expectedStatus: "Revise",
+    expectedStatus: "REVISE",
     expectedFindings: ["Overtime"],
   },
   {
     name: "❌ Reject - Underpayment",
     description: "WCP with wage below DBWD base rate - major violation",
     input: "Role: Electrician, Hours: 40, Wage: $30.00",
-    expectedStatus: "Reject",
+    expectedStatus: "REJECT",
     expectedFindings: ["Underpay"],
   },
   {
     name: "✅ Approved - Laborer Valid",
     description: "Valid Laborer WCP with no violations",
     input: "Role: Laborer, Hours: 40, Wage: $30.00",
-    expectedStatus: "Approved",
+    expectedStatus: "APPROVED",
   },
   {
     name: "⚠️ Revise - Laborer Overtime",
     description: "Laborer WCP with overtime - requires revision",
     input: "Role: Laborer, Hours: 50, Wage: $30.00",
-    expectedStatus: "Revise",
+    expectedStatus: "REVISE",
     expectedFindings: ["Overtime"],
   },
   {
     name: "❌ Reject - Laborer Underpayment",
     description: "Laborer WCP with wage below base rate",
     input: "Role: Laborer, Hours: 40, Wage: $20.00",
-    expectedStatus: "Reject",
+    expectedStatus: "REJECT",
     expectedFindings: ["Underpay"],
   },
 ];
@@ -222,9 +225,9 @@ function printSummary(results: Array<{ scenario: ShowcaseScenario; decision: any
   results.forEach((result, index) => {
     const status = result.success ? chalk.green("✓") : chalk.red("✗");
     const actualStatus = 
-      result.decision?.status === "Approved" ? chalk.green(result.decision.status) :
-      result.decision?.status === "Revise" ? chalk.yellow(result.decision.status) :
-      result.decision?.status === "Reject" ? chalk.red(result.decision.status) :
+      result.decision?.status === "APPROVED" ? chalk.green(result.decision.status) :
+      result.decision?.status === "REVISE" ? chalk.yellow(result.decision.status) :
+      result.decision?.status === "REJECT" ? chalk.red(result.decision.status) :
       chalk.red("Error");
     
     console.log(`${status} Scenario ${index + 1}: ${chalk.white(result.scenario.name)}`);

@@ -175,12 +175,13 @@ async function setupEnvironment() {
   
   // Get OpenAI API key
   info('\nOpenAI API Key is required for the WCP AI Agent to work.');
-  info('Get your API key at: https://platform.openai.com/api-keys\n');
+  info('Get your API key at: https://platform.openai.com/api-keys');
+  info('OR use "mock" to test without an API key\n');
   
-  const apiKey = await ask('Enter your OpenAI API key (sk-...)');
+  const apiKey = await ask('Enter your OpenAI API key (sk-...) or "mock" for testing');
   
-  if (!apiKey || !apiKey.startsWith('sk-')) {
-    error('Invalid API key format. Should start with "sk-"');
+  if (!apiKey || (!apiKey.startsWith('sk-') && apiKey !== 'mock')) {
+    error('Invalid API key format. Should start with "sk-" or be "mock"');
     process.exit(1);
   }
   

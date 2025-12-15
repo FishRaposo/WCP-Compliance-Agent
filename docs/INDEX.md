@@ -24,6 +24,7 @@
 - [**AGENTS.md**](../AGENTS.md) - Developer implementation guide
 - [**WORKFLOW.md**](../WORKFLOW.md) - User workflows and validation
 - [**PROJECT MAPPING**](PROJECT-MAPPING.md) - Complete file and feature mapping
+- [**TEMPLATE MAPPING**](TEMPLATE-MAPPING.md) - Template system compliance analysis
 
 ### 📋 Development Resources
 - [**TODO.md**](../TODO.md) - Pending features and improvements

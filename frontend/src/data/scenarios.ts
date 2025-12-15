@@ -1,5 +1,7 @@
 import { ShowcaseScenario } from '../types';
 
+export type { ShowcaseScenario };
+
 export const scenarios: ShowcaseScenario[] = [
   {
     name: "✅ Approved - Valid WCP",

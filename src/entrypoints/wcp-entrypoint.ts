@@ -2,6 +2,7 @@
 import { mastra } from "../mastra/index.js";
 import { WCPDecisionSchema } from "../mastra/agents/wcp-agent.js";
 import { ExternalApiError, RateLimitError } from "../utils/errors.js";
+import { generateMockWcpDecision, isMockMode } from "../utils/mock-responses.js";
 
 type StepFinishCallback = (args: {
   text?: string;
@@ -17,6 +18,27 @@ export async function generateWcpDecision(args: {
   onStepFinish?: StepFinishCallback;
 }) {
   const { content, mastraInstance = mastra, maxSteps = 3, onStepFinish } = args;
+
+  // Check if we're in mock mode
+  if (isMockMode()) {
+    console.log('🔧 Using mock mode - generating deterministic response');
+    const mockDecision = generateMockWcpDecision(content);
+    
+    // Return in the same format as the real API
+    return {
+      object: {
+        ...mockDecision,
+        health: {
+          cycleTime: 50, // Mock fast response
+          tokenUsage: 0,
+          validationScore: mockDecision.findings?.length === 0 ? 1.0 : 0.8,
+          confidence: mockDecision.status === "APPROVED" ? 0.95 : 
+                     mockDecision.status === "REVISE" ? 0.85 : 0.90,
+        },
+      },
+      usage: { totalTokens: 0 }
+    };
+  }
 
   // Track timing
   const startTime = Date.now();

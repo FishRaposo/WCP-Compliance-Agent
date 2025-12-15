@@ -5,10 +5,7 @@ export default {
   moduleNameMapper: {
     "^(\\.{1,2}/.*)\\.js$": "$1",
   },
-  testMatch: ["**/tests/**/*.test.ts"],
-  transformIgnorePatterns: [
-    "/node_modules/(?!(@mastra|@sindresorhus|escape-string-regexp)/)"
-  ],
+  testMatch: ["**/tests/unit/**/*.test.ts", "**/tests/integration/**/*.test.ts", "**/tests/workflows/**/*.test.ts"],
   collectCoverageFrom: [
     "src/**/*.ts",
     "!src/**/*.d.ts",

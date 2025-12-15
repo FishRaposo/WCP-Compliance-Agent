@@ -26,11 +26,16 @@ const REQUIRED_VARS = {
   OPENAI_API_KEY: {
     validate: (value: string) => {
       if (!value) return false;
-      if (!value.startsWith('sk-')) return false;
-      if (value.length < 20) return false; // Minimum reasonable length
-      return true;
+      // Allow real API keys (sk-...) or mock key for testing
+      if (value.startsWith('sk-')) {
+        return value.length >= 20; // Minimum reasonable length
+      }
+      if (value === 'mock' || value === 'mock-key') {
+        return true; // Allow mock key for testing
+      }
+      return false;
     },
-    description: 'OpenAI API key (must start with "sk-" and be at least 20 characters)'
+    description: 'OpenAI API key (must start with "sk-" and be at least 20 characters, or use "mock" for testing)'
   }
 };
 
