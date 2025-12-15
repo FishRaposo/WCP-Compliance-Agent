@@ -1,10 +1,12 @@
 {
   "name": "wcp-ai-agent",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "WCP AI Agent Prototype using TypeScript with Mastra.ai",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
+    "setup": "node scripts/setup.js",
+    "postinstall": "node -e \"if (!require('fs').existsSync('.env')) { console.log('\\n⚠️  Environment not configured. Run: npm run setup\\n'); }\"",
     "dev": "mastra dev",
     "clean": "node -e \"const fs = require('fs'); const path = require('path'); if (fs.existsSync('dist')) fs.rmSync('dist', { recursive: true, force: true });\"",
     "build": "npm run clean && tsc && tsc -p tsconfig.showcase.json",
@@ -12,7 +14,7 @@
     "build:showcase": "tsc -p tsconfig.showcase.json",
     "start": "node dist/index.js",
     "serve": "node dist/server.js",
-    "test": "ts-node --esm src/index.ts",
+    "test": "npm run build && node dist/index.js",
     "test:jest": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
     "test:all": "ts-node utils/run-tests.ts",
     "test:unit": "ts-node utils/run-tests.ts --unit",

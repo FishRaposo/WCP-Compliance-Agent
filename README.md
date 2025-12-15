@@ -84,26 +84,50 @@ See **docs/INDEX.md** for complete documentation navigation, **ROADMAP.md** for 
 
 ## 🚀 Getting Started
 
-### Prerequisites
-- Node.js (v20.0.0 or higher)
-- npm or yarn
-- OpenAI API key
-
-### Installation
+### ⚡ One-Command Setup (60 seconds)
 
 ```bash
-# Install dependencies
-npm install
-
-# Configure environment variables
-# Recommended: copy the template and edit it
-cp .env.example .env
-
-# Then set your OpenAI API key:
-# OPENAI_API_KEY=sk-...
+# Clone and setup in one command
+git clone <repository-url> wcp-ai-agent
+cd wcp-ai-agent
+npm run setup
 ```
 
-**Get API Key**: https://platform.openai.com/api-keys
+The setup wizard will:
+- ✅ Check prerequisites (Node.js 20+)
+- ✅ Install all dependencies
+- ✅ Configure your OpenAI API key
+- ✅ Validate everything works
+- ✅ Run a quick demo
+
+### 🎯 Quick Start Options
+
+**See the Demo:**
+```bash
+npm run showcase  # 6 compliance scenarios
+```
+
+**Test the API:**
+```bash
+npm run serve     # Start server
+curl -X POST http://localhost:3000/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"content": "Role: Electrician, Hours: 45, Wage: $50"}'
+```
+
+**Web Interface:**
+```bash
+# Terminal 1
+npm run serve
+
+# Terminal 2
+cd frontend && npm run dev
+# Open: http://localhost:5173
+```
+
+### Prerequisites
+- Node.js (v20.0.0 or higher)
+- OpenAI API key (get at: https://platform.openai.com/api-keys)
 
 ### Platform Support
 - **Node.js**: ✅ Fully supported (version 20.0.0+)

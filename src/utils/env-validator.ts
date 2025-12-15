@@ -118,8 +118,12 @@ export function validateEnvironmentOrExit(): void {
     console.error('\n❌ Environment Validation Failed:');
     console.error('Required environment variables are missing or invalid:');
     result.errors.forEach(error => console.error(`  - ${error}`));
-    console.error('\nPlease check your .env file and try again.');
-    console.error('Copy .env.example to .env and fill in the required values.\n');
+    console.error('\n🚀 Quick Fix Options:');
+    console.error('  Option 1: Run the setup wizard - npm run setup');
+    console.error('  Option 2: Copy .env.example to .env and fill in the values:');
+    console.error('    cp .env.example .env');
+    console.error('    # Edit .env with your OPENAI_API_KEY');
+    console.error('\nGet your API key at: https://platform.openai.com/api-keys\n');
     process.exit(1);
   }
   

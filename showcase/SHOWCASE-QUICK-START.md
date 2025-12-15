@@ -2,7 +2,7 @@
 
 **Purpose**: Quick reference for running and demonstrating the WCP AI Agent Prototype showcase.
 
-**Last Updated**: 2025-01-27
+**Last Updated**: 2025-12-15
 
 ---
 
