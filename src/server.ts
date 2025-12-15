@@ -21,7 +21,9 @@ app.get("/health", (c) => {
   return c.json({ 
     status: "healthy",
     timestamp: new Date().toISOString(),
-    version: process.env.npm_package_version || "0.0.0"
+    version: process.env.npm_package_version || "0.0.0",
+    uptime: process.uptime(),
+    environment: process.env.NODE_ENV || 'development'
   });
 });
 
@@ -51,19 +53,32 @@ app.post("/analyze", async (c) => {
     // Add request ID for audit trail
     const requestId = c.req.header('x-request-id') || crypto.randomUUID();
     
+    // Format response to match API specs
+    // result.object contains { status, explanation, findings, trace, health }
     return c.json({
-      ...result.object,
-      requestId,
-      timestamp: new Date().toISOString()
+      success: true,
+      data: {
+        ...result.object,
+        requestId,
+        timestamp: new Date().toISOString()
+      }
     });
   } catch (error: any) {
     console.error("Error analyzing WCP:", error);
+
+    // Handle JSON parsing errors
+    if (error instanceof SyntaxError) {
+      const valError = new ValidationError("Invalid JSON format");
+      const formatted = formatApiError(valError);
+      return c.json(formatted, 400);
+    }
+
     const formattedError = formatApiError(error);
     return c.json(formattedError, formattedError.error.statusCode as any);
   }
 });
 
-const port = 3000;
+const port = parseInt(process.env.PORT || '3000', 10);
 console.log(`Server is running on http://localhost:${port}`);
 
 serve({
