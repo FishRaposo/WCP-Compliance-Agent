@@ -99,7 +99,7 @@
 - ❌ **No validation for invalid regex matches**: Should validate that regex matches succeeded
 - ❌ **validateWCPTool doesn't validate negative numbers**: No validation for negative hours or wages
 - ❌ **validateWCPTool doesn't validate impossible values**: No validation for hours > 168 (impossible per week)
-- ❌ **Unknown role handling issue**: Unknown role returns { base: 0, fringe: 0 } which might cause incorrect validation (wage < 0 will always trigger underpay)
+- ✅ **Unknown role handling issue**: Unknown role returns finding instead of default values (FIXED)
 
 #### Requirements
 - [x] Add try-catch block in `src/index.ts` for error handling (COMPLETED)
@@ -112,7 +112,7 @@
 - [ ] Add NaN validation for parseFloat results in `extractWCPTool`
 - [ ] Add validation for invalid regex matches in `extractWCPTool` (should throw error or return error status)
 - [ ] Add input validation for `validateWCPTool` (negative numbers, invalid hours >168, invalid wages)
-- [ ] Add error handling for unknown roles in `validateWCPTool` (should return finding instead of defaulting to 0)
+- [x] Add error handling for unknown roles in `validateWCPTool` (returns finding instead of defaulting to 0)
 - [ ] Add error handling for malformed input
 - [ ] Add error handling for tool execution failures
 - [ ] Add error handling for agent generation failures

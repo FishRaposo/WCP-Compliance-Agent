@@ -28,6 +28,10 @@ See `docs/DOCUMENTATION-MAINTENANCE.md` for complete update guidelines and check
 
 ## [Unreleased]
 
+### Fixed
+- Handled unknown roles in `wcp-tools.ts` more gracefully (flags as invalid instead of defaulting to valid) (Item 1 in TODO.md)
+- Updated `tests/unit/test_wcp_tools.test.ts` to expect "Unknown Role" finding for unknown roles.
+
 ### Added
 - Unified Frontend System with integrated showcase scenarios (2025-12-14)
   - Created `frontend/src/data/scenarios.ts` with 6 pre-defined showcase scenarios

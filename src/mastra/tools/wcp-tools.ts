@@ -115,12 +115,17 @@ export const validateWCPTool = createTool({
     const { role, hours, wage } = context;
     
     // Look up DBWD rates for the role
-    // Defaults to { base: 0, fringe: 0 } for unknown roles
-    // TODO: Handle unknown roles more gracefully (see TODO.md - Item 1)
-    const expected = DBWDRates[role as keyof typeof DBWDRates] || { base: 0, fringe: 0 };
+    const expected = DBWDRates[role as keyof typeof DBWDRates];
     
     // Array to collect validation findings
     const findings = [];
+
+    if (!expected) {
+      findings.push({
+        type: "Unknown Role",
+        detail: `Role '${role}' not found in DBWD rates`
+      });
+    }
     
     // Check for overtime violation: hours > 40
     // DBWD requires 1.5x pay for hours over 40
@@ -133,7 +138,7 @@ export const validateWCPTool = createTool({
     
     // Check for underpayment violation: wage < base rate
     // DBWD requires wage >= base rate (fringe benefits are separate)
-    if (wage < expected.base) {
+    if (expected && wage < expected.base) {
       findings.push({ 
         type: "Underpay", 
         detail: `Wage $${wage} < $${expected.base} base (plus $${expected.fringe} fringe)` 
