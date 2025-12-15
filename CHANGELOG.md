@@ -10,6 +10,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **GitHub Copilot Instructions**: Created `.github/copilot-instructions.md` with comprehensive guidelines for AI agents (2025-12-15)
+  - **Project Overview**: Tech stack, core principles, and architecture
+  - **Mandatory Requirements**: Prompt validation, tool call awareness, script-first approach, automatic test creation, automatic documentation updates
+  - **Coding Standards**: Import organization, file naming, code quality standards, tool/agent patterns
+  - **Testing Requirements**: Test types, execution, organization
+  - **Directory Structure**: Complete project layout
+  - **Key Components**: Tools, agents, decision logic
+  - **Common Tasks**: Adding features, development commands
+  - **Common Pitfalls**: Do's and don'ts for development
+  - **Important Documentation**: Links to all key documentation files
+  - **Decision-Making Workflow**: Complete workflow explanation
+  - **Module System**: ES modules usage with .js extensions
 - **Phase 0 MVP Completion**: Comprehensive implementation of Phase 0 requirements (2025-12-15)
   - **Response Validation**: Added validation for null/undefined response.object in src/index.ts and wcp-entrypoint.ts
   - **API Error Handling**: Enhanced wcp-entrypoint.ts with specific error handling for rate limits, network failures, and API errors
