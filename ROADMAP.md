@@ -1,6 +1,6 @@
 # ROADMAP.md - Product & Engineering Roadmap
 
-**Purpose**: Consolidated roadmap for the WCP AI Agent Prototype. This file is the single source of truth for planned work, synthesized from `TODO.md` and `docs/development-plan/*`.
+**Purpose**: Consolidated roadmap for the WCP AI Agent Prototype. This file is the single source of truth for planned work, synthesized from `TODO.md` and `development-plan/*`.
 
 **Last Updated**: 2025-12-14  
 **Project Version**: 1.0.0  
@@ -55,7 +55,7 @@
   - Item 0: Test Suite Implementation
   - Item 1: Error Handling and Input Validation
   - Item 4: Configuration and Environment Setup
-- `docs/development-plan/PHASE-0-MVP.md`
+- `development-plan/PHASE-0-MVP.md`
 
 **Exit Criteria**:
 - No crashes on malformed input
@@ -77,7 +77,7 @@
   - Increase coverage and add more integration/system coverage where appropriate
 
 **Source References**:
-- `docs/development-plan/PHASE-1-CORE-IMPROVEMENTS.md`
+- `development-plan/PHASE-1-CORE-IMPROVEMENTS.md`
 - `TODO.md` Item 5: Infrastructure and Utilities
 
 ---
@@ -95,7 +95,7 @@
   - Build a harness for running large sets of mock WCPs and scoring outcomes
 
 **Source References**:
-- `docs/development-plan/PHASE-2-ENHANCED-FEATURES.md`
+- `development-plan/PHASE-2-ENHANCED-FEATURES.md`
 - `TODO.md` Item 2 (PDF), Item 9 (roles), Item 10 (evals)
 
 ---
@@ -112,7 +112,7 @@
 - **Caching + monitoring enhancements**
 
 **Source References**:
-- `docs/development-plan/PHASE-3-ADVANCED-FEATURES.md`
+- `development-plan/PHASE-3-ADVANCED-FEATURES.md`
 - `TODO.md` Item 3 (RAG), Item 6 (workflow chaining)
 
 ---
@@ -131,7 +131,7 @@
   - Deployment procedures, health checks, metrics
 
 **Source References**:
-- `docs/development-plan/PHASE-4-PRODUCTION-READY.md`
+- `development-plan/PHASE-4-PRODUCTION-READY.md`
 - `TODO.md` Item 7 (Production Deployment)
 
 ---

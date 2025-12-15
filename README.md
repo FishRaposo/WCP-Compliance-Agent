@@ -20,7 +20,7 @@ I built this for a client who needed to automate payroll compliance. Even though
 - ✅ Hybrid architecture (rules + LLM reasoning)
 - ✅ Type-safe validation (Zod schemas throughout)
 - ✅ Bounded execution (maxSteps guardrail)
-- ✅ Comprehensive test suite
+- ⚠️ Test suite planned (see TODO.md for implementation status)
 
 **Tech Stack**: TypeScript, Mastra.ai, OpenAI GPT-4o-mini, Jest, Zod
 
@@ -29,7 +29,7 @@ I built this for a client who needed to automate payroll compliance. Even though
 ## 🗺️ Quick Navigation
 
 **For Recruiters/Hiring Managers** → See [`showcase/`](showcase/) folder (project overview, demo guide, quick start)  
-**Want to run it fast?** → Read [`QUICK-START.md`](QUICK-START.md) (5-minute setup)  
+**Want to run it fast?** → Read [`showcase/QUICK-START.md`](showcase/QUICK-START.md) (5-minute setup)  
 **Want the roadmap?** → Read [`ROADMAP.md`](ROADMAP.md) (planned work by phase)  
 **Want to develop?** → Read [`AGENTS.md`](AGENTS.md) (developer guide)  
 **Looking for a file?** → Check [`docs/INDEX.md`](docs/INDEX.md) (complete documentation navigation)  
@@ -126,12 +126,12 @@ cp .env.example .env
 
 ## 📚 Documentation
 
-**Example Files**: See [`README-EXAMPLES.md`](README-EXAMPLES.md) for example/mockup files and implementation guides.
+**Example Files**: See [`_archive/`](_archive/) directory for example templates and archived documentation.
 
 ---
 
 - **README.md** - This file (project overview)
-- **QUICK-START.md** - 5-minute setup guide (canonical)
+- **showcase/QUICK-START.md** - 5-minute setup guide (canonical)
 - **ROADMAP.md** - Consolidated phased roadmap (planned features)
 - **CONTEXT.md** - Architecture decisions and philosophy
 - **AGENTS.md** - Developer implementation guide
@@ -141,7 +141,7 @@ cp .env.example .env
 - **docs/PROMPT-VALIDATION.md** - ⚠️ **MANDATORY**: Prompt validation system
 - **docs/DOCUMENTATION-MAINTENANCE.md** - ⚠️ **MANDATORY**: Automatic documentation maintenance guide
 - **docs/TOOL-CALL-LIMITS.md** - ⚠️ **RECOMMENDED**: Tool call optimization guidelines
-- **docs/showcase/** - Showcase materials
+- **showcase/** - Showcase materials
 - **docs/guides/** - User guides
 - **docs/reference/** - Reference documentation
 - **CLAUDE.md** - Quick reference for developers
@@ -294,10 +294,8 @@ wcp-agent/
 │   │       └── utils.ts             # Frontend utilities
 │   ├── package.json                 # Frontend dependencies
 │   └── vite.config.ts               # Vite configuration
-├── showcase/                         # Recruiter/demo materials (docs + scripts)
-│   ├── PROJECT-OVERVIEW.md
-│   ├── QUICK-START.md
-│   ├── SHOWCASE.md
+├── showcase/                         # Recruiter/demo scripts and configs
+│   ├── .env.example                 # Environment variables template
 │   └── scripts/
 │       └── showcase.ts              # Showcase demo script (6 scenarios)
 ├── docs/
@@ -307,25 +305,20 @@ wcp-agent/
 │   ├── PROMPT-VALIDATION.md       # Validation system
 │   ├── DOCUMENTATION-MAINTENANCE.md # Documentation workflow
 │   ├── TOOL-CALL-LIMITS.md         # Tool optimization
-│   ├── showcase/                   # Showcase materials
 │   ├── guides/                     # User guides
 │   └── reference/                  # Reference documentation
 │       ├── MVP-TEMPLATE-REBUILD-PLAN.md  # MVP refactoring plan
 │       ├── AI Payroll Compliance Agent — Technical Specification.md  # Technical spec
 │       ├── DOCUMENTATION-BLUEPRINT.md    # Documentation architecture
-│       └── development-plan/             # Development phases and roadmaps
-│           ├── OVERVIEW.md               # Overview of all phases
-│           ├── PHASE-0-MVP.md            # Phase 0: MVP requirements
-│           ├── PHASE-1-CORE-IMPROVEMENTS.md  # Phase 1: Core improvements
-│           ├── PHASE-2-ENHANCED-FEATURES.md  # Phase 2: Enhanced features
-│           ├── PHASE-3-ADVANCED-FEATURES.md  # Phase 3: Advanced features
-│           ├── PHASE-4-PRODUCTION-READY.md   # Phase 4: Production guide
-│           ├── IMPLEMENTATION-GUIDE.md   # Implementation patterns
-│           └── TESTING-GUIDE.md          # Testing best practices
-│       ├── PHASE-3-ADVANCED-FEATURES.md  # Phase 3: Advanced features
-│       ├── PHASE-4-PRODUCTION-READY.md   # Phase 4: Production guide
-│       ├── IMPLEMENTATION-GUIDE.md   # Implementation patterns
-│       └── TESTING-GUIDE.md          # Testing best practices
+├── development-plan/                # Development phases and roadmaps
+│   ├── OVERVIEW.md                   # Overview of all phases
+│   ├── PHASE-0-MVP.md                # Phase 0: MVP requirements
+│   ├── PHASE-1-CORE-IMPROVEMENTS.md  # Phase 1: Core improvements
+│   ├── PHASE-2-ENHANCED-FEATURES.md  # Phase 2: Enhanced features
+│   ├── PHASE-3-ADVANCED-FEATURES.md  # Phase 3: Advanced features
+│   ├── PHASE-4-PRODUCTION-READY.md   # Phase 4: Production guide
+│   ├── IMPLEMENTATION-GUIDE.md       # Implementation patterns
+│   └── TESTING-GUIDE.md              # Testing best practices
 ├── _archive/
 │   ├── README.md                     # Archive directory documentation
 │   └── documentation/                # Archived documentation files
@@ -333,7 +326,6 @@ wcp-agent/
 ├── .env.example                      # Environment variables template
 ├── dist/                             # Compiled JavaScript (generated by npm run build)
 ├── .gitignore
-├── QUICK-START.md                    # Canonical quickstart
 ├── ROADMAP.md                        # Consolidated roadmap
 ├── package.json
 ├── tsconfig.json
@@ -382,8 +374,8 @@ These can be extended to RAG-based lookup from vector DB in production.
 1. **Valid WCP Input**: Should extract correctly and return Approved
 2. **Overtime Scenario**: Hours > 40 should trigger Revise with overtime finding
 3. **Underpayment Scenario**: Wage < base rate should trigger Revise/Reject with underpayment finding
-4. **Invalid Input**: Should handle gracefully with Reject and clear error message (planned - see TODO.md)
-5. **Unknown Role**: Should handle gracefully with Reject and note about unknown role (planned - see TODO.md)
+4. **Invalid Input**: Should handle gracefully with Reject and clear error message (currently returns defaults - see TODO.md for planned improvements)
+5. **Unknown Role**: Should handle gracefully with Reject and note about unknown role (currently returns {base: 0, fringe: 0} - see TODO.md for planned improvements)
 
 ### Decision Logic
 
@@ -458,7 +450,7 @@ npm run dev
 
 ### Error Handling
 
-**⚠️ Note**: Basic error handling is implemented in the test script (`src/index.ts`) with try-catch blocks. Comprehensive error handling for edge cases (invalid input, unknown roles, missing data) is planned (see **TODO.md**).
+**⚠️ Note**: Basic error handling is implemented in the test script (`src/index.ts`) with try-catch blocks. Comprehensive error handling for edge cases (invalid input, unknown roles, missing data) is being implemented (see **TODO.md**).
 
 The agent is designed to handle errors gracefully:
 - **Invalid Input**: Should return Reject decision with clear error message (planned)

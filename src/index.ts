@@ -14,7 +14,7 @@
  * 
  * @file src/index.ts
  * @see README.md - For showcase demo and quick start instructions
- * @see showcase/ - For recruiter-focused documentation
+ * @see showcase/README.md - Showcase folder documentation
  */
 
 // Internal dependencies

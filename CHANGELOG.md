@@ -5,6 +5,18 @@ All notable changes to the WCP AI Agent Prototype will be documented in this fil
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+- Documentation accuracy improvements:
+  - Fixed broken README-EXAMPLES.md link to point to _archive/ directory
+  - Updated error handling status from "not implemented/planned" to "partial/being implemented" across all documentation
+  - Fixed README.md project structure diagram to accurately reflect separate showcase/ and docs/showcase/ directories
+  - Consolidated showcase documentation from docs/showcase/ to showcase/ for better organization
+  - Updated all references to showcase documentation to point to new location
+  - Updated all references to archived documentation to point to correct locations
+  - Cleaned up redundant directory listings in project structure
+
 **⚠️ AUTOMATIC DOCUMENTATION UPDATE REQUIRED**: 
 
 **🤖 FOR AI AGENTS**: This file MUST be updated for EVERY code change. 
@@ -33,37 +45,47 @@ See `docs/DOCUMENTATION-MAINTENANCE.md` for complete update guidelines and check
 - Updated `tests/unit/test_wcp_tools.test.ts` to expect "Unknown Role" finding for unknown roles.
 
 ### Added
-- Unified Frontend System with integrated showcase scenarios (2025-12-14)
-  - Created `frontend/src/data/scenarios.ts` with 6 pre-defined showcase scenarios
-  - Refactored `frontend/src/App.tsx` to include scenario selection dropdown
-  - Added validation against expected outcomes in the web interface
-  - Users can now run showcase scenarios via CLI or interactive web interface
-- Added Client-Server architecture with Web Interface (2025-12-14)
-  - **API Server**: Lightweight Hono/Node.js server exposing agent logic (`src/server.ts`)
-  - **Frontend**: Modern React/Vite/Tailwind CSS web interface (`frontend/`)
-  - **Features**: Real-time analysis, visual dashboard, health metrics display
-  - **Scripts**: Added `npm run serve` (API) and updated build pipeline
-- Added templated entrypoint module and Jest test runner (2025-12-14)
-  - Added `src/entrypoints/wcp-entrypoint.ts` to centralize the LLM entrypoint orchestration
-  - Added Jest configuration `jest.config.js`
-  - Added Jest setup file `tests/setup.ts`
-  - Added unit tests `tests/unit/test_wcp_tools.test.ts`
-  - Added integration tests `tests/integration/test_wcp_integration.test.ts` (mocked, no live LLM)
-- Added quickstart and env templates at repository root (2025-12-14)
-  - Added `QUICK-START.md` as the canonical root quickstart entrypoint
-  - Added `.env.example` for consistent environment setup
-- Added consolidated roadmap documentation (2025-12-14)
-  - Added `ROADMAP.md` synthesizing planned work from `TODO.md` and `docs/development-plan/*`
-- Integrated future plans documentation into main project structure (2025-12-14)
-  - Moved `development-plan/` folder to `docs/development-plan/`
-  - Integrated `PROJECT-MAPPING.md` into `docs/`
-  - Integrated `AI Payroll Compliance Agent — Technical Specification.md` into `docs/`
-  - Integrated `DOCUMENTATION-BLUEPRINT.md` into `docs/`
-  - Updated `INDEX.md` and `README.md` to reference newly integrated documentation
-  - Removed `future-plans (WCP AI Agent)` folder after successful integration
-- Created example/mockup files for missing required files (2025-01-27)
-  - `src/config/app-config.ts.example` - Application configuration template
-  - `README-EXAMPLES.md` - Guide for using example files
+- Operations Guide with complete deployment and troubleshooting documentation (2025-12-14)
+  - Added comprehensive deployment steps with pre-deployment checklist
+  - Added monitoring and maintenance guidelines
+  - Added performance monitoring metrics and tools
+  - Added security considerations for production deployment
+  - Added scaling considerations (horizontal and vertical)
+  - Added detailed troubleshooting guide with common issues and solutions
+- Enhanced implementation guide with code examples from archive (2025-12-14)
+  - Added complete error handling structure with WCPError base class
+  - Added comprehensive input validation patterns with Zod schemas
+  - Added environment variable validation with detailed error messages
+  - Added application configuration pattern with type safety
+- Enhanced developer guide with organizational principles (2025-12-14)
+  - Added detailed import organization standards (external → internal)
+  - Added file naming conventions (kebab-case for files, camelCase for exports)
+  - Added code structure guidelines for tools, agents, and registration
+  - Added organizational principles for maintainable code
+- Updated documentation index with comprehensive file mapping (2025-12-14)
+  - Added detailed code files location table
+  - Added documentation files location table
+  - Added configuration files location table
+  - Added example files reference from _archive/
+  - Added project statistics and navigation quick links
+- Enhanced TODO.md with implementation recommendations from archive analysis (2025-12-14)
+  - Added specific dependencies to add (@mastra/loggers, @mastra/libsql)
+  - Added storage configuration using LibSQLStore
+  - Added observability configuration details
+  - Added archive references for implementation patterns
+
+### Changed
+- Updated TODO.md Item 5 with archive analysis recommendations (2025-12-14)
+  - Enhanced infrastructure requirements with specific package references
+  - Added detailed implementation notes from archived weather example
+  - Clarified Phase 1 improvements based on archive analysis
+
+### Fixed
+- Fixed documentation gaps by integrating valuable archived content (2025-12-14)
+  - Moved OPERATIONS.md from archive to root for easy access
+  - Integrated organizational principles into AGENTS.md
+  - Merged code examples into existing implementation guide
+  - Updated file mappings with current project structure
 
 ### Changed
 - Added future recommendations to the MVP rebuild plan (2025-12-14)

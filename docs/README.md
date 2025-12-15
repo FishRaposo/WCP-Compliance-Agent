@@ -38,9 +38,9 @@
 | Purpose | Document | Location |
 |---------|----------|----------|
 | **Get Started** | README.md | `/README.md` |
-| **5-Minute Setup** | QUICK-START.md | `/docs/showcase/QUICK-START.md` |
-| **Full Overview** | PROJECT-OVERVIEW.md | `/docs/showcase/PROJECT-OVERVIEW.md` |
-| **Demo Guide** | SHOWCASE.md | `/docs/showcase/SHOWCASE.md` |
+| **5-Minute Setup** | QUICK-START.md | `/showcase/QUICK-START.md` |
+| **Full Overview** | PROJECT-OVERVIEW.md | `/showcase/PROJECT-OVERVIEW.md` |
+| **Demo Guide** | SHOWCASE.md | `/showcase/SHOWCASE.md` |
 | **Development** | AGENTS.md | `/AGENTS.md` |
 | **Architecture** | CONTEXT.md | `/CONTEXT.md` |
 | **All Docs** | INDEX.md | `/docs/INDEX.md` |
