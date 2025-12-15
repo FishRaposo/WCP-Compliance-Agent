@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "scripts": {
     "setup": "node scripts/setup.js",
-    "postinstall": "node -e \"if (process.env.NODE_ENV !== 'production' && !require('fs').existsSync('.env')) { console.log('\\n⚠️  Environment not configured. Run: npm run setup\\n'); }\"",
+    "postinstall": "node -e \"if (!process.env.VERCEL && !process.env.CI && !require('fs').existsSync('.env')) { console.log('\\n⚠️  Environment not configured. Run: npm run setup\\n'); }\"",
     "dev": "mastra dev",
     "clean": "node -e \"const fs = require('fs'); const path = require('path'); if (fs.existsSync('dist')) fs.rmSync('dist', { recursive: true, force: true });\"",
     "build": "npm run clean && tsc && tsc -p tsconfig.showcase.json",
