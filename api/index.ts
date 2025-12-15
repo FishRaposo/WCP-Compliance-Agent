@@ -1,7 +1,9 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
-import { generateWcpDecision } from '../dist/entrypoints/wcp-entrypoint.js';
-import { formatApiError } from '../dist/utils/errors.js';
+
+// Import from source for Vercel, it will handle TypeScript compilation
+import { generateWcpDecision } from '../src/entrypoints/wcp-entrypoint.js';
+import { formatApiError } from '../src/utils/errors.js';
 
 const app = new Hono();
 
