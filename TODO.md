@@ -65,24 +65,69 @@ This section provides a high-level mapping of all planned features across develo
 
 ### 1. Error Handling and Input Validation
 
-- **Status**: Partially Complete
+- **Status**: Partially Complete (~50%)
 - **Priority**: 🔥 **Critical**
-- **Overview**: Implement comprehensive error handling with structured error types and input validation throughout the codebase
+- **Overview**: Add comprehensive error handling and input validation for all tools and agents
+- **Progress**: Basic try-catch blocks exist in src/index.ts and showcase/scripts/showcase.ts, but missing response validation and specific error types
 
-#### Current State
-- **Basic Error Handling**: ✅ Try-catch blocks exist in src/index.ts and showcase/scripts/showcase.ts
-- **Structured Error Types**: ❌ Missing (examples exist in _archive/error-handler.ts.example)
-- **Input Validation**: ❌ Missing - tools return default values instead of validating
-- **Environment Validation**: ❌ Missing - no startup validation
-- **API Error Handling**: ⚠️ Basic - server.ts has try-catch but no structured errors
+#### Critical Issues Found
+
+**src/index.ts Issues**:
+- ✅ **Has try-catch block**: Basic error handling implemented (FIXED)
+- ✅ **Error handling for agent.getAgent()**: Covered by try-catch (FIXED)
+- ✅ **Error handling for agent.generate()**: Covered by try-catch (FIXED)
+- ❌ **No validation for response.object**: response.object might be null/undefined, code doesn't check before using
+- ✅ **Error handling for API failures**: Covered by try-catch (FIXED)
+- ⚠️ **Limited error specificity**: Error handling is generic - could be more specific for different error types
+
+**src/mastra/tools/wcp-tools.ts Issues**:
+- ✅ **extractWCPTool validation**: Now throws errors for missing data, failed matches, and invalid numbers (FIXED)
+- ✅ **NaN validation**: Added checks for isNaN (FIXED)
+- ✅ **Empty string validation**: Added check for empty content (FIXED)
+- ✅ **Regex match validation**: Added checks for match failure (FIXED)
+- ❌ **validateWCPTool doesn't validate negative numbers**: No validation for negative hours or wages
+- ❌ **validateWCPTool doesn't validate impossible values**: No validation for hours > 168 (impossible per week)
+- ❌ **Unknown role handling issue**: Unknown role returns { base: 0, fringe: 0 } which might cause incorrect validation (wage < 0 will always trigger underpay)
 
 #### Requirements
-- [ ] Create structured error types (WCPError, ValidationError, APIError, ConfigurationError)
-- [ ] Add input validation to extractWCPTool (validate content, check for NaN, range validation)
-- [ ] Add input validation to validateWCPTool
-- [ ] Add response validation in src/index.ts
-- [ ] Add environment variable validation on startup (see _archive/env-validator.ts.example)
-- [ ] Add error handling to API server with structured responses
+- [x] Add try-catch block in `src/index.ts` for error handling (COMPLETED)
+- [x] Add error handling for `agent.getAgent()` failures (COMPLETED - covered by try-catch)
+- [x] Add error handling for `agent.generate()` failures (COMPLETED - covered by try-catch)
+- [ ] Add validation for `response.object` being null/undefined (showcase/scripts/showcase.ts has this but index.ts doesn't)
+- [ ] Add specific error types/handling for different failure scenarios (API errors, validation errors, etc.)
+- [ ] Add error handling for API failures (OpenAI API rate limits, network failures)
+- [x] Add input validation for `extractWCPTool` (empty string, null, undefined, invalid format)
+- [x] Add NaN validation for parseFloat results in `extractWCPTool`
+- [x] Add validation for invalid regex matches in `extractWCPTool` (should throw error or return error status)
+- [ ] Add input validation for `validateWCPTool` (negative numbers, invalid hours >168, invalid wages)
+- [ ] Add error handling for unknown roles in `validateWCPTool` (should return finding instead of defaulting to 0)
+- [ ] Add error handling for malformed input
+- [ ] Add error handling for tool execution failures
+- [ ] Add error handling for agent generation failures
+- [ ] Add input validation utility (`src/utils/validator.ts`)
+- [ ] Integrate error handling utilities from Item 5 (Infrastructure and Utilities)
+- [ ] Add tests for error handling and input validation
+
+#### Technical Details
+- **Files to Modify**: 
+  - `src/index.ts`: Add try-catch block, error handling for agent.getAgent() and agent.generate(), validation for response.object
+  - `src/mastra/tools/wcp-tools.ts`: Add input validation, NaN validation, error handling for invalid input
+  - `src/mastra/agents/wcp-agent.ts`: Add error handling in agent instructions
+- **New Files Needed**:
+  - `src/utils/validator.ts`: Input validation utility
+  - `tests/unit/test_error_handling.ts`: Unit tests for error handling
+  - `tests/unit/test_input_validation.ts`: Unit tests for input validation
+  - `tests/integration/test_error_handling_integration.ts`: Integration tests for error handling
+- **Dependencies**: Error handling utilities (from Item 5), logging utility (from Item 5)
+
+#### Notes
+- Error handling should be graceful (no crashes)
+- Error messages should be clear and informative
+- Error handling should follow AGENTS.md best practices
+- Error handling should be tested thoroughly
+- Error handling utilities (error-handler.ts, logger.ts) are created in Item 5 (Infrastructure and Utilities)
+- Unknown roles should return a finding instead of defaulting to { base: 0, fringe: 0 }
+- Invalid input should be validated and rejected with clear error messages
 
 ---
 
