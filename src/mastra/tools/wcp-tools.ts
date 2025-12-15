@@ -16,6 +16,7 @@ import { z } from "zod";
 
 // Internal dependencies
 import { WCPData, DBWDRates, Finding } from "../../types/index.js";
+import { ValidationError, ConfigError } from "../../utils/errors.js";
 
 /**
  * DBWD (Davis-Bacon Wage Determinations) Rates
@@ -63,39 +64,59 @@ export const extractWCPTool = createTool({
   execute: async ({ context }) => {
     const { content } = context;
     
-    // Input validation
-    if (!content) {
-      throw new Error("Input content is empty");
+    // Input validation with structured errors
+    if (!content || content.trim().length === 0) {
+      throw new ValidationError("Input content cannot be empty");
+    }
+
+    if (content.length > 10000) {
+      throw new ValidationError("Input content too long (max 10,000 characters)");
     }
 
     // Extract role using regex: "Role: Electrician" → "Electrician"
     const roleMatch = content.match(/Role:\s*(\w+)/i);
     if (!roleMatch) {
-      throw new Error("Could not extract role from content");
+      throw new ValidationError("Could not extract role from content. Expected format: 'Role: <role>'");
     }
     const role = roleMatch[1];
     
     // Extract hours using regex: "Hours: 45" → 45
     const hoursMatch = content.match(/Hours:\s*(\d+)/i);
     if (!hoursMatch) {
-      throw new Error("Could not extract hours from content");
+      throw new ValidationError("Could not extract hours from content. Expected format: 'Hours: <number>'");
     }
     const hours = parseFloat(hoursMatch[1]);
     
     // Extract wage using regex: "Wage: $50" or "Wage: 50" → 50
     const wageMatch = content.match(/Wage:\s*\$?(\d+\.?\d*)/i);
     if (!wageMatch) {
-      throw new Error("Could not extract wage from content");
+      throw new ValidationError("Could not extract wage from content. Expected format: 'Wage: $<number>' or 'Wage: <number>'");
     }
     const wage = parseFloat(wageMatch[1]);
 
-    // Validate parsed values
-    if (isNaN(hours) || hours < 0) {
-      throw new Error(`Invalid hours value: ${hoursMatch[1]}`);
+    // Validate parsed values with business rules
+    if (isNaN(hours)) {
+      throw new ValidationError(`Invalid hours value: ${hoursMatch[1]}. Hours must be a valid number.`);
     }
 
-    if (isNaN(wage) || wage < 0) {
-      throw new Error(`Invalid wage value: ${wageMatch[1]}`);
+    if (hours < 0) {
+      throw new ValidationError(`Hours cannot be negative: ${hours}`);
+    }
+
+    if (hours > 168) {
+      throw new ValidationError(`Hours exceed maximum (168 hours in 24 days): ${hours}`);
+    }
+
+    if (isNaN(wage)) {
+      throw new ValidationError(`Invalid wage value: ${wageMatch[1]}. Wage must be a valid number.`);
+    }
+
+    if (wage < 0) {
+      throw new ValidationError(`Wage cannot be negative: $${wage}`);
+    }
+
+    if (wage > 1000) {
+      throw new ValidationError(`Wage exceeds reasonable maximum ($1000/hr): $${wage}`);
     }
     
     return {
@@ -133,6 +154,31 @@ export const validateWCPTool = createTool({
   }),
   execute: async ({ context }) => {
     const { role, hours, wage } = context;
+    
+    // Validate input parameters
+    if (typeof role !== 'string' || role.trim().length === 0) {
+      throw new ValidationError('Role must be a non-empty string', { received: role });
+    }
+    
+    if (typeof hours !== 'number' || isNaN(hours)) {
+      throw new ValidationError('Hours must be a valid number', { received: hours });
+    }
+    
+    if (hours < 0) {
+      throw new ValidationError('Hours cannot be negative', { received: hours });
+    }
+    
+    if (hours > 168) {
+      throw new ValidationError('Hours exceed maximum (168 hours in 24 days)', { received: hours });
+    }
+    
+    if (typeof wage !== 'number' || isNaN(wage)) {
+      throw new ValidationError('Wage must be a valid number', { received: wage });
+    }
+    
+    if (wage < 0) {
+      throw new ValidationError('Wage cannot be negative', { received: wage });
+    }
     
     // Look up DBWD rates for the role
     const expected = DBWDRates[role as keyof typeof DBWDRates];

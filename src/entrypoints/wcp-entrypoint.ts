@@ -1,6 +1,7 @@
 // Internal dependencies
 import { mastra } from "../mastra/index.js";
 import { WCPDecisionSchema } from "../mastra/agents/wcp-agent.js";
+import { ExternalApiError, RateLimitError } from "../utils/errors.js";
 
 type StepFinishCallback = (args: {
   text?: string;
@@ -38,16 +39,49 @@ export async function generateWcpDecision(args: {
     }
   };
 
-  const agent = await mastraInstance.getAgent("wcpAgent");
+  let response;
+  try {
+    const agent = await mastraInstance.getAgent("wcpAgent");
 
-  const response = await agent.generate(
-    [{ role: "user", content }],
-    {
-      structuredOutput: { schema: WCPDecisionSchema },
-      maxSteps,
-      onStepFinish: wrappedOnStepFinish,
-    },
-  );
+    response = await agent.generate(
+      [{ role: "user", content }],
+      {
+        structuredOutput: { schema: WCPDecisionSchema },
+        maxSteps,
+        onStepFinish: wrappedOnStepFinish,
+      },
+    );
+  } catch (error: any) {
+    // Handle specific API errors
+    if (error.status === 429) {
+      throw new RateLimitError('OpenAI API rate limit exceeded', {
+        retryAfter: error.headers?.['retry-after']
+      });
+    }
+    if (error.code === 'insufficient_quota') {
+      throw new ExternalApiError('OpenAI API quota exceeded', {
+        code: error.code,
+        type: 'quota_error'
+      });
+    }
+    if (error.name === 'FetchError' || error.code === 'ENOTFOUND') {
+      throw new ExternalApiError('Network connection failed', {
+        originalError: error.message
+      });
+    }
+    throw new ExternalApiError('OpenAI API error', {
+      code: error.code || 'UNKNOWN_API_ERROR',
+      message: error.message
+    });
+  }
+
+  // Validate response.object after API call
+  if (!response.object || typeof response.object !== 'object') {
+    throw new ExternalApiError('Invalid agent response structure', {
+      response,
+      expected: 'WCPDecision object with status, explanation, findings, trace'
+    });
+  }
 
   // Calculate final metrics
   const endTime = Date.now();

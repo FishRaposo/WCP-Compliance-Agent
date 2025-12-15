@@ -19,6 +19,11 @@
 
 // Internal dependencies
 import { generateWcpDecision } from "./entrypoints/wcp-entrypoint.js";
+import { validateEnvironmentOrExit } from "./utils/env-validator.js";
+import { formatApiError } from "./utils/errors.js";
+
+// Validate environment before starting
+validateEnvironmentOrExit();
 
 /**
  * Main execution function
@@ -51,6 +56,19 @@ import { generateWcpDecision } from "./entrypoints/wcp-entrypoint.js";
       },
     });
 
+    // Validate response.object before using it
+    if (!response.object) {
+      const formattedError = formatApiError(new Error('LLM returned invalid response: missing object'));
+      
+      console.error("\n❌ Invalid Response Error:");
+      console.error(`Error Code: ${formattedError.error.code}`);
+      console.error(`Message: ${formattedError.error.message}`);
+      console.error("Response:", response);
+      
+      // Exit with error code for CI/CD
+      process.exit(1);
+    }
+
     // Display structured decision output
     console.log("\nDecision:", JSON.stringify(response.object, null, 2));
     
@@ -60,11 +78,19 @@ import { generateWcpDecision } from "./entrypoints/wcp-entrypoint.js";
     // Display tool execution results (for audit trail)
     console.log("\nTool Results:", JSON.stringify(response.toolResults, null, 2));
   } catch (error: any) {
-    // Error handling: Log error message and stack trace
-    console.error("Error:", error.message);
-    if (error.stack) {
-      console.error(error.stack);
+    // Structured error handling with proper error formatting
+    const formattedError = formatApiError(error);
+    
+    console.error("\n❌ Error occurred while processing WCP:");
+    console.error(`Error Code: ${formattedError.error.code}`);
+    console.error(`Message: ${formattedError.error.message}`);
+    
+    // Show details if available
+    if (error && typeof error === 'object' && 'details' in error) {
+      console.error("\nDetails:", (error as any).details);
     }
+    
+    // Exit with error code for CI/CD
     process.exit(1);
   }
 })();

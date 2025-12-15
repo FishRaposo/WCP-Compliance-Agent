@@ -19,14 +19,16 @@ let mockServer: Server;
 function createMockServer() {
   // In a real implementation, this would start the actual Express server
   // For now, we'll create a mock that simulates the server's behavior
-  return {
+  const server = {
     listen: (port: number, callback: () => void) => {
       callback();
-      return {
-        close: (cb: () => void) => cb(),
-      };
+      return server;
     },
-  } as any;
+    close: (cb: () => void) => {
+      cb();
+    },
+  };
+  return server as any;
 }
 
 describe('API Server - System Tests', () => {

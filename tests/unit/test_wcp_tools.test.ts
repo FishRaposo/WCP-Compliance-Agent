@@ -35,7 +35,7 @@ describe("extractWCPTool", () => {
     await expect(extractWCPTool.execute({
       context: { content: "" },
       runtimeContext: mockRuntimeContext,
-    })).rejects.toThrow("Input content is empty");
+    })).rejects.toThrow("Input content cannot be empty");
   });
 
   it("throws error when hours are negative (regex mismatch)", async () => {

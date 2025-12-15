@@ -1,0 +1,127 @@
+/**
+ * Environment Variable Validation
+ * 
+ * Validates required and optional environment variables on startup.
+ * Fails fast with clear error messages if critical variables are missing.
+ */
+
+import { config } from 'dotenv';
+
+// Load environment variables
+config();
+
+/**
+ * Environment variable validation result
+ */
+interface EnvValidationResult {
+  isValid: boolean;
+  errors: string[];
+  warnings: string[];
+}
+
+/**
+ * Required environment variables with their validation rules
+ */
+const REQUIRED_VARS = {
+  OPENAI_API_KEY: {
+    validate: (value: string) => {
+      if (!value) return false;
+      if (!value.startsWith('sk-')) return false;
+      if (value.length < 20) return false; // Minimum reasonable length
+      return true;
+    },
+    description: 'OpenAI API key (must start with "sk-" and be at least 20 characters)'
+  }
+};
+
+/**
+ * Optional environment variables with their defaults
+ */
+const OPTIONAL_VARS = {
+  OPENAI_MODEL: {
+    defaultValue: 'gpt-4o-mini',
+    validate: (value: string) => {
+      const validModels = ['gpt-4o-mini', 'gpt-4o', 'gpt-3.5-turbo'];
+      return validModels.includes(value);
+    }
+  },
+  AGENT_MAX_STEPS: {
+    defaultValue: '3',
+    validate: (value: string) => {
+      const num = parseInt(value, 10);
+      return !isNaN(num) && num > 0 && num <= 10;
+    }
+  },
+  LOG_LEVEL: {
+    defaultValue: 'info',
+    validate: (value: string) => {
+      const validLevels = ['debug', 'info', 'warn', 'error'];
+      return validLevels.includes(value);
+    }
+  },
+  NODE_ENV: {
+    defaultValue: 'development',
+    validate: (value: string) => {
+      const validEnvs = ['development', 'production', 'test'];
+      return validEnvs.includes(value);
+    }
+  }
+};
+
+/**
+ * Validate environment variables
+ */
+export function validateEnvironment(): EnvValidationResult {
+  const errors: string[] = [];
+  const warnings: string[] = [];
+
+  // Check required variables
+  for (const [varName, rules] of Object.entries(REQUIRED_VARS)) {
+    const value = process.env[varName];
+    if (!rules.validate(value || '')) {
+      errors.push(`Missing or invalid ${varName}: ${rules.description}`);
+    }
+  }
+
+  // Check optional variables and set defaults if needed
+  for (const [varName, rules] of Object.entries(OPTIONAL_VARS)) {
+    const value = process.env[varName];
+    if (value && !rules.validate(value)) {
+      warnings.push(`Invalid ${varName}: using default "${rules.defaultValue}"`);
+      process.env[varName] = rules.defaultValue;
+    } else if (!value) {
+      process.env[varName] = rules.defaultValue;
+    }
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors,
+    warnings
+  };
+}
+
+/**
+ * Validate environment and exit if invalid
+ */
+export function validateEnvironmentOrExit(): void {
+  const result = validateEnvironment();
+  
+  // Print warnings
+  if (result.warnings.length > 0) {
+    console.warn('\n⚠️  Environment Warnings:');
+    result.warnings.forEach(warning => console.warn(`  - ${warning}`));
+  }
+  
+  // Print errors and exit if invalid
+  if (!result.isValid) {
+    console.error('\n❌ Environment Validation Failed:');
+    console.error('Required environment variables are missing or invalid:');
+    result.errors.forEach(error => console.error(`  - ${error}`));
+    console.error('\nPlease check your .env file and try again.');
+    console.error('Copy .env.example to .env and fill in the required values.\n');
+    process.exit(1);
+  }
+  
+  console.log('✅ Environment validation passed');
+}

@@ -25,24 +25,29 @@
 ### 1. API Endpoints
 
 #### API Implementation
-- [ ] Create REST API endpoints (Express, Fastify, or similar)
-- [ ] Create GraphQL API endpoints (optional)
+- [ ] Create REST API endpoints using Hono framework
 - [ ] Create API documentation (OpenAPI/Swagger)
-- [ ] Create API error handling
-- [ ] Create API logging
+- [ ] Create API error handling with detailed validation errors
+- [ ] Create API logging with request ID tracking
 - [ ] Create API tests
 
 #### API Features
-- [ ] Support WCP processing endpoints (POST /api/wcp/process)
-- [ ] Support batch processing endpoints (POST /api/wcp/batch)
-- [ ] Support health check endpoints (GET /api/health)
-- [ ] Support metrics endpoints (GET /api/metrics)
+- [ ] Support WCP processing endpoint (POST /analyze)
+  - Input validation for wcpText, county, state, projectType
+  - Structured error responses with validation details
+- [ ] Support health check endpoint (GET /health)
+  - Return status, timestamp, version
+- [ ] Support metrics endpoints (GET /metrics)
+- [ ] Add security middleware:
+  - CORS with configurable origins
+  - Secure headers (helmet equivalent)
+  - Request compression
+  - Request/response logging
 - [ ] Support API versioning
 - [ ] Support API rate limiting
 - [ ] Support API authentication
 - [ ] Support API authorization
-- [ ] Support API logging
-- [ ] Support API monitoring
+- [ ] Support audit logging with correlation IDs
 
 **Acceptance Criteria**:
 - ✅ API endpoints are operational

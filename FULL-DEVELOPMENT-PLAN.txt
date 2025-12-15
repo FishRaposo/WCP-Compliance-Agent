@@ -1,0 +1,360 @@
+================================================================================
+WCP AI AGENT PROTOTYPE - FULL STEP-BY-STEP DEVELOPMENT PLAN (PHASE 0 → PHASE 4)
+================================================================================
+
+Last Updated: 2025-01-27
+Source of Truth:
+- development-plan/OVERVIEW.md
+- development-plan/PHASE-0-MVP.md
+- development-plan/PHASE-1-CORE-IMPROVEMENTS.md
+- development-plan/PHASE-2-ENHANCED-FEATURES.md
+- development-plan/PHASE-3-ADVANCED-FEATURES.md
+- development-plan/PHASE-4-PRODUCTION-READY.md
+- TODO.md (detailed backlog items and statuses)
+- ROADMAP.md (consolidated roadmap)
+
+How to use this plan:
+- Execute phases in order.
+- Do not start a later phase until the prior phase exit criteria are met.
+- For every implementation step:
+  1) Add/Update tests
+  2) Update docs (README/WORKFLOW/CONTEXT as needed)
+  3) Update CHANGELOG.md
+  4) Update TODO.md statuses
+
+================================================================================
+GLOBAL RULES / QUALITY GATES (APPLY TO ALL PHASES)
+================================================================================
+
+A) Quality gates before moving forward:
+- Build succeeds (npm run build)
+- Tests pass (npm test) and coverage target is met for the phase
+- Docs updated to match behavior (no “planned” claims for implemented behavior)
+- CHANGELOG.md updated
+
+B) Boundary-first approach:
+- Validate inputs at boundaries (API -> tool -> agent)
+- Prefer structured errors over silent defaults
+
+C) Traceability:
+- Every phase task should map back to TODO.md items
+- Every shipped change should be reflected in documentation
+
+================================================================================
+PHASE 0 — MVP (MINIMUM VIABLE PRODUCT) | Priority: CRITICAL | Timeline: 1–2 weeks
+================================================================================
+
+Goal:
+- Fix critical issues and establish a stable foundation.
+
+Primary TODO.md mapping:
+- Item 0: Test Suite Implementation
+- Item 1: Error Handling and Input Validation
+- Item 4: Configuration and Environment Setup
+
+Step-by-step:
+
+0.1 Baseline verification (do this once at the start)
+1) Confirm build baseline:
+   - Run: npm run build
+2) Confirm demo baseline:
+   - Run: npm run showcase
+3) Confirm server baseline (if used):
+   - Run: npm run start (or the documented server command)
+
+0.2 Environment setup (foundation)
+4) Ensure root .env.example is canonical and complete.
+5) Implement environment variable validation on startup:
+   - Validate OPENAI_API_KEY presence and basic format
+   - Validate optional variables (NODE_ENV, LOG_LEVEL, etc.) as defined by plan
+   - Fail fast with a clear error message
+
+0.3 Minimum viable input validation (prevent crashes)
+6) Validate tool inputs:
+   - Reject empty/null/undefined input content
+   - Add numeric parsing checks (NaN)
+   - Enforce plausible limits (e.g., 0 <= hours <= 168, wage > 0)
+7) Stop silent defaults:
+   - Replace “Unknown/0” and “{base:0, fringe:0}” fallbacks with explicit, testable outcomes
+   - Ensure unknown role is handled intentionally (e.g., Reject with finding)
+
+0.4 Minimum viable error handling (consistent, structured)
+8) Introduce structured error types (minimum set):
+   - ValidationError
+   - ConfigurationError
+   - ToolExecutionError (or similar)
+9) Normalize errors across entrypoints:
+   - src/index.ts (test script)
+   - src/server.ts (/analyze endpoint)
+   - showcase/scripts/showcase.ts
+10) Ensure all user-facing outputs for failures are actionable:
+   - Clear message
+   - Clear status (Reject/Revise) if applicable
+   - Trace retained for auditability
+
+0.5 MVP test suite (must exist before leaving Phase 0)
+11) Unit tests (tests/unit):
+   - extract tool: happy path, missing fields, malformed numbers
+   - validate tool: known role pass/fail, unknown role, invalid hours/wage
+12) Integration tests (tests/integration):
+   - text -> extract -> validate -> decision (deterministic fixture)
+13) Error-path tests:
+   - invalid input
+   - unknown role
+   - missing OPENAI_API_KEY (startup validation)
+
+0.6 Documentation and tracking updates
+14) Update README.md claims to match reality:
+   - Ensure test status, error handling status, and inputs behavior are accurate
+15) Update WORKFLOW.md error workflow to match implementation
+16) Update TODO.md item statuses and add notes for any scope adjustments
+17) Update CHANGELOG.md for Phase 0 changes
+
+Phase 0 Exit Criteria:
+- No crashes on malformed input
+- Structured, consistent error handling in scripts + API
+- Tests cover critical happy path + failure paths
+- Documentation matches behavior
+
+================================================================================
+PHASE 1 — CORE IMPROVEMENTS | Priority: HIGH | Timeline: 2–3 weeks
+================================================================================
+
+Goal:
+- Improve reliability, maintainability, and developer experience.
+
+Primary TODO.md mapping:
+- Item 5: Infrastructure and Utilities
+- Extends/finishes Phase 0 items for completeness
+
+Step-by-step:
+
+1.1 Configuration management (single source)
+1) Create a centralized config module:
+   - model name selection
+   - maxSteps and agent parameters
+   - logging config
+   - feature flags and environment mode
+2) Ensure all runtime modules use this config:
+   - agent, tools, server, showcase
+
+1.2 Comprehensive validation utilities
+3) Create shared Zod schemas for:
+   - WCP input
+   - extracted WCP data
+   - validation outputs
+   - API request/response bodies
+4) Apply validation at boundaries everywhere:
+   - server request body validation
+   - tool input validation
+   - agent output validation
+
+1.3 Comprehensive error handling (systematic)
+5) Expand error taxonomy:
+   - APIError, RateLimitError, ExternalServiceError
+6) Standardize error responses:
+   - consistent error shape for the API and internal callers
+7) Ensure errors are logged with proper context (inputs, correlation id if available)
+
+1.4 Infrastructure utilities
+8) Logging:
+   - structured logs (levels, contexts)
+9) Monitoring baseline:
+   - basic metrics shape, timing hooks
+10) Retry/backoff policy:
+   - apply to external calls with strict bounds
+
+1.5 Test expansion and coverage
+11) Expand tests to cover:
+   - server /analyze endpoint (happy + error)
+   - more tool edge cases
+12) Achieve target coverage:
+   - >80% on core modules and workflows
+
+1.6 Documentation and tracking updates
+13) Update AGENTS.md / docs to reflect new utilities patterns
+14) Update CHANGELOG.md + TODO.md statuses
+
+Phase 1 Exit Criteria:
+- Central configuration in place
+- Comprehensive validation at boundaries
+- Unified error contracts
+- Logging/monitoring baseline exists
+- Coverage target met
+- Database integration (SQLite) operational
+- Observability (Langfuse) integrated
+- Location and project type validation implemented
+
+================================================================================
+PHASE 2 — ENHANCED FEATURES | Priority: MEDIUM | Timeline: 3–4 weeks
+================================================================================
+
+Goal:
+- Support real-world inputs and introduce evaluation rigor.
+
+Primary TODO.md mapping:
+- Item 2: PDF Parsing
+- Item 9: DBWD roles expansion
+- Item 10: Evaluation framework
+
+Step-by-step:
+
+2.1 PDF parsing integration
+1) Add PDF parsing pipeline:
+   - PDF -> text -> extraction
+2) Add fixtures:
+   - sample PDFs or text snapshots from PDFs
+3) Add tests for PDF ingestion:
+   - parse success
+   - parse failure
+
+2.2 Expanded DBWD role coverage
+4) Add additional roles beyond Electrician/Laborer
+5) Ensure rate tables and logic are test-driven:
+   - table-driven tests per role
+
+2.3 Enhanced parsing strategy
+6) Improve extraction robustness:
+   - improved regex patterns
+   - optional LLM-assisted extraction fallback (as planned)
+
+2.4 Evaluation framework (EVALS)
+7) Build an evaluation harness:
+   - dataset of at least 50 mock WCP samples with expected outcomes
+8) Implement scoring:
+   - accuracy, precision/recall (if applicable)
+   - regression detection
+9) Add docs for how to run evals and interpret results
+
+2.5 Enhanced Frontend Components
+10) Create AnalysisInterface component with:
+    - Text area, analyze button, results display
+    - Decision badges, confidence progress bar
+    - Violations list, recommendations, reasoning section
+11) Add UI features:
+    - Decision icons, color coding
+    - Real-time validation, export functionality
+
+Phase 2 Exit Criteria:
+- PDFs supported end-to-end
+- Meaningful role coverage beyond the initial set
+- Eval framework produces repeatable metrics
+- Enhanced UI components implemented
+
+================================================================================
+PHASE 3 — ADVANCED FEATURES | Priority: MEDIUM | Timeline: 4–6 weeks
+================================================================================
+
+Goal:
+- Scale beyond hardcoded rules with RAG and workflows/batching.
+
+Primary TODO.md mapping:
+- Item 3: RAG-based DBWD lookup
+- Item 6: Workflow chaining and batch processing
+
+Step-by-step:
+
+3.1 RAG-based DBWD lookup
+1) Prepare DBWD source documents:
+   - ingestion strategy, chunking approach
+2) Build embedding + storage pipeline:
+   - vector DB selection and setup
+3) Implement lookup tool:
+   - query -> retrieved rates -> cited sources
+4) Validate correctness:
+   - golden tests comparing expected rates
+   - eval comparisons vs hardcoded baseline
+
+3.2 Workflow chaining
+5) Define workflows for multi-document and multi-step processing
+6) Implement workflow orchestration using Mastra workflows
+7) Add workflow tests (end-to-end)
+
+3.3 Batch processing
+8) Implement batch ingestion mode:
+   - API endpoint or CLI workflow
+9) Add backpressure / limits / chunking for safety
+
+3.4 Caching + advanced monitoring
+10) Cache rate lookups and repeated computations
+11) Expand metrics:
+   - latency breakdown, tool timings, model call counts
+
+Phase 3 Exit Criteria:
+- RAG lookup is reliable, cited, and testable
+- Workflow chaining works end-to-end
+- Batch processing works within safe limits
+- Monitoring supports debugging and performance tracking
+
+================================================================================
+PHASE 4 — PRODUCTION READY | Priority: MEDIUM | Timeline: 4–6 weeks
+================================================================================
+
+Goal:
+- Deployable service with security, reliability, and operational maturity.
+
+Primary TODO.md mapping:
+- Item 7: Production deployment (API/auth/security/ops)
+
+Step-by-step:
+
+4.1 API hardening
+1) Finalize API contracts:
+   - request/response schemas, versioning
+2) Add rate limiting and abuse prevention
+3) Add authentication and authorization:
+   - JWT/OAuth + RBAC/ABAC as required
+4) Implement specific API endpoints using Hono:
+   - POST /analyze with input validation for wcpText, county, state, projectType
+   - GET /health returning status, timestamp, version
+   - GET /metrics for monitoring
+5) Add security middleware:
+   - CORS with configurable origins
+   - Secure headers
+   - Request compression
+   - Request/response logging with request IDs
+
+4.2 Operational readiness
+4) CI/CD pipeline:
+   - build, test, deploy automation
+5) Observability:
+   - logs, metrics, tracing
+6) Incident readiness:
+   - runbooks, alerting, diagnostics
+
+4.3 Reliability and performance
+7) Load and stress testing
+8) Define SLOs and alert thresholds
+9) Validate rollback procedure
+
+4.4 Security and compliance
+10) Security review:
+   - secrets handling, dependency audit, threat modeling
+11) Data handling policies:
+   - retention, access logging, PII considerations if applicable
+
+Phase 4 Exit Criteria:
+- Production deployment path proven
+- Authn/authz + rate limiting in place
+- Observability sufficient for operations
+- Reliability and security checks completed
+
+================================================================================
+APPENDIX: DOCUMENTS TO READ IN ORDER
+================================================================================
+
+1) README.md
+2) TODO.md
+3) development-plan/OVERVIEW.md
+4) development-plan/PHASE-0-MVP.md
+5) development-plan/PHASE-1-CORE-IMPROVEMENTS.md
+6) development-plan/PHASE-2-ENHANCED-FEATURES.md
+7) development-plan/PHASE-3-ADVANCED-FEATURES.md
+8) development-plan/PHASE-4-PRODUCTION-READY.md
+9) AGENTS.md
+10) WORKFLOW.md
+11) EVALS.md
+
+================================================================================
+END OF PLAN
+================================================================================

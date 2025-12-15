@@ -62,6 +62,8 @@
 - [ ] Add validation for WCP text input
 - [ ] Add validation for extracted data (role, hours, wage)
 - [ ] Add validation for DBWD rates
+- [ ] Add validation for location parameters (county, state)
+- [ ] Add validation for project type (building, highway, residential)
 - [ ] Add validation for agent inputs
 - [ ] Add validation for configuration
 
@@ -92,11 +94,25 @@
 
 #### Configuration Files
 - [ ] Create `src/config/agent-config.ts` - Agent configuration
-- [ ] Create `src/config/dbwd-rates.json` - DBWD rates configuration (optional)
+- [ ] Create `src/config/db-config.ts` - Database configuration (SQLite)
 - [ ] Create `src/config/app-config.ts` - Application configuration
 - [ ] Add environment-specific configuration (dev, staging, production)
 - [ ] Add configuration validation
 - [ ] Add configuration documentation
+
+#### Database Integration
+- [ ] Set up SQLite database with `DATABASE_URL` environment variable
+- [ ] Create `src/utils/database.ts` - Database connection utility
+- [ ] Add schema for storing analysis results and audit logs
+- [ ] Add database migration scripts
+- [ ] Add database connection pooling and error handling
+
+#### Observability Integration
+- [ ] Integrate Langfuse for observability (optional, via LANGFUSE_PUBLIC_KEY)
+- [ ] Add request ID tracking for audit trails
+- [ ] Add structured logging with correlation IDs
+- [ ] Add metrics collection for API endpoints
+- [ ] Add performance monitoring hooks
 
 #### Configuration for Agent
 - [ ] Add configuration for OpenAI model selection

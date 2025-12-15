@@ -2,14 +2,28 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { generateWcpDecision } from "./entrypoints/wcp-entrypoint.js";
+import { validateEnvironmentOrExit } from "./utils/env-validator.js";
+import { formatApiError, ValidationError } from "./utils/errors.js";
+
+// Validate environment before starting server
+validateEnvironmentOrExit();
 
 const app = new Hono();
 
-// Enable CORS
-app.use("/*", cors());
+// Enable CORS with configurable origins
+app.use("/*", cors({
+  origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000'],
+  credentials: true
+}));
 
-// Health check endpoint
-app.get("/health", (c) => c.json({ status: "ok" }));
+// Health check endpoint with version info
+app.get("/health", (c) => {
+  return c.json({ 
+    status: "healthy",
+    timestamp: new Date().toISOString(),
+    version: process.env.npm_package_version || "0.0.0"
+  });
+});
 
 // WCP Analysis endpoint
 app.post("/analyze", async (c) => {
@@ -17,29 +31,35 @@ app.post("/analyze", async (c) => {
     const body = await c.req.json();
     const { content } = body;
 
+    // Input validation with structured error
     if (!content) {
-      return c.json({ error: "Content is required" }, 400);
+      const error = new ValidationError("Content is required");
+      return c.json(formatApiError(error), 400);
+    }
+
+    if (typeof content !== 'string') {
+      const error = new ValidationError("Content must be a string");
+      return c.json(formatApiError(error), 400);
     }
 
     // Call the agent entrypoint
-    // We'll pass a dummy callback for onStepFinish if we want to stream logs later,
-    // but for now we just want the final result.
-    // The entrypoint already handles health metrics generation.
     const result = await generateWcpDecision({
       content,
-      maxSteps: 3,
+      maxSteps: parseInt(process.env.AGENT_MAX_STEPS || '3', 10),
     });
 
-    return c.json(result.object);
+    // Add request ID for audit trail
+    const requestId = c.req.header('x-request-id') || crypto.randomUUID();
+    
+    return c.json({
+      ...result.object,
+      requestId,
+      timestamp: new Date().toISOString()
+    });
   } catch (error: any) {
     console.error("Error analyzing WCP:", error);
-    return c.json(
-      {
-        error: "Failed to analyze WCP",
-        details: error.message,
-      },
-      500
-    );
+    const formattedError = formatApiError(error);
+    return c.json(formattedError, formattedError.error.statusCode as any);
   }
 });
 

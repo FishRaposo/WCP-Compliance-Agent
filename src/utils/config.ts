@@ -24,7 +24,7 @@ const ConfigSchema = z.object({
   server: z.object({
     port: z.number().min(1).max(65535).default(3000),
     host: z.string().default('localhost'),
-    environment: z.enum(['development', 'staging', 'production']).default('development'),
+    environment: z.enum(['development', 'staging', 'production', 'test']).default('development'),
   }),
   
   // Agent Configuration
