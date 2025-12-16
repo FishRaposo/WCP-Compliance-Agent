@@ -41,6 +41,12 @@ yarn-error.log*
 coverage/
 .nyc_output/
 
+# Database files (SQLite)
+data/
+*.db
+*.db-shm
+*.db-wal
+
 # Temporary files
 *.tmp
 *.temp
