@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- **Phase 1: Core Improvements** - Infrastructure and utilities for production readiness (2025-12-15)
+- **Phase 1: Core Improvements** - Infrastructure and utilities for production readiness (2025-12-15 to 2025-12-16)
   - **Configuration System**: Centralized configuration management
     - `src/config/agent-config.ts` - Agent configuration (model, maxSteps, timeout, temperature)
     - `src/config/db-config.ts` - Database configuration (SQLite with LibSQL)
@@ -22,26 +22,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `src/utils/monitor.ts` - Performance and error monitoring
     - `src/utils/metrics.ts` - Metrics collection system
     - `src/utils/database.ts` - Database connection utility (placeholder for LibSQL integration)
-  - **Mastra Integrations**: Added support for Mastra ecosystem
+  - **Mastra Integrations**: Integrated Mastra ecosystem components
     - Installed `@mastra/loggers@0.10.19` for PinoLogger
     - Installed `@mastra/libsql@0.16.4` for database storage
+    - Integrated PinoLogger into Mastra instance for structured logging
+    - Integrated LibSQLStore into Mastra instance for persistent storage
+    - Database directory auto-creation on initialization
+  - **Agent Enhancements**: Made agent configuration dynamic
+    - WCP Agent now uses centralized configuration
+    - Agent model selection configurable via `OPENAI_MODEL` environment variable
+    - Default model: gpt-4o-mini (configurable)
   - **Test Suite Expansion**: Comprehensive test coverage
     - `tests/unit/test_retry.test.ts` - 7 tests for retry utility
     - `tests/unit/test_validator.test.ts` - 20 tests for validator utility
     - `tests/unit/test_health_check.test.ts` - 6 tests for health check utility
-    - `tests/unit/test_config.test.ts` - 3 tests for configuration system
-    - Total: 197 tests (all passing)
+    - `tests/unit/test_config.test.ts` - 7 tests for configuration system
+    - Total: 197 tests (182 passing, 15 API tests require running server)
 
 ### Fixed
-- **TypeScript Build Errors**: Removed problematic `lib` array from tsconfig.json to fix 28+ compilation errors
-  - Build now completes successfully
-  - All Node.js types properly recognized
+- **TypeScript Build Errors**: Fixed compilation errors (2025-12-16)
+  - Added `"types": ["node"]` to tsconfig.json to enable Node.js type definitions
+  - Installed all missing dependencies including @types/node
+  - Build now completes successfully with no errors
+- **Database Initialization**: Fixed LibSQLStore connection errors
+  - Added automatic database directory creation
+  - Added database files (*.db, *.db-shm, *.db-wal) to .gitignore
+  - LibSQLStore now initializes successfully
 
 ### Changed
 - Updated package.json with new Mastra dependencies
 - Improved configuration management with dedicated config directory
 - Enhanced error handling with retry capabilities
 - Added comprehensive input validation across all WCP data types
+- Mastra instance now includes logger and storage for observability
 
 ### Fixed
 - **Phase 0 Maintenance**: Verified and fixed Phase 0 implementation issues
