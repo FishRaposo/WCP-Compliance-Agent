@@ -40,8 +40,8 @@ This section provides a high-level mapping of all planned features across develo
 
 ### Feature Count by Phase
 - **Phase 2**: 5 features 📋 Standard (PDF/CSV Parsing, Data Model, Deterministic Parsing, LLM Extraction, Explainability)
-- **Phase 3**: 7 features 🏢 Enterprise (Authoritative RAG, Risk Control, Database, Advanced Validation, Citations, Workflows, OCR)
-- **Phase 4**: 2 features 🏢 Enterprise (Multi-Document Authority, Production Deployment)
+- **Phase 3**: 7 features 🏢 Enterprise (Advanced validation, Database, Workflow processing, OCR, Document management)
+- **Phase 4**: 2 features 🏢 Enterprise (Production deployment, Multi-document processing)
 - **Total**: 14 planned features
 
 | Phase | Priority | Focus Areas | TODO Items | Details |
@@ -49,7 +49,7 @@ This section provides a high-level mapping of all planned features across develo
 | **Phase 0: MVP** | 🔥 **Complete** (2025-12-15) | Error handling, validation, environment setup, tests | [PHASE-0-MVP.md](development-plan/PHASE-0-MVP.md) |
 | **Phase 1: Core** | 🔥 **Complete** (2025-12-16) | Infrastructure, configuration, utilities | Item 5 | [PHASE-1-CORE-IMPROVEMENTS.md](development-plan/PHASE-1-CORE-IMPROVEMENTS.md) |
 | **Phase 2: Extraction** | 📋 **Next** | 5 features: PDF/CSV parsing, data model, extraction | Items 2-4, 8 | [PHASE-2-ENHANCED-FEATURES.md](development-plan/PHASE-2-ENHANCED-FEATURES.md) |
-| **Phase 3: Authority** | 🏢 Enterprise | Enterprise authority systems | Contact for details | Contact for specifications |
+| **Phase 3: Advanced** | 🏢 Enterprise | Advanced processing systems | Contact for details | Contact for specifications |
 | **Phase 4: Production** | 🏢 Enterprise | Production deployment suite | Contact for details | Contact for specifications |
 
 **See [ROADMAP.md](ROADMAP.md) for the complete product roadmap and phase dependencies.**
@@ -217,8 +217,8 @@ All Phase 1 requirements have been successfully implemented and verified:
   - [ ] Support role aliases and case-insensitive matching
   - [ ] Add role validation tests
 - **Phase 3 Requirements** (Full coverage) 🏢 Enterprise:
-  - [ ] Add all remaining DBWD roles from official documents
-  - [ ] Create automated DBWD rate import system
+  - [ ] Add comprehensive role validation
+  - [ ] Create automated rate import system
   - [ ] Support regional rate variations
   - [ ] Add comprehensive role validation
   - [ ] Add extended role tests
@@ -296,10 +296,10 @@ All Phase 1 requirements have been successfully implemented and verified:
 - **Overview**: Enterprise validation systems with signature and arithmetic checks
 - **Requirements**: Contact for detailed specifications
 
-### 16. Citation System
+### 16. Document Tracking
 
 - **Status**: 🏢 Enterprise Only
-- **Overview**: Enterprise citation system for audit compliance
+- **Overview**: Enterprise document tracking system for compliance
 - **Requirements**: Contact for detailed specifications
 
 ---

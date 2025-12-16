@@ -31,16 +31,16 @@
 
 ## 🔒 Enterprise Only (Consulting Required)
 
-### Phase 3: Authority & Risk Control Layer
-- **Purpose**: Operational authority under uncertainty
-- Truth arbitration and decision authority
-- Risk control and acceptance frameworks
+### Phase 3: Advanced Processing Layer
+- **Purpose**: Enterprise-grade processing systems
+- Decision validation and control frameworks
+- Risk management and acceptance criteria
 - Enterprise-grade validation systems
 
 *Contact for detailed implementation specifications*
 
 ### Phase 4: Production Hardening
-- Multi-document authority resolution
+- Multi-document processing
 - Production deployment suite
 - Enterprise security and monitoring
 - Scalable batch processing
@@ -51,7 +51,7 @@
 - Payroll system connectors
 - HR platform integration
 - Multi-tenant support
-- Legal defensibility
+- Compliance reporting
 
 *Contact for detailed implementation specifications*
 
@@ -80,7 +80,7 @@
 - **Phase 2**: Extraction & Explainability (Reference skeleton only)
 
 #### Enterprise Edition (Paid)
-- **Phase 3**: Authority & Risk Control (Truth arbitration)
+- **Phase 3**: Authority & Risk Control (Decision authority)
 - **Phase 4**: Production-Ready (Multi-document authority)
 - **Phase 5**: Enterprise Integration (System connectors)
 
@@ -194,16 +194,15 @@ See `docs/REQUIREMENTS-TRACEABILITY.md` for detailed mapping.
 
 ---
 
-## Phase 3 (Authority & Risk Control) — Medium Enterprise
+## Phase 3 (Advanced Processing) — Medium Enterprise
 
-**Goal**: Scale beyond reference implementation to operational authority under uncertainty.
+**Goal**: Scale beyond reference implementation to enterprise-grade processing systems.
 
 **Primary Deliverables**:
-- Authoritative RAG systems
-- Risk control frameworks
+- Advanced processing systems
 - Database persistence
 - Advanced validation
-- Citation systems
+- Document tracking
 - Workflow orchestration
 - OCR capabilities
 
@@ -218,10 +217,10 @@ See `docs/REQUIREMENTS-TRACEABILITY.md` for detailed mapping.
 
 ## Phase 4 (Production Hardening) — Medium Enterprise
 
-**Goal**: Provide production-ready authority resolution and operational controls.
+**Goal**: Provide production-ready processing and operational controls.
 
 **Primary Deliverables**:
-- Multi-document authority resolution
+- Multi-document processing
 - Production deployment suite
 - Enterprise security
 - Scalable batch processing

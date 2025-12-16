@@ -33,22 +33,17 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [selectedScenario, setSelectedScenario] = useState<ShowcaseScenario | null>(null);
 
-  const handleScenarioSelect = (scenario: ShowcaseScenario) => {
-    setInput(scenario.input);
-    setSelectedScenario(scenario);
-    setResult(null);
-    setError(null);
-  };
-
-  const analyzeWCP = async () => {
-    if (!input.trim()) return;
+  const analyzeWCP = async (overrideInput?: string, scenario?: ShowcaseScenario) => {
+    const content = (overrideInput ?? input).trim();
+    if (!content) return;
     
     setIsLoading(true);
     setError(null);
     setResult(null);
 
-    // If the input doesn't match the selected scenario anymore, clear the selection
-    if (selectedScenario && input !== selectedScenario.input) {
+    if (scenario) {
+      setSelectedScenario(scenario);
+    } else if (selectedScenario && content !== selectedScenario.input) {
       setSelectedScenario(null);
     }
 
@@ -58,20 +53,38 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ content: input }),
+        body: JSON.stringify({ content }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to analyze WCP');
+        // Read actual error from server
+        let errorMessage = 'Failed to analyze WCP';
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.error?.message || errorMessage;
+          console.error('Server error:', errorData);
+        } catch {
+          // Failed to parse error response
+          errorMessage = `Server returned ${response.status}: ${response.statusText}`;
+        }
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
       setResult(data);
     } catch (err: any) {
+      console.error('WCP analysis error:', err);
       setError(err.message || 'Something went wrong');
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const runScenario = (scenario: ShowcaseScenario) => {
+    setInput(scenario.input);
+    setResult(null);
+    setError(null);
+    void analyzeWCP(scenario.input, scenario);
   };
 
   const getStatusColor = (status: string) => {
@@ -134,7 +147,7 @@ function App() {
                   {scenarios.map((scenario, i) => (
                     <button
                       key={i}
-                      onClick={() => handleScenarioSelect(scenario)}
+                      onClick={() => runScenario(scenario)}
                       className={cn(
                         "text-left text-xs px-3 py-2 rounded-md transition-all border border-border/50 hover:border-primary/30 flex items-center justify-between group",
                         selectedScenario?.name === scenario.name 
@@ -164,7 +177,7 @@ function App() {
             </div>
 
             <button
-              onClick={analyzeWCP}
+              onClick={() => analyzeWCP()}
               disabled={isLoading || !input.trim()}
               className="w-full bg-primary text-primary-foreground h-12 rounded-lg font-semibold hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:shadow-[0_0_25px_rgba(255,255,255,0.1)] flex items-center justify-center gap-2"
             >
@@ -222,13 +235,21 @@ function App() {
                         {/* Validation against scenario */}
                         {selectedScenario && selectedScenario.input === input && (
                            <div className={cn(
-                             "text-xs font-bold px-2 py-1 rounded uppercase tracking-wider border",
-                             result.status === selectedScenario.expectedStatus
-                               ? "bg-green-500/20 text-green-500 border-green-500/30"
-                               : "bg-red-500/20 text-red-500 border-red-500/30"
-                           )}>
-                             {result.status === selectedScenario.expectedStatus ? "Test Passed" : "Test Failed"}
-                           </div>
+                              "text-xs font-bold px-2 py-1 rounded uppercase tracking-wider border",
+                              result.status === selectedScenario.expectedStatus &&
+                              (selectedScenario.expectedFindings
+                                ? selectedScenario.expectedFindings.every((t) => result.findings.some((f) => f.type === t))
+                                : true)
+                                ? "bg-green-500/20 text-green-500 border-green-500/30"
+                                : "bg-red-500/20 text-red-500 border-red-500/30"
+                            )}>
+                              {result.status === selectedScenario.expectedStatus &&
+                              (selectedScenario.expectedFindings
+                                ? selectedScenario.expectedFindings.every((t) => result.findings.some((f) => f.type === t))
+                                : true)
+                                ? "Test Passed"
+                                : "Test Failed"}
+                            </div>
                         )}
                       </div>
                       <p className="mt-1 opacity-90 text-sm leading-relaxed font-medium">
