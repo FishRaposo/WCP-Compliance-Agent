@@ -10,12 +10,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+- **Vercel Deployment Routing** (2025-12-16):
+  - Root URL was serving compiled backend test script instead of React frontend
+  - Updated `vercel.json` to build frontend first, then copy built assets to dist/
+  - Added proper rewrite rules: `/api/*` → serverless API function, `/*` → `index.html` for React Router SPA support
+  - Frontend now correctly serves at `/`, API at `/api/*`
+  - Disabled CORS warnings by ensuring frontend build is part of static output
 - API 500 on analyze endpoint when environment not configured:
   - Clarified error message to suggest setting OPENAI_API_KEY or using "mock" for local testing
   - Aligned ESM import specifiers in `api/index.ts` to use `.js` extensions to prevent runtime resolution issues in serverless environments
 
 ### Added
 - Local development convenience: ensure `.env` is used by server (`src/server.ts`) and document mock mode usage in error messaging
+
 
 ### Added
 - **Phase 1: Core Improvements** - Infrastructure and utilities for production readiness (2025-12-15 to 2025-12-16) - ✅ **COMPLETE**

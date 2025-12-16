@@ -1,12 +1,23 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
+  "buildCommand": "npm run build && npm run build:frontend && mkdir -p dist && cp -r frontend/dist/* dist/ 2>/dev/null || true && mkdir -p dist/_next && echo '{}' > dist/_next/build-id.json",
   "outputDirectory": "dist",
   "installCommand": "npm install --no-audit --no-fund",
+  "regions": ["iad1"],
+  "functions": {
+    "api/index.ts": {
+      "runtime": "nodejs20.x",
+      "maxDuration": 30
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/vercel-api"
+      "destination": "/api"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }

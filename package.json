@@ -9,7 +9,7 @@
     "dev": "mastra dev",
     "clean": "node -e \"const fs = require('fs'); const path = require('path'); if (fs.existsSync('dist')) fs.rmSync('dist', { recursive: true, force: true });\"",
     "build": "npm run clean --silent && tsc && tsc -p tsconfig.showcase.json && node -e \"require('fs').mkdirSync('build', { recursive: true }); require('fs').writeFileSync('build/build.txt', 'Build complete');\"",
-    "build:frontend": "cd frontend && npm install && npm run build",
+    "build:frontend": "cd frontend && npm install && npm run build && cd ..",
     "build:src": "tsc",
     "build:showcase": "tsc -p tsconfig.showcase.json",
     "start": "node dist/index.js",
