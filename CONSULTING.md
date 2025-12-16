@@ -2,25 +2,25 @@
 
 The WCP Compliance Agent (Phases 0-2) is open source and MIT licensed. You can use it, modify it, and deploy the core validation system yourself.
 
-**Phases 3+ are enterprise-only:** Advanced validation, multi-jurisdiction support, production hardening, and custom integrations are not open source.
+**Phases 3+ are enterprise-only:** Advanced authority systems, production hardening, and enterprise integrations are not open source.
 
-Enterprise deployments with tailored rules, integrations, and production support are available through consulting engagements.
+Enterprise deployments with operational authority, risk control, and production support are available through consulting engagements.
 
 ---
 
 ## Service Tiers
 
-### 🔧 Tier 1: Custom Implementation
+### 🔧 Tier 1: Enterprise Authority Systems
 **Price Range:** $5,000 - $12,000
 
 **What you get:**
-- Custom compliance rule engines for your jurisdiction/industry
-- Integration with existing payroll/HR/ERP systems
-- Validation layers tailored to your data structure
-- Production deployment and hardening
+- Enterprise-grade authority and risk control systems
+- Production deployment with operational guarantees
+- Custom validation frameworks
+- Audit-grade compliance reporting
 - 30 days post-launch support
 
-**Best for:** Companies with compliance requirements beyond federal WCP or operating in specialized industries
+**Best for:** Organizations requiring production compliance systems with audit guarantees
 
 **Timeline:** 3-5 weeks
 

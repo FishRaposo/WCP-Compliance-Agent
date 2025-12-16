@@ -39,18 +39,18 @@ This section provides a high-level mapping of all planned features across develo
 - 📋 **Standard** - Features available in all editions
 
 ### Feature Count by Phase
-- **Phase 2**: 8 features 📋 Standard (Document Processing, Data Extraction, RAG Lookup, Enhanced Parsing, DBWD Roles, Evaluation, Overtime, Fringe Benefits)
-- **Phase 3**: 6 features 🏢 Enterprise (Database, Batch Processing, Advanced Validation, Citations, Workflows, OCR)
-- **Phase 4**: 1 feature 🏢 Enterprise (Production Deployment Suite)
-- **Total**: 15 planned features
+- **Phase 2**: 5 features 📋 Standard (PDF/CSV Parsing, Data Model, Deterministic Parsing, LLM Extraction, Explainability)
+- **Phase 3**: 7 features 🏢 Enterprise (Authoritative RAG, Risk Control, Database, Advanced Validation, Citations, Workflows, OCR)
+- **Phase 4**: 2 features 🏢 Enterprise (Multi-Document Authority, Production Deployment)
+- **Total**: 14 planned features
 
 | Phase | Priority | Focus Areas | TODO Items | Details |
 |-------|----------|-------------|------------|---------|
 | **Phase 0: MVP** | 🔥 **Complete** (2025-12-15) | Error handling, validation, environment setup, tests | [PHASE-0-MVP.md](development-plan/PHASE-0-MVP.md) |
 | **Phase 1: Core** | 🔥 **Complete** (2025-12-16) | Infrastructure, configuration, utilities | Item 5 | [PHASE-1-CORE-IMPROVEMENTS.md](development-plan/PHASE-1-CORE-IMPROVEMENTS.md) |
-| **Phase 2: Enhanced** | 📋 **Next** | 8 features: PDF/CSV parsing, data extraction, RAG lookup | Items 2-4, 8-12 | [PHASE-2-ENHANCED-FEATURES.md](development-plan/PHASE-2-ENHANCED-FEATURES.md) |
-| **Phase 3: Advanced** | 🏢 Enterprise | 6 features: Database, batch processing, workflows | Items 6, 13-16, OCR | [PHASE-3-ADVANCED-FEATURES.md](development-plan/PHASE-3-ADVANCED-FEATURES.md) |
-| **Phase 4: Production** | 🏢 Enterprise | 1 feature: Production deployment suite | Item 7 | [PHASE-4-PRODUCTION-READY.md](development-plan/PHASE-4-PRODUCTION-READY.md) |
+| **Phase 2: Extraction** | 📋 **Next** | 5 features: PDF/CSV parsing, data model, extraction | Items 2-4, 8 | [PHASE-2-ENHANCED-FEATURES.md](development-plan/PHASE-2-ENHANCED-FEATURES.md) |
+| **Phase 3: Authority** | 🏢 Enterprise | Enterprise authority systems | Contact for details | Contact for specifications |
+| **Phase 4: Production** | 🏢 Enterprise | Production deployment suite | Contact for details | Contact for specifications |
 
 **See [ROADMAP.md](ROADMAP.md) for the complete product roadmap and phase dependencies.**
 
@@ -90,6 +90,7 @@ All Phase 1 requirements have been successfully implemented and verified:
   - Configuration files: `src/config/*.ts` (agent, db, app)
   - Utilities: `src/utils/*.ts` (8 utility files)
   - Test coverage: 197 tests (169 passing, 28 server-dependent)
+
 ## 📋 Medium Priority Items (Phase 2 - Next)
 
 ### 2. Document Processing Suite
@@ -151,61 +152,38 @@ All Phase 1 requirements have been successfully implemented and verified:
   - [ ] Validate required fields presence
 - **Notes**: Critical for real-world WCP compliance
 
-### 4. RAG-Based DBWD Rate Lookup
+### 4. Non-Authoritative RAG Examples
 
-- **Status**: Planned for Phase 2
-- **Overview**: Replace hardcoded DBWD rates with RAG-based lookup from vector DB
+- **Status**: Planned for Phase 2 (Educational Only)
+- **Overview**: Demonstrate RAG capabilities with toy examples - NOT for production use
 - **Requirements**:
-  - [ ] Set up vector DB (Pinecone, Weaviate, or similar)
-  - [ ] Create DBWD PDF chunking pipeline
-  - [ ] Create RAG tool for DBWD rate lookup
-  - [ ] Update validateWCPTool to use RAG lookup
-  - [ ] Add caching for frequently accessed rates
-  - [ ] Add RAG integration tests
+  - [ ] Create toy DBWD corpus for demonstration
+  - [ ] Set up simple vector DB for examples
+  - [ ] Create stubbed RAG tool for educational purposes
+  - [ ] Add clear warnings: "DO NOT USE FOR REAL DECISIONS"
+  - [ ] Add example RAG tests
 - **Technical Details**:
-  - Vector DB integration with embeddings
-  - PDF processing and chunking
-  - Semantic search capabilities
-  - Caching strategy for performance
-- **Notes**: See [PHASE-2-ENHANCED-FEATURES.md](development-plan/PHASE-2-ENHANCED-FEATURES.md) for complete requirements
+  - Educational vector DB integration
+  - Synthetic data for demonstrations
+  - Non-authoritative rate lookup
+  - Best effort matching only
+- **Boundary**: This is for education only - see Phase 3 for authoritative RAG
+- **Notes**: Reference implementation only
 
 ### 6. Multi-Document Workflows
 
-- **Status**: Planned for Phase 3 🏢 Enterprise
-- **Overview**: Support workflow chaining for batch processing of multiple WCP documents
-- **Requirements**:
-  - [ ] Create workflow using `createWorkflow` and `createStep` from Mastra
-  - [ ] Create WCP workflow steps (extract → validate → decide)
-  - [ ] Support parallel workflow execution
-  - [ ] Add workflow error handling and progress tracking
-  - [ ] Add workflow tests
-- **Technical Details**:
-  - Mastra workflow orchestration
-  - Parallel processing capabilities
-  - Progress tracking and status reporting
-  - Error handling in workflow context
-- **Notes**: See [PHASE-3-ADVANCED-FEATURES.md](development-plan/PHASE-3-ADVANCED-FEATURES.md) for complete requirements
+- **Status**: 🏢 Enterprise Only
+- **Overview**: Enterprise workflow orchestration for batch processing
+- **Requirements**: Contact for detailed specifications
+- **Source References**: Available under enterprise agreement
 
 ### 7. Production Deployment
 
-- **Status**: Planned for Phase 4 🏢 Enterprise
-- **Overview**: Deploy to production with full operational capabilities
-- **Requirements**:
-  - [ ] Implement REST/GraphQL API endpoints
-  - [ ] Add authentication and authorization
-  - [ ] Add rate limiting and security measures
-  - [ ] Set up production deployment pipeline
-  - [ ] Add comprehensive monitoring and alerting
-  - [ ] Add performance optimization
-  - [ ] Add production deployment tests
-- **Technical Details**:
-  - API gateway and middleware
-  - Authentication and authorization system
-  - Rate limiting and DDoS protection
-  - Security headers and HTTPS/TLS encryption
-  - CI/CD pipeline with automated testing
-  - Production monitoring and observability
-- **Notes**: See [PHASE-4-PRODUCTION-READY.md](development-plan/PHASE-4-PRODUCTION-READY.md) for complete requirements
+- **Status**: 🏢 Enterprise Only
+- **Overview**: Production deployment suite with full operational capabilities
+- **Requirements**: Contact for detailed specifications
+- **Source References**: Available under enterprise agreement
+- **Ready to implement?** [Hire me on Upwork](https://www.upwork.com/freelancers/~01ca94c53d0d0101f3) for enterprise deployment.
 
 ---
 
@@ -253,20 +231,18 @@ All Phase 1 requirements have been successfully implemented and verified:
   - Automated rate import system
 - **Notes**: Phase 2 adds common roles, Phase 3 provides full DBWD coverage
 
-### 10. Evaluation Framework
+### 10. Demonstration Metrics
 
-- **Status**: Planned for Phase 2
-- **Overview**: Implement evaluation framework to test on 50+ mock WCPs and achieve >95% accuracy
+- **Status**: Planned for Phase 2 (Educational Only)
+- **Overview**: Create demonstration metrics and synthetic datasets for testing
 - **Requirements**:
-  - [ ] Create evaluation framework
-  - [ ] Add evaluation scorers (tool call appropriateness, completeness, compliance accuracy)
-  - [ ] Create test dataset with expected outcomes
-  - [ ] Add accuracy reporting and metrics
-  - [ ] Add evaluation tests
-- **Technical Details**:
-  - Evaluation metrics and scoring
-  - Test data management
-  - Accuracy calculation and reporting
+  - [ ] Create demonstration test harness
+  - [ ] Add example metrics (accuracy, completeness)
+  - [ ] Create synthetic test datasets
+  - [ ] Add clear warnings: "NOT FOR PRODUCTION EVALUATION"
+  - [ ] Add demonstration tests
+- **Boundary**: Educational metrics only - see Phase 3 for risk thresholds and acceptance criteria
+- **Notes**: Reference implementation for learning purposes
   - Performance benchmarking
 - **Notes**: This will help validate the effectiveness of the WCP processing system
 
@@ -304,59 +280,27 @@ All Phase 1 requirements have been successfully implemented and verified:
 
 ### 13. Persistence Layer & Database
 
-- **Status**: Planned for Phase 3 🏢 Enterprise
-- **Overview**: Implement full database integration for storing WCPs, decisions, and audit trails
-- **Requirements**:
-  - [ ] Complete database.ts implementation (currently stubs)
-  - [ ] Set up PostgreSQL database (Supabase or managed instance)
-  - [ ] Create database schema matching specification
-  - [ ] Implement tables: docs, wcp_reports, dbwd_records, decisions, audit_traces
-  - [ ] Add database connection pooling
-  - [ ] Add database migrations
-  - [ ] Add database backup strategy
-  - [ ] Support tenant isolation (multi-tenancy prep)
-  - [ ] Support document versioning
-  - [ ] Add database indexing for performance
-- **Notes**: Critical for Phase 3 features
+- **Status**: 🏢 Enterprise Only
+- **Overview**: Enterprise database integration for audit trails and persistence
+- **Requirements**: Contact for detailed specifications
 
 ### 14. Batch Processing
 
-- **Status**: Planned for Phase 3 🏢 Enterprise
-- **Overview**: Add batch processing capabilities for large-scale processing
-- **Requirements**:
-  - [ ] Create batch processing API endpoints
-  - [ ] Support async processing with status tracking
-  - [ ] Add job queue system
-  - [ ] Support bulk file uploads
-  - [ ] Add batch result aggregation
-  - [ ] Add batch processing monitoring
-  - [ ] Add batch error handling and retry
-- **Notes**: Essential for enterprise deployments
+- **Status**: 🏢 Enterprise Only
+- **Overview**: Enterprise batch processing for large-scale operations
+- **Requirements**: Contact for detailed specifications
 
 ### 15. Advanced Validation Features
 
-- **Status**: Planned for Phase 3 🏢 Enterprise
-- **Overview**: Implement advanced validation including signatures and arithmetic checks
-- **Requirements**:
-  - [ ] Add signature validation capabilities
-  - [ ] Implement arithmetic validation for totals
-  - [ ] Add cross-field validation rules
-  - [ ] Support custom validation rules
-  - [ ] Add validation rule configuration
-  - [ ] Add validation audit logging
-- **Notes**: Completes compliance checking capabilities
+- **Status**: 🏢 Enterprise Only
+- **Overview**: Enterprise validation systems with signature and arithmetic checks
+- **Requirements**: Contact for detailed specifications
 
 ### 16. Citation System
 
-- **Status**: Planned for Phase 3 🏢 Enterprise
-- **Overview**: Add DBWD citation support for decisions
-- **Requirements**:
-  - [ ] Store DBWD citations with decisions
-  - [ ] Link findings to specific DBWD sections
-  - [ ] Generate citation reports
-  - [ ] Support citation formatting
-  - [ ] Add citation validation
-- **Notes**: Important for audit and compliance
+- **Status**: 🏢 Enterprise Only
+- **Overview**: Enterprise citation system for audit compliance
+- **Requirements**: Contact for detailed specifications
 
 ---
 

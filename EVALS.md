@@ -2,7 +2,7 @@
 
 **Purpose**: This document provides evaluation criteria, test scenarios, and quality checks for the WCP AI Agent Prototype. Use this to verify feature completeness, code quality, and system reliability.
 
-**Last Updated**: 2025-01-27  
+**Last Updated**: 2025-12-16  
 **Project Status**: Prototype
 
 ---
@@ -13,7 +13,7 @@
 
 - **Functionality**: ✅ Core features implemented
 - **Code Quality**: ✅ Type-safe with Zod validation
-- **Testing**: 🚧 Test script implemented, full test suite planned
+- **Testing**: ✅ Vitest suite includes unit/integration/system/workflow tests
 - **Documentation**: ✅ Comprehensive documentation system in place
 
 ### Evaluation Categories
@@ -59,6 +59,9 @@ npm run test tests/workflows/
 # All tests (when test suite is implemented)
 npm run test
 ```
+
+**System coverage note**:
+- `tests/system/test_frontend_scenarios_api_routes.test.ts` verifies `/api/analyze` compatibility and the 6 showcased UI scenarios via mock mode.
 
 ### Test Organization
 
@@ -218,4 +221,4 @@ npm run test
 
 ---
 
-**Last Updated**: 2025-01-27
+**Last Updated**: 2025-12-16

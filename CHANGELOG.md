@@ -49,6 +49,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added automatic database directory creation
   - Added database files (*.db, *.db-shm, *.db-wal) to .gitignore
   - LibSQLStore now initializes successfully
+- **Front-End Scenario Execution**: Fixed showcase scenario runs in the UI (2025-12-16)
+  - Added `/api/analyze` alias in local server to match frontend requests
+  - Scenario buttons now run the selected scenario immediately and validate expected findings
+  - Added system test coverage for the 6 showcase scenarios via API
 
 ### Changed
 - **TODO.md Reorganization**: Consolidated and organized planned features (2025-12-16)
@@ -226,5 +230,5 @@ See `docs/DOCUMENTATION-MAINTENANCE.md` for complete update guidelines and check
 
 ---
 
-**Last Updated**: 2025-12-15  
+**Last Updated**: 2025-12-16  
 **Version**: 1.0.0

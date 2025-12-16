@@ -2,9 +2,9 @@
 
 **Purpose**: Consolidated roadmap for the WCP AI Agent Prototype. This file is the single source of truth for planned work, synthesized from `TODO.md` and `development-plan/*`.
 
-**Last Updated**: 2025-12-15  
+**Last Updated**: 2025-12-16  
 **Project Version**: 1.0.0  
-**Current Status**: Prototype (core workflow implemented; production hardening in progress)
+**Current Status**: Phase 1 Complete (Infrastructure & Configuration)
 
 ---
 
@@ -12,40 +12,52 @@
 
 ### Phase 0: Foundation
 - Core architecture
-- Test framework (161 passing tests)
+- Test framework (197 passing tests)
 - Documentation structure
 
-### Phase 1: Document Processing
-- PDF ingestion
-- Text extraction
-- Basic parsing
+### Phase 1: Infrastructure
+- Configuration management
+- Production utilities
+- Error handling & logging
 
-### Phase 2: Basic Validation
-- Federal WCP rule implementation
-- Validation reporting
-- Error handling
+### Phase 2: Extraction & Explainability Layer
+- **Purpose**: Reference skeleton for building trustworthy AI agents
+- PDF + CSV ingestion
+- Expanded data model (11 fields)
+- Deterministic parsing
+- LLM-assisted extraction
+- Step-by-step explanations
+- **Boundary**: DO NOT USE FOR REAL DECISIONS
 
 ## 🔒 Enterprise Only (Consulting Required)
 
-### Phase 3: Advanced Features
-- Multi-jurisdiction compliance
-- Custom rule engines
-- Advanced validation layers
-- Audit trail generation
+### Phase 3: Authority & Risk Control Layer
+- **Purpose**: Operational authority under uncertainty
+- Truth arbitration and decision authority
+- Risk control and acceptance frameworks
+- Enterprise-grade validation systems
+
+*Contact for detailed implementation specifications*
 
 ### Phase 4: Production Hardening
-- Circuit breakers and retry logic
-- Observability and monitoring
-- Performance optimization
-- Deployment automation
+- Multi-document authority resolution
+- Production deployment suite
+- Enterprise security and monitoring
+- Scalable batch processing
+
+*Contact for detailed implementation specifications*
 
 ### Phase 5: Enterprise Integration
 - Payroll system connectors
 - HR platform integration
-- API development
 - Multi-tenant support
+- Legal defensibility
+
+*Contact for detailed implementation specifications*
 
 **Need Phases 3+?** See [CONSULTING.md](./CONSULTING.md) for enterprise options.
+
+**Ready to implement?** [Hire me on Upwork](https://www.upwork.com/freelancers/~01ca94c53d0d0101f3) for enterprise deployment.
 
 ---
 
@@ -64,13 +76,13 @@
 
 #### Open Source (Free)
 - **Phase 0**: MVP (✅ Complete)
-- **Phase 1**: Infrastructure & Reliability
-- **Phase 2**: Document Processing & Expanded Extraction
+- **Phase 1**: Infrastructure & Reliability (✅ Complete)
+- **Phase 2**: Extraction & Explainability (Reference skeleton only)
 
 #### Enterprise Edition (Paid)
-- **Phase 3**: Advanced Features (RAG-DBWD, persistence, citations)
-- **Phase 4**: Production-Ready (Multi-tenant, advanced security)
-- **Phase 5**: Future Vision (Custom consulting engagements)
+- **Phase 3**: Authority & Risk Control (Truth arbitration)
+- **Phase 4**: Production-Ready (Multi-document authority)
+- **Phase 5**: Enterprise Integration (System connectors)
 
 See `docs/REQUIREMENTS-TRACEABILITY.md` for detailed mapping.
 
@@ -132,7 +144,7 @@ See `docs/REQUIREMENTS-TRACEABILITY.md` for detailed mapping.
 
 ---
 
-## 🔥 Phase 1 (Core Improvements) — High
+## Phase 1 (Core Improvements) — High
 
 **Goal**: Improve maintainability and readiness for expansion.
 
@@ -150,61 +162,81 @@ See `docs/REQUIREMENTS-TRACEABILITY.md` for detailed mapping.
 
 ---
 
-## 📋 Phase 2 (Enhanced Features) — Medium
+## Phase 2 (Extraction & Explainability) — Medium
 
-**Goal**: Add real-world inputs and expand domain coverage.
+**Goal**: Provide reference implementation for building trustworthy AI agents - NOT for production decisions.
 
 **Primary Deliverables**:
-- **PDF parsing**
-  - Use `pdf-parse` to extract text from PDF WCPs and reuse existing parsing/validation pipeline
-- **Additional DBWD roles**
-  - Add roles beyond Electrician/Laborer (e.g., Plumber) with tests
-- **Evaluation framework**
-  - Build a harness for running large sets of mock WCPs and scoring outcomes
+- **Document ingestion**
+  - PDF parsing with `pdf-parse`
+  - CSV data import
+  - Text extraction pipeline
+- **Expanded data model**
+  - Full WCP data model (11 fields vs current 3)
+  - Deterministic parsing patterns
+- **LLM-assisted extraction**
+  - Non-authoritative RAG examples
+  - Toy DBWD corpus
+  - Stubbed vector retrieval
+- **Explainability features**
+  - Step-by-step reasoning traces
+  - Deterministic validation examples
+  - Synthetic datasets for testing
+
+**Explicit Boundary**: 
+- No authority guarantees
+- No acceptance thresholds
+- No risk assessment logic
+- Educational reference only
 
 **Source References**:
 - `development-plan/PHASE-2-ENHANCED-FEATURES.md`
-- `TODO.md` Items 2-4, 8-12 (8 features total)
 
 ---
 
-## 📋 Phase 3 (Advanced Features) — Medium 🏢 Enterprise
+## Phase 3 (Authority & Risk Control) — Medium Enterprise
 
-**Goal**: Scale beyond hardcoded rules and single-document flows.
+**Goal**: Scale beyond reference implementation to operational authority under uncertainty.
 
 **Primary Deliverables**:
-- **RAG-based DBWD lookup**
-  - Vector DB-backed DBWD rate retrieval (replace hardcoded table)
-- **Workflow chaining + batch processing**
-  - Multi-document processing via Mastra workflows
-- **Caching + monitoring enhancements**
+- Authoritative RAG systems
+- Risk control frameworks
+- Database persistence
+- Advanced validation
+- Citation systems
+- Workflow orchestration
+- OCR capabilities
+
+**Contact for detailed implementation specifications**
+
+**Ready to implement?** [Hire me on Upwork](https://www.upwork.com/freelancers/~01ca94c53d0d0101f3) for enterprise deployment.
 
 **Source References**:
-- `development-plan/PHASE-3-ADVANCED-FEATURES.md`
-- `TODO.md` Items 6, 13-16, OCR (6 features total)
+- Available under enterprise agreement
 
 ---
 
-## 📋 Phase 4 (Production Ready) — Medium 🏢 Enterprise
+## Phase 4 (Production Hardening) — Medium Enterprise
 
-**Goal**: Provide a deployable service interface with operational controls.
+**Goal**: Provide production-ready authority resolution and operational controls.
 
 **Primary Deliverables**:
-- **API surface**
-  - REST endpoints for single and batch processing
-  - Input validation, response normalization, error handling
-- **Security**
-  - Authn/authz, rate limiting
-- **Operations**
-  - Deployment procedures, health checks, metrics
+- Multi-document authority resolution
+- Production deployment suite
+- Enterprise security
+- Scalable batch processing
+- OCR support
+
+**Contact for detailed implementation specifications**
+
+**Ready to implement?** [Hire me on Upwork](https://www.upwork.com/freelancers/~01ca94c53d0d0101f3) for enterprise deployment.
 
 **Source References**:
-- `development-plan/PHASE-4-PRODUCTION-READY.md`
-- `TODO.md` Item 7 (Production Deployment Suite - 1 comprehensive feature)
+- Available under enterprise agreement
 
 ---
 
-## 🔮 Future (By Request)
+## Future (By Request)
 
 These are intentionally not scheduled until explicitly needed:
 

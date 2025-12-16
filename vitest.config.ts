@@ -22,8 +22,7 @@ export default defineConfig({
         'scripts/',
         'utils/',
         'showcase/',
-        '_archive/',
-        '_private/'
+        '_archive/'
       ]
     }
   },
