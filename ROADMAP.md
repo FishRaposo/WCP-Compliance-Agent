@@ -1,10 +1,51 @@
-# ROADMAP.md - Product & Engineering Roadmap
+# WCP Development Roadmap
 
 **Purpose**: Consolidated roadmap for the WCP AI Agent Prototype. This file is the single source of truth for planned work, synthesized from `TODO.md` and `development-plan/*`.
 
 **Last Updated**: 2025-12-15  
 **Project Version**: 1.0.0  
 **Current Status**: Prototype (core workflow implemented; production hardening in progress)
+
+---
+
+## ✅ Open Source (Available Now)
+
+### Phase 0: Foundation
+- Core architecture
+- Test framework (161 passing tests)
+- Documentation structure
+
+### Phase 1: Document Processing
+- PDF ingestion
+- Text extraction
+- Basic parsing
+
+### Phase 2: Basic Validation
+- Federal WCP rule implementation
+- Validation reporting
+- Error handling
+
+## 🔒 Enterprise Only (Consulting Required)
+
+### Phase 3: Advanced Features
+- Multi-jurisdiction compliance
+- Custom rule engines
+- Advanced validation layers
+- Audit trail generation
+
+### Phase 4: Production Hardening
+- Circuit breakers and retry logic
+- Observability and monitoring
+- Performance optimization
+- Deployment automation
+
+### Phase 5: Enterprise Integration
+- Payroll system connectors
+- HR platform integration
+- API development
+- Multi-tenant support
+
+**Need Phases 3+?** See [CONSULTING.md](./CONSULTING.md) for enterprise options.
 
 ---
 
@@ -123,11 +164,11 @@ See `docs/REQUIREMENTS-TRACEABILITY.md` for detailed mapping.
 
 **Source References**:
 - `development-plan/PHASE-2-ENHANCED-FEATURES.md`
-- `TODO.md` Item 2 (PDF), Item 9 (roles), Item 10 (evals)
+- `TODO.md` Items 2-4, 8-12 (8 features total)
 
 ---
 
-## 📋 Phase 3 (Advanced Features) — Medium
+## 📋 Phase 3 (Advanced Features) — Medium 🏢 Enterprise
 
 **Goal**: Scale beyond hardcoded rules and single-document flows.
 
@@ -140,11 +181,11 @@ See `docs/REQUIREMENTS-TRACEABILITY.md` for detailed mapping.
 
 **Source References**:
 - `development-plan/PHASE-3-ADVANCED-FEATURES.md`
-- `TODO.md` Item 3 (RAG), Item 6 (workflow chaining)
+- `TODO.md` Items 6, 13-16, OCR (6 features total)
 
 ---
 
-## 📋 Phase 4 (Production Ready) — Medium
+## 📋 Phase 4 (Production Ready) — Medium 🏢 Enterprise
 
 **Goal**: Provide a deployable service interface with operational controls.
 
@@ -159,7 +200,7 @@ See `docs/REQUIREMENTS-TRACEABILITY.md` for detailed mapping.
 
 **Source References**:
 - `development-plan/PHASE-4-PRODUCTION-READY.md`
-- `TODO.md` Item 7 (Production Deployment)
+- `TODO.md` Item 7 (Production Deployment Suite - 1 comprehensive feature)
 
 ---
 
@@ -172,4 +213,4 @@ These are intentionally not scheduled until explicitly needed:
 - **Advanced capabilities** (integrations, database storage, analytics)
 
 **Source References**:
-- `TODO.md` Items 11–13
+- `TODO.md` Items 11-12 (Overtime and Fringe Benefits)

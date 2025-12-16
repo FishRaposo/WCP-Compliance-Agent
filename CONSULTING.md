@@ -1,8 +1,10 @@
 # Custom Compliance & Validation Systems
 
-The WCP Compliance Agent is open source and MIT licensed. You can use it, modify it, and deploy it yourself.
+The WCP Compliance Agent (Phases 0-2) is open source and MIT licensed. You can use it, modify it, and deploy the core validation system yourself.
 
-Custom enterprise deployments with tailored rules, integrations, and production support are not open source.
+**Phases 3+ are enterprise-only:** Advanced validation, multi-jurisdiction support, production hardening, and custom integrations are not open source.
+
+Enterprise deployments with tailored rules, integrations, and production support are available through consulting engagements.
 
 ---
 
@@ -154,4 +156,4 @@ Or review my production work: [github.com/FishRaposo](https://github.com/FishRap
 
 ---
 
-*Last updated: December 2024*
+*Last updated: December 2025*

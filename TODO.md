@@ -34,13 +34,23 @@
 
 This section provides a high-level mapping of all planned features across development phases. For detailed requirements, see the linked phase documents.
 
+**Legend**:
+- 🏢 **Enterprise** - Features available in Enterprise Edition only
+- 📋 **Standard** - Features available in all editions
+
+### Feature Count by Phase
+- **Phase 2**: 8 features 📋 Standard (Document Processing, Data Extraction, RAG Lookup, Enhanced Parsing, DBWD Roles, Evaluation, Overtime, Fringe Benefits)
+- **Phase 3**: 6 features 🏢 Enterprise (Database, Batch Processing, Advanced Validation, Citations, Workflows, OCR)
+- **Phase 4**: 1 feature 🏢 Enterprise (Production Deployment Suite)
+- **Total**: 15 planned features
+
 | Phase | Priority | Focus Areas | TODO Items | Details |
 |-------|----------|-------------|------------|---------|
 | **Phase 0: MVP** | 🔥 **Complete** (2025-12-15) | Error handling, validation, environment setup, tests | [PHASE-0-MVP.md](development-plan/PHASE-0-MVP.md) |
 | **Phase 1: Core** | 🔥 **Complete** (2025-12-16) | Infrastructure, configuration, utilities | Item 5 | [PHASE-1-CORE-IMPROVEMENTS.md](development-plan/PHASE-1-CORE-IMPROVEMENTS.md) |
-| **Phase 2: Enhanced** | 📋 **Next** | PDF parsing, more roles, evaluation | Items 2, 9, 10 | [PHASE-2-ENHANCED-FEATURES.md](development-plan/PHASE-2-ENHANCED-FEATURES.md) |
-| **Phase 3: Advanced** | 📋 Medium | RAG lookup, workflows, batch processing | Items 3, 6 | [PHASE-3-ADVANCED-FEATURES.md](development-plan/PHASE-3-ADVANCED-FEATURES.md) |
-| **Phase 4: Production** | 📋 Medium | API, auth, security, deployment | Item 7 | [PHASE-4-PRODUCTION-READY.md](development-plan/PHASE-4-PRODUCTION-READY.md) |
+| **Phase 2: Enhanced** | 📋 **Next** | 8 features: PDF/CSV parsing, data extraction, RAG lookup | Items 2-4, 8-12 | [PHASE-2-ENHANCED-FEATURES.md](development-plan/PHASE-2-ENHANCED-FEATURES.md) |
+| **Phase 3: Advanced** | 🏢 Enterprise | 6 features: Database, batch processing, workflows | Items 6, 13-16, OCR | [PHASE-3-ADVANCED-FEATURES.md](development-plan/PHASE-3-ADVANCED-FEATURES.md) |
+| **Phase 4: Production** | 🏢 Enterprise | 1 feature: Production deployment suite | Item 7 | [PHASE-4-PRODUCTION-READY.md](development-plan/PHASE-4-PRODUCTION-READY.md) |
 
 **See [ROADMAP.md](ROADMAP.md) for the complete product roadmap and phase dependencies.**
 
@@ -80,30 +90,68 @@ All Phase 1 requirements have been successfully implemented and verified:
   - Configuration files: `src/config/*.ts` (agent, db, app)
   - Utilities: `src/utils/*.ts` (8 utility files)
   - Test coverage: 197 tests (169 passing, 28 server-dependent)
-- **Notes**: All Phase 1 core improvements successfully implemented and verified
-
----
-
 ## 📋 Medium Priority Items (Phase 2 - Next)
 
-### 2. PDF Parsing Integration
+### 2. Document Processing Suite
 
+#### PDF Parsing Integration
 - **Status**: Planned for Phase 2
-- **Overview**: Integrate PDF parsing for real PDF document processing
+- **Overview**: Add PDF parsing support to handle real WCP documents
 - **Requirements**:
-  - [ ] Install and configure `pdf-parse` package
-  - [ ] Update extractWCPTool to handle PDF inputs
-  - [ ] Add PDF error handling (corrupted PDFs, unreadable PDFs)
-  - [ ] Add PDF fallback to text extraction
+  - [ ] Install and integrate `pdf-parse` package
+  - [ ] Update `extractWCPTool` to handle PDF inputs
+  - [ ] Add PDF text extraction and preprocessing
+  - [ ] Add PDF metadata extraction
+  - [ ] Add PDF error handling and validation
   - [ ] Add PDF parsing tests
 - **Technical Details**:
-  - Dependencies: pdf-parse package
-  - PDF chunking for large documents
-  - OCR integration for scanned PDFs
-  - Error handling for various PDF formats
+  - PDF parsing with `pdf-parse` package
+  - Text preprocessing and cleaning
+  - Metadata extraction for document tracking
+  - Error handling for corrupted/unreadable PDFs
 - **Notes**: See [PHASE-2-ENHANCED-FEATURES.md](development-plan/PHASE-2-ENHANCED-FEATURES.md) for complete requirements
 
-### 3. RAG-Based DBWD Rate Lookup
+#### CSV Parsing Support
+- **Status**: Planned for Phase 2
+- **Overview**: Add CSV parsing for structured WCP data imports
+- **Requirements**:
+  - [ ] Install `csv-parser` or `papaparse` package
+  - [ ] Create CSV parsing function for structured WCP data
+  - [ ] Support various CSV formats (different column headers)
+  - [ ] Handle CSV encoding issues
+  - [ ] Add CSV validation and error handling
+  - [ ] Add CSV parsing tests
+- **Notes**: Quick win for Phase 2
+
+#### OCR Support (Optional)
+- **Status**: Planned for Phase 3 🏢 Enterprise
+- **Overview**: Add OCR capabilities for scanned PDFs
+- **Requirements**:
+  - [ ] Install `tesseract.js` for OCR capabilities
+  - [ ] Create OCR preprocessing for scanned PDFs
+  - [ ] Add image preprocessing for better OCR accuracy
+  - [ ] Add OCR confidence scoring
+  - [ ] Add OCR fallback mechanisms
+- **Notes**: Optional advanced feature for Phase 3
+
+### 3. Expanded Data Extraction
+
+- **Status**: Planned for Phase 2
+- **Overview**: Extract full WCP data model (11 fields vs current 3)
+- **Requirements**:
+  - [ ] Update `TWCPReport` schema to match specification (11 fields)
+  - [ ] Extract employee names (not just roles)
+  - [ ] Extract job titles with DBWD classification mapping
+  - [ ] Extract locality information (county/zip)
+  - [ ] Extract hours by day (not just total)
+  - [ ] Extract separate base and fringe rates
+  - [ ] Detect and extract signatures
+  - [ ] Extract project and subcontractor information
+  - [ ] Handle multiple employees per WCP
+  - [ ] Validate required fields presence
+- **Notes**: Critical for real-world WCP compliance
+
+### 4. RAG-Based DBWD Rate Lookup
 
 - **Status**: Planned for Phase 2
 - **Overview**: Replace hardcoded DBWD rates with RAG-based lookup from vector DB
@@ -123,7 +171,7 @@ All Phase 1 requirements have been successfully implemented and verified:
 
 ### 6. Multi-Document Workflows
 
-- **Status**: Planned for Phase 3
+- **Status**: Planned for Phase 3 🏢 Enterprise
 - **Overview**: Support workflow chaining for batch processing of multiple WCP documents
 - **Requirements**:
   - [ ] Create workflow using `createWorkflow` and `createStep` from Mastra
@@ -140,7 +188,7 @@ All Phase 1 requirements have been successfully implemented and verified:
 
 ### 7. Production Deployment
 
-- **Status**: Planned for Phase 4
+- **Status**: Planned for Phase 4 🏢 Enterprise
 - **Overview**: Deploy to production with full operational capabilities
 - **Requirements**:
   - [ ] Implement REST/GraphQL API endpoints
@@ -182,20 +230,28 @@ All Phase 1 requirements have been successfully implemented and verified:
 
 ### 9. Additional DBWD Roles
 
-- **Status**: Quick win for Phase 2
-- **Overview**: Add support for additional DBWD roles beyond Electrician and Laborer
-- **Requirements**:
+- **Status**: Phase 2 (basic) → Phase 3 (extended)
+- **Overview**: Add comprehensive support for all DBWD roles
+- **Phase 2 Requirements** (Quick win):
   - [ ] Add Plumber role to DBWD rates
   - [ ] Add other common roles (Carpenter, Mason, etc.)
   - [ ] Create role configuration file
   - [ ] Support role aliases and case-insensitive matching
   - [ ] Add role validation tests
+- **Phase 3 Requirements** (Full coverage) 🏢 Enterprise:
+  - [ ] Add all remaining DBWD roles from official documents
+  - [ ] Create automated DBWD rate import system
+  - [ ] Support regional rate variations
+  - [ ] Add comprehensive role validation
+  - [ ] Add extended role tests
 - **Technical Details**:
   - Extended DBWD rate structure
   - Role configuration management
   - Case-insensitive matching
   - Role alias support
-- **Notes**: This is a quick win that can be implemented early in Phase 2
+  - Regional rate support
+  - Automated rate import system
+- **Notes**: Phase 2 adds common roles, Phase 3 provides full DBWD coverage
 
 ### 10. Evaluation Framework
 
@@ -246,23 +302,61 @@ All Phase 1 requirements have been successfully implemented and verified:
   - Fringe benefit calculation validation
 - **Notes**: This completes the compliance checking capabilities
 
-### 13. Additional DBWD Roles (Extended)
+### 13. Persistence Layer & Database
 
-- **Status**: Planned for Phase 3
-- **Overview**: Add comprehensive support for all DBWD roles
+- **Status**: Planned for Phase 3 🏢 Enterprise
+- **Overview**: Implement full database integration for storing WCPs, decisions, and audit trails
 - **Requirements**:
-  - [ ] Add all remaining DBWD roles from official documents
-  - [ ] Create automated DBWD rate import system
-  - [ ] Support regional rate variations
-  - [ ] Add comprehensive role validation
-  - [ ] Add extended role tests
-- **Technical Details**:
-  - Complete DBWD rate database
-  - Automated rate import system
-  - Regional rate support
-  - Comprehensive role management
-  - Extended validation and testing
-- **Notes**: This provides full DBWD coverage for production use
+  - [ ] Complete database.ts implementation (currently stubs)
+  - [ ] Set up PostgreSQL database (Supabase or managed instance)
+  - [ ] Create database schema matching specification
+  - [ ] Implement tables: docs, wcp_reports, dbwd_records, decisions, audit_traces
+  - [ ] Add database connection pooling
+  - [ ] Add database migrations
+  - [ ] Add database backup strategy
+  - [ ] Support tenant isolation (multi-tenancy prep)
+  - [ ] Support document versioning
+  - [ ] Add database indexing for performance
+- **Notes**: Critical for Phase 3 features
+
+### 14. Batch Processing
+
+- **Status**: Planned for Phase 3 🏢 Enterprise
+- **Overview**: Add batch processing capabilities for large-scale processing
+- **Requirements**:
+  - [ ] Create batch processing API endpoints
+  - [ ] Support async processing with status tracking
+  - [ ] Add job queue system
+  - [ ] Support bulk file uploads
+  - [ ] Add batch result aggregation
+  - [ ] Add batch processing monitoring
+  - [ ] Add batch error handling and retry
+- **Notes**: Essential for enterprise deployments
+
+### 15. Advanced Validation Features
+
+- **Status**: Planned for Phase 3 🏢 Enterprise
+- **Overview**: Implement advanced validation including signatures and arithmetic checks
+- **Requirements**:
+  - [ ] Add signature validation capabilities
+  - [ ] Implement arithmetic validation for totals
+  - [ ] Add cross-field validation rules
+  - [ ] Support custom validation rules
+  - [ ] Add validation rule configuration
+  - [ ] Add validation audit logging
+- **Notes**: Completes compliance checking capabilities
+
+### 16. Citation System
+
+- **Status**: Planned for Phase 3 🏢 Enterprise
+- **Overview**: Add DBWD citation support for decisions
+- **Requirements**:
+  - [ ] Store DBWD citations with decisions
+  - [ ] Link findings to specific DBWD sections
+  - [ ] Generate citation reports
+  - [ ] Support citation formatting
+  - [ ] Add citation validation
+- **Notes**: Important for audit and compliance
 
 ---
 
@@ -302,10 +396,10 @@ All Phase 1 requirements have been successfully implemented and verified:
 - **Phase 4**: 📋 **Planned** - Production deployment with full operational capabilities
 
 ### Critical Path for Next Development
-1. **Start Phase 2**: Implement PDF parsing and enhanced features (Items 2, 9, 10)
-2. **Continue Phase 2**: Add RAG lookup and evaluation framework
-3. **Progress to Phase 3**: Implement workflows and batch processing (Items 3, 6)
-4. **Prepare Phase 4**: Production deployment planning (Item 7)
+1. **Start Phase 2**: Implement Document Processing Suite and Data Extraction (Items 2-4)
+2. **Continue Phase 2**: Add RAG lookup, DBWD roles, and evaluation framework (Items 8-12)
+3. **Progress to Phase 3**: Implement database, workflows, and batch processing (Items 6, 13-16)
+4. **Prepare Phase 4**: Production deployment suite implementation (Item 7)
 
 ---
 
@@ -316,11 +410,11 @@ All Phase 1 requirements have been successfully implemented and verified:
 - **AGENTS.md** - Developer guide with patterns and conventions
 - **WORKFLOW.md** - User workflows and validation guide
 - **EVALS.md** - Evaluation and testing guide
-- **CHANGELOG.md** - Version history (this file)
+- **CHANGELOG.md** - Version history
 - **docs/INDEX.md** - Documentation navigation hub
 - **development-plan/** - Complete phase planning and requirements
 - **PHASE-0-MVP.md** - Phase 0 MVP requirements (COMPLETED)
-- **PHASE-1-CORE-IMPROVEMENTS.md** - Phase 1 core improvements (NEXT)
+- **PHASE-1-CORE-IMPROVEMENTS.md** - Phase 1 core improvements (COMPLETE)
 - **PHASE-2-ENHANCED-FEATURES.md** - Phase 2 enhanced features (PLANNED)
 - **PHASE-3-ADVANCED-FEATURES.md** - Phase 3 advanced features (PLANNED)
 - **PHASE-4-PRODUCTION-READY.md** - Phase 4 production guide (PLANNED)

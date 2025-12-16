@@ -150,7 +150,7 @@ npm run dev
 - **Frontend Files**: 7 files in `frontend/`
 - **Root Documentation**: 11 files
 - **Technical Documentation**: 20+ files in `docs/`
-- **Test Files**: 5 files (structure exists, needs implementation)
+- **Test Files**: 18 files (169 tests passing, 28 skipped)
 - **Configuration Files**: 4 files (package.json, tsconfig.json, .gitignore, jest.config.js)
 - **Build Status**: ✅ Successfully builds and compiles
 - **Dependencies**: Mastra 0.24.0, @ai-sdk/openai 2.0.65, Zod 3.22.0, chalk 5.3.0

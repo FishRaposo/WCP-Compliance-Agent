@@ -6,6 +6,18 @@ I built this for a client who needed to automate payroll compliance. Even though
 
 **Tagline:** A functional mini-agent that processes Weekly Certified Payrolls (WCPs), validates them against Davis-Bacon Wage Determinations (DBWD), and makes compliance decisions using a hybrid approach of deterministic tools and LLM reasoning.
 
+## Open Source Scope
+
+**Phases 0-2 are open source (MIT License):**
+- Phase 0: Core architecture and foundational testing
+- Phase 1: Document ingestion and parsing
+- Phase 2: Basic compliance validation
+
+**Phases 3+ are enterprise-only:**
+- Phase 3: Advanced validation and multi-jurisdiction support
+- Phase 4+: Production hardening, integrations, custom deployments
+
+Enterprise implementations available - see [CONSULTING.md](./CONSULTING.md)
 
 ## 🏗️ Production-Grade AI Compliance Agent
 
@@ -98,16 +110,27 @@ The WCP AI Agent Prototype is designed to demonstrate a production-minded AI age
 
 See **docs/INDEX.md** for complete documentation navigation, **ROADMAP.md** for the consolidated phased roadmap, and **TODO.md** for the detailed backlog.
 
-**High Priority:**
-- **PDF Parsing**: Integrate `pdf-parse` for real PDF document processing
-- **RAG-Based DBWD Lookup**: Replace hardcoded rates with vector DB lookup (e.g., Pinecone)
+**Legend**: 🏢 Enterprise Edition features | 📋 Standard Edition features
 
-**Medium Priority:**
-- **Multi-Document Workflows**: Chain multiple documents for batch processing
-- **Production Deployment**: Add API endpoints, error handling, monitoring
+**Phase 2 (Next) - 8 Features 📋 Standard:**
+- **Document Processing**: PDF parsing, CSV support, OCR (Phase 3)
+- **Data Extraction**: Full WCP data model (11 fields vs current 3)
+- **RAG-Based DBWD Lookup**: Vector DB for rate retrieval
+- **Enhanced Parsing**: Better regex and LLM support
+- **DBWD Roles**: Extended role support (Phase 2 basic, Phase 3 full)
+- **Evaluation Framework**: Test on 50+ mock WCPs for >95% accuracy
+- **Overtime & Fringe Benefits**: Complete compliance validation
 
-**Low Priority:**
-- **Evaluation Framework**: Test on 50+ mock WCPs to achieve >95% accuracy
+**Phase 3 - 6 Features 🏢 Enterprise:**
+- **Persistence Layer**: Full database integration
+- **Batch Processing**: Large-scale processing capabilities
+- **Advanced Validation**: Signatures and arithmetic checks
+- **Citation System**: DBWD citation support
+- **Multi-Document Workflows**: Workflow chaining
+- **OCR Support**: Scanned PDF processing
+
+**Phase 4 - 1 Feature 🏢 Enterprise:**
+- **Production Deployment Suite**: APIs, security, monitoring, reliability
 
 ## 🚀 Getting Started
 
@@ -211,7 +234,7 @@ See `.env.example` for a template with all available options.
 - **Total Files**: 8 core files (5 in `src/` + 1 showcase script + 2 frontend files)
 - **Tools**: 2 (extractWCPTool, validateWCPTool)
 - **Agents**: 1 (wcpAgent)
-- **Test Files**: 0 (planned - see TODO.md)
+- **Test Files**: 18 (169 tests passing, 28 skipped)
 - **Showcase Script**: 1 file (`showcase/scripts/showcase.ts`) - Professional demo with 6 scenarios
 - **Frontend Files**: 2 files (`frontend/src/App.tsx`, `frontend/src/data/scenarios.ts`)
 - **Documentation Files**: 17 files

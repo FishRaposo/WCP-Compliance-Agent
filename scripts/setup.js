@@ -302,9 +302,11 @@ async function main() {
     const isValid = await validateSetup();
     
     if (isValid) {
-      const runDemo = await ask('Run quick demo now? (Y/n)');
-      if (runDemo.toLowerCase() !== 'n') {
-        await runDemo();
+      const runDemoAnswer = await ask('Run quick demo now? (Y/n)');
+      if (runDemoAnswer.toLowerCase() !== 'n') {
+        console.log(color('\n🎉 Running quick demo...', 'bright'));
+        console.log(color('Run: npm run showcase', 'cyan'));
+        console.log(color('This will demonstrate all 6 compliance scenarios.\n', 'cyan'));
       }
     }
     
