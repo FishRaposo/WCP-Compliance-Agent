@@ -1,5 +1,7 @@
 # WCP Compliance Agent
 
+📋 **Need custom compliance automation?** This implementation is open source. Enterprise deployments with custom rules, integrations, and support are available. See [CONSULTING.md](./CONSULTING.md) for details.
+
 I built this for a client who needed to automate payroll compliance. Even though the engagement changed, the architecture pattern is what matters: hybrid deterministic/LLM agents with full auditability for regulated domains. Whether it's payroll, healthcare, or financial compliance—this is how you build AI that regulators can trust.
 
 **Tagline:** A functional mini-agent that processes Weekly Certified Payrolls (WCPs), validates them against Davis-Bacon Wage Determinations (DBWD), and makes compliance decisions using a hybrid approach of deterministic tools and LLM reasoning.
