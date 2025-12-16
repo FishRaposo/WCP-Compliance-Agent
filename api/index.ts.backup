@@ -3,8 +3,9 @@ import { cors } from 'hono/cors';
 import { handle } from 'hono/vercel';
 
 // Import from source for Vercel, it will handle TypeScript compilation
-import { generateWcpDecision } from '../src/entrypoints/wcp-entrypoint';
-import { formatApiError } from '../src/utils/errors';
+// Use .js extensions for ESM compatibility in TS (compiled output preserves .js)
+import { generateWcpDecision } from '../src/entrypoints/wcp-entrypoint.js';
+import { formatApiError } from '../src/utils/errors.js';
 
 const app = new Hono().basePath('/api');
 
@@ -31,7 +32,7 @@ app.post('/analyze', async (c) => {
       return c.json({ 
         success: false, 
         error: {
-          message: 'OpenAI API key not configured',
+          message: 'OpenAI API key not configured. Set OPENAI_API_KEY in your environment or use "mock" to enable deterministic local testing.',
           code: 'CONFIG_ERROR',
           statusCode: 500
         }

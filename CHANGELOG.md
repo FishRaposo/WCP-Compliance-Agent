@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- API 500 on analyze endpoint when environment not configured:
+  - Clarified error message to suggest setting OPENAI_API_KEY or using "mock" for local testing
+  - Aligned ESM import specifiers in `api/index.ts` to use `.js` extensions to prevent runtime resolution issues in serverless environments
+
+### Added
+- Local development convenience: ensure `.env` is used by server (`src/server.ts`) and document mock mode usage in error messaging
+
 ### Added
 - **Phase 1: Core Improvements** - Infrastructure and utilities for production readiness (2025-12-15 to 2025-12-16) - ✅ **COMPLETE**
   - **Configuration System**: Centralized configuration management

@@ -96,6 +96,20 @@ ensureDatabaseDirectory(dbConfig.url);
  * - Storage: LibSQLStore for persistent audit trail
  * - Observability: Enabled in production for AI tracing
  */
+
+// Ensure database directory exists before creating storage
+ensureDatabaseDirectory(dbConfig.url);
+
+/**
+ * Mastra Instance
+ * 
+ * Main Mastra instance for the WCP AI Agent Prototype.
+ * Configured with:
+ * - Agents: wcpAgent for WCP compliance validation
+ * - Logger: PinoLogger for structured, searchable logs
+ * - Storage: LibSQLStore for persistent audit trail
+ * - Observability: Enabled in production for AI tracing
+ */
 export const mastra = new Mastra({
   agents: { wcpAgent },
   
