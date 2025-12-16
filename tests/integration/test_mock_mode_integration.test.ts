@@ -20,32 +20,32 @@ describe("Mock Mode Integration Tests", () => {
       const testCases = [
         {
           input: "Role: Electrician, Hours: 40, Wage: $55.00",
-          expectedStatus: "APPROVED",
+          expectedStatus: "Approved",
           expectedFindings: 0
         },
         {
           input: "Role: Electrician, Hours: 45, Wage: $55.00",
-          expectedStatus: "REVISE",
+          expectedStatus: "Revise",
           expectedFindings: 1
         },
         {
           input: "Role: Electrician, Hours: 40, Wage: $30.00",
-          expectedStatus: "REJECT",
+          expectedStatus: "Reject",
           expectedFindings: 1
         },
         {
           input: "Role: Laborer, Hours: 40, Wage: $30.00",
-          expectedStatus: "APPROVED",
+          expectedStatus: "Approved",
           expectedFindings: 0
         },
         {
           input: "Role: Laborer, Hours: 50, Wage: $30.00",
-          expectedStatus: "REVISE",
+          expectedStatus: "Revise",
           expectedFindings: 1
         },
         {
           input: "Role: Laborer, Hours: 40, Wage: $20.00",
-          expectedStatus: "REJECT",
+          expectedStatus: "Reject",
           expectedFindings: 1
         }
       ];
@@ -95,7 +95,7 @@ describe("Mock Mode Integration Tests", () => {
         mastraInstance: mastra as any
       });
 
-      expect(response.object.status).toBe("APPROVED");
+      expect(response.object.status).toBe("Approved");
     });
 
     it("handles custom maxSteps parameter", async () => {
@@ -104,7 +104,7 @@ describe("Mock Mode Integration Tests", () => {
         maxSteps: 5
       });
 
-      expect(response.object.status).toBe("APPROVED");
+      expect(response.object.status).toBe("Approved");
     });
 
     it("calls onStepFinish callback", async () => {
@@ -117,7 +117,7 @@ describe("Mock Mode Integration Tests", () => {
         }
       });
 
-      expect(response.object.status).toBe("APPROVED");
+      expect(response.object.status).toBe("Approved");
       // In mock mode, steps might not be called the same way
       expect(steps).toBeDefined();
     });
@@ -129,7 +129,7 @@ describe("Mock Mode Integration Tests", () => {
         content: "This is not a valid WCP format"
       });
 
-      expect(response.object.status).toBe("REJECT");
+      expect(response.object.status).toBe("Reject");
       expect(response.object.findings).toHaveLength(1);
     });
 
@@ -138,7 +138,7 @@ describe("Mock Mode Integration Tests", () => {
         content: ""
       });
 
-      expect(response.object.status).toBe("REJECT");
+      expect(response.object.status).toBe("Reject");
     });
 
     it("handles missing fields", async () => {
@@ -185,7 +185,7 @@ describe("Mock Mode Integration Tests", () => {
       responses.forEach((response: any, index: number) => {
         expect(response.object.status).toBeDefined();
         if (index > 0) {
-          expect(response.object.status).toBe("REVISE");
+          expect(response.object.status).toBe("Revise");
         }
       });
     });
@@ -213,8 +213,8 @@ describe("Mock Mode Integration Tests", () => {
       });
 
       // Electrician base rate is $51.69, Laborer is $26.45
-      expect(electricianLow.object.status).toBe("REJECT");
-      expect(laborerHigh.object.status).toBe("APPROVED");
+      expect(electricianLow.object.status).toBe("Reject");
+      expect(laborerHigh.object.status).toBe("Approved");
     });
   });
 });

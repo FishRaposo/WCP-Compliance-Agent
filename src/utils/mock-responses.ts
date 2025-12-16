@@ -20,33 +20,34 @@ export function generateMockWcpDecision(input: string) {
   const hoursMatch = input.match(/hours[:\s]+(\d+(?:\.\d+)?)/i);
   const wageMatch = input.match(/wage[:\s]+\$?(\d+(?:\.\d+)?)/i);
   
-  const role = roleMatch ? roleMatch[1] : 'UNKNOWN'; // Keep original case for DBWD_RATES lookup
+  const role = roleMatch ? roleMatch[1] : 'UNKNOWN';
   const hours = hoursMatch ? parseFloat(hoursMatch[1]) : 0;
   const wage = wageMatch ? parseFloat(wageMatch[1]) : 0;
   
-  // Validate the role
-  const validRole = role in DBWD_RATES;
+  // Normalize role to title case for case-insensitive matching
+  const normalizedRole = role.charAt(0).toUpperCase() + role.slice(1).toLowerCase();
+  const validRole = normalizedRole in DBWD_RATES;
   
   // Determine violations
   const violations = [];
-  let status: 'APPROVED' | 'REVISE' | 'REJECT' = 'APPROVED';
+  let status: 'Approved' | 'Revise' | 'Reject' = 'Approved';
   
   if (!validRole) {
-    status = 'REJECT';
+    status = 'Reject';
     violations.push({ type: 'Invalid Role', detail: `Unknown role: ${role}. Must be Electrician or Laborer.` });
   } else {
-    const dbwdRate = DBWD_RATES[role as keyof typeof DBWD_RATES];
+    const dbwdRate = DBWD_RATES[normalizedRole as keyof typeof DBWD_RATES];
     
     // Check underpayment
     if (wage < dbwdRate.base) {
-      status = 'REJECT';
+      status = 'Reject';
       violations.push({ type: 'Underpay', detail: `Wage $${wage}/hr is below DBWD base rate of $${dbwdRate.base}/hr for ${role}.` });
     }
     
     // Check overtime
     if (hours > 40) {
-      if (status !== 'REJECT') {
-        status = 'REVISE';
+      if (status !== 'Reject') {
+        status = 'Revise';
       }
       violations.push({ type: 'Overtime', detail: `Hours ${hours} exceeds 40 hours/week. Overtime pay should be 1.5x base rate for hours over 40.` });
     }
@@ -55,13 +56,13 @@ export function generateMockWcpDecision(input: string) {
   // Generate explanation based on status
   let explanation = '';
   switch (status) {
-    case 'APPROVED':
-      explanation = `This WCP is approved. The ${role} role is valid, hours (${hours}) are within limits, and wage ($${wage}/hr) meets or exceeds the DBWD base rate of $${DBWD_RATES[role as keyof typeof DBWD_RATES].base}/hr.`;
+    case 'Approved':
+      explanation = `This WCP is approved. The ${role} role is valid, hours (${hours}) are within limits, and wage ($${wage}/hr) meets or exceeds the DBWD base rate of $${DBWD_RATES[normalizedRole as keyof typeof DBWD_RATES].base}/hr.`;
       break;
-    case 'REVISE':
+    case 'Revise':
       explanation = `This WCP requires revision. The ${role} role and wage are valid, but there are overtime violations that need to be addressed.`;
       break;
-    case 'REJECT':
+    case 'Reject':
       explanation = `This WCP is rejected due to compliance violations that must be corrected.`;
       break;
   }

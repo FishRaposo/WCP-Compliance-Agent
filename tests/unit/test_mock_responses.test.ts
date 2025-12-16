@@ -40,7 +40,7 @@ describe("Mock Responses Unit Tests", () => {
     it("approves valid electrician WCP", () => {
       const result = generateMockWcpDecision("Role: Electrician, Hours: 40, Wage: $55.00");
 
-      expect(result.status).toBe("APPROVED");
+      expect(result.status).toBe("Approved");
       expect(result.findings).toEqual([]);
       expect(result.explanation).toContain("approved");
       expect(result.explanation).toContain("Electrician");
@@ -50,7 +50,7 @@ describe("Mock Responses Unit Tests", () => {
     it("approves valid laborer WCP", () => {
       const result = generateMockWcpDecision("Role: Laborer, Hours: 40, Wage: $30.00");
 
-      expect(result.status).toBe("APPROVED");
+      expect(result.status).toBe("Approved");
       expect(result.findings).toEqual([]);
       expect(result.explanation).toContain("Laborer");
     });
@@ -58,7 +58,7 @@ describe("Mock Responses Unit Tests", () => {
     it("rejects underpaid electrician", () => {
       const result = generateMockWcpDecision("Role: Electrician, Hours: 40, Wage: $30.00");
 
-      expect(result.status).toBe("REJECT");
+      expect(result.status).toBe("Reject");
       expect(result.findings).toHaveLength(1);
       expect(result.findings[0]).toMatchObject({
         type: "Underpay",
@@ -69,7 +69,7 @@ describe("Mock Responses Unit Tests", () => {
     it("rejects underpaid laborer", () => {
       const result = generateMockWcpDecision("Role: Laborer, Hours: 40, Wage: $20.00");
 
-      expect(result.status).toBe("REJECT");
+      expect(result.status).toBe("Reject");
       expect(result.findings).toHaveLength(1);
       expect(result.findings[0].type).toBe("Underpay");
     });
@@ -77,7 +77,7 @@ describe("Mock Responses Unit Tests", () => {
     it("revises electrician with overtime", () => {
       const result = generateMockWcpDecision("Role: Electrician, Hours: 45, Wage: $55.00");
 
-      expect(result.status).toBe("REVISE");
+      expect(result.status).toBe("Revise");
       expect(result.findings).toHaveLength(1);
       expect(result.findings[0]).toMatchObject({
         type: "Overtime",
@@ -88,7 +88,7 @@ describe("Mock Responses Unit Tests", () => {
     it("revises laborer with overtime", () => {
       const result = generateMockWcpDecision("Role: Laborer, Hours: 50, Wage: $30.00");
 
-      expect(result.status).toBe("REVISE");
+      expect(result.status).toBe("Revise");
       expect(result.findings).toHaveLength(1);
       expect(result.findings[0].type).toBe("Overtime");
     });
@@ -96,7 +96,7 @@ describe("Mock Responses Unit Tests", () => {
     it("rejects unknown role", () => {
       const result = generateMockWcpDecision("Role: Plumber, Hours: 40, Wage: $50.00");
 
-      expect(result.status).toBe("REJECT");
+      expect(result.status).toBe("Reject");
       expect(result.findings).toHaveLength(1);
       expect(result.findings[0]).toMatchObject({
         type: "Invalid Role",
@@ -107,7 +107,7 @@ describe("Mock Responses Unit Tests", () => {
     it("rejects for both underpayment and overtime", () => {
       const result = generateMockWcpDecision("Role: Electrician, Hours: 45, Wage: $30.00");
 
-      expect(result.status).toBe("REJECT");
+      expect(result.status).toBe("Reject");
       expect(result.findings).toHaveLength(2);
       expect(result.findings.map(f => f.type)).toContain("Underpay");
       expect(result.findings.map(f => f.type)).toContain("Overtime");
@@ -122,21 +122,21 @@ describe("Mock Responses Unit Tests", () => {
 
       for (const testCase of testCases) {
         const result = generateMockWcpDecision(testCase);
-        expect(result.status).toBe("APPROVED");
+        expect(result.status).toBe("Approved");
       }
     });
 
     it("handles decimal hours", () => {
       const result = generateMockWcpDecision("Role: Electrician, Hours: 40.5, Wage: $55.00");
 
-      expect(result.status).toBe("REVISE");
+      expect(result.status).toBe("Revise");
       expect(result.findings[0].type).toBe("Overtime");
     });
 
     it("handles decimal wages", () => {
       const result = generateMockWcpDecision("Role: Laborer, Hours: 40, Wage: $26.45");
 
-      expect(result.status).toBe("APPROVED");
+      expect(result.status).toBe("Approved");
     });
 
     it("generates unique request IDs", () => {
@@ -170,7 +170,7 @@ describe("Mock Responses Unit Tests", () => {
     it("handles malformed input gracefully", () => {
       const result = generateMockWcpDecision("Invalid input without proper format");
 
-      expect(result.status).toBe("REJECT");
+      expect(result.status).toBe("Reject");
       expect(result.findings).toHaveLength(1);
       expect(result.findings[0].type).toBe("Invalid Role");
     });
@@ -178,14 +178,14 @@ describe("Mock Responses Unit Tests", () => {
     it("handles zero hours", () => {
       const result = generateMockWcpDecision("Role: Electrician, Hours: 0, Wage: $55.00");
 
-      expect(result.status).toBe("APPROVED");
+      expect(result.status).toBe("Approved");
       expect(result.findings).toEqual([]);
     });
 
     it("handles very high hours", () => {
       const result = generateMockWcpDecision("Role: Electrician, Hours: 100, Wage: $55.00");
 
-      expect(result.status).toBe("REVISE");
+      expect(result.status).toBe("Revise");
       expect(result.findings[0].type).toBe("Overtime");
     });
   });

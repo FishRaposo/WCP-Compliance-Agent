@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run build:*)",
+      "Bash(npm test:*)",
+      "Bash(npm run test:unit:*)",
+      "Bash(node dist/server.js:*)",
+      "Bash(curl:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(node validate-scenarios.mjs:*)"
+    ]
+  }
+}

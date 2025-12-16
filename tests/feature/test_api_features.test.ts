@@ -173,7 +173,7 @@ describe.skip("API Feature Tests", () => {
           .expect(200);
 
         expect(response.body.success).toBe(true);
-        expect(response.body.data.status).toBe("APPROVED");
+        expect(response.body.data.status).toBe("Approved");
       }
     });
 

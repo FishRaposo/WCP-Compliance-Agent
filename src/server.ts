@@ -53,15 +53,12 @@ app.post("/analyze", async (c) => {
     // Add request ID for audit trail
     const requestId = c.req.header('x-request-id') || crypto.randomUUID();
     
-    // Format response to match API specs
+    // Return result.object directly to match frontend expectations
     // result.object contains { status, explanation, findings, trace, health }
     return c.json({
-      success: true,
-      data: {
-        ...result.object,
-        requestId,
-        timestamp: new Date().toISOString()
-      }
+      ...result.object,
+      requestId,
+      timestamp: new Date().toISOString()
     });
   } catch (error: any) {
     console.error("Error analyzing WCP:", error);

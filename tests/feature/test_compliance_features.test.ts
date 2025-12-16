@@ -21,7 +21,7 @@ describe("Compliance Feature Tests", () => {
         content: "Role: Electrician, Hours: 45, Wage: $55.00"
       });
 
-      expect(response.object.status).toBe("REVISE");
+      expect(response.object.status).toBe("Revise");
       expect(response.object.findings).toContainEqual(
         expect.objectContaining({
           type: "Overtime",
@@ -35,7 +35,7 @@ describe("Compliance Feature Tests", () => {
         content: "Role: Laborer, Hours: 50, Wage: $30.00"
       });
 
-      expect(response.object.status).toBe("REVISE");
+      expect(response.object.status).toBe("Revise");
       expect(response.object.findings).toContainEqual(
         expect.objectContaining({
           type: "Overtime"
@@ -48,7 +48,7 @@ describe("Compliance Feature Tests", () => {
         content: "Role: Electrician, Hours: 40, Wage: $55.00"
       });
 
-      expect(response.object.status).toBe("APPROVED");
+      expect(response.object.status).toBe("Approved");
       expect(response.object.findings).toEqual([]);
     });
   });
@@ -59,7 +59,7 @@ describe("Compliance Feature Tests", () => {
         content: "Role: Electrician, Hours: 40, Wage: $30.00"
       });
 
-      expect(response.object.status).toBe("REJECT");
+      expect(response.object.status).toBe("Reject");
       expect(response.object.findings).toContainEqual(
         expect.objectContaining({
           type: "Underpay",
@@ -73,7 +73,7 @@ describe("Compliance Feature Tests", () => {
         content: "Role: Laborer, Hours: 40, Wage: $20.00"
       });
 
-      expect(response.object.status).toBe("REJECT");
+      expect(response.object.status).toBe("Reject");
       expect(response.object.findings).toContainEqual(
         expect.objectContaining({
           type: "Underpay"
@@ -86,7 +86,7 @@ describe("Compliance Feature Tests", () => {
         content: "Role: Laborer, Hours: 40, Wage: $30.00"
       });
 
-      expect(response.object.status).toBe("APPROVED");
+      expect(response.object.status).toBe("Approved");
       expect(response.object.findings).toEqual([]);
     });
   });
@@ -97,7 +97,7 @@ describe("Compliance Feature Tests", () => {
         content: "Role: Plumber, Hours: 40, Wage: $50.00"
       });
 
-      expect(response.object.status).toBe("REJECT");
+      expect(response.object.status).toBe("Reject");
       expect(response.object.findings).toContainEqual(
         expect.objectContaining({
           type: "Invalid Role",
@@ -111,7 +111,7 @@ describe("Compliance Feature Tests", () => {
         content: "Role: Electrician, Hours: 40, Wage: $55.00"
       });
 
-      expect(response.object.status).toBe("APPROVED");
+      expect(response.object.status).toBe("Approved");
       expect(response.object.explanation).toContain("Electrician");
     });
 
@@ -120,7 +120,7 @@ describe("Compliance Feature Tests", () => {
         content: "Role: Laborer, Hours: 40, Wage: $30.00"
       });
 
-      expect(response.object.status).toBe("APPROVED");
+      expect(response.object.status).toBe("Approved");
       expect(response.object.explanation).toContain("Laborer");
     });
   });
@@ -213,7 +213,7 @@ describe("Compliance Feature Tests", () => {
         content: "Role: Electrician, Hours: 40.5, Wage: $55.00"
       });
 
-      expect(response.object.status).toBe("REVISE");
+      expect(response.object.status).toBe("Revise");
       expect(response.object.findings).toContainEqual(
         expect.objectContaining({ type: "Overtime" })
       );
@@ -224,7 +224,7 @@ describe("Compliance Feature Tests", () => {
         content: "Role: Laborer, Hours: 40, Wage: $26.45"
       });
 
-      expect(response.object.status).toBe("APPROVED");
+      expect(response.object.status).toBe("Approved");
     });
 
     it("handles different input formats", async () => {

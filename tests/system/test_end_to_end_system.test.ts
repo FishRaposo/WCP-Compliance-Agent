@@ -72,7 +72,7 @@ describe.skip("End-to-End System Tests", () => {
 
       expect(response.body).toHaveProperty("success", true);
       expect(response.body).toHaveProperty("data");
-      expect(response.body.data).toHaveProperty("status", "APPROVED");
+      expect(response.body.data).toHaveProperty("status", "Approved");
       expect(response.body.data).toHaveProperty("explanation");
       expect(response.body.data).toHaveProperty("findings");
       expect(response.body.data).toHaveProperty("trace");
@@ -125,12 +125,12 @@ describe.skip("End-to-End System Tests", () => {
   describe("Full Workflow System Tests", () => {
     it("processes all showcase scenarios correctly", async () => {
       const scenarios = [
-        { input: "Role: Electrician, Hours: 40, Wage: $55.00", expected: "APPROVED" },
-        { input: "Role: Electrician, Hours: 45, Wage: $55.00", expected: "REVISE" },
-        { input: "Role: Electrician, Hours: 40, Wage: $30.00", expected: "REJECT" },
-        { input: "Role: Laborer, Hours: 40, Wage: $30.00", expected: "APPROVED" },
-        { input: "Role: Laborer, Hours: 50, Wage: $30.00", expected: "REVISE" },
-        { input: "Role: Laborer, Hours: 40, Wage: $20.00", expected: "REJECT" }
+        { input: "Role: Electrician, Hours: 40, Wage: $55.00", expected: "Approved" },
+        { input: "Role: Electrician, Hours: 45, Wage: $55.00", expected: "Revise" },
+        { input: "Role: Electrician, Hours: 40, Wage: $30.00", expected: "Reject" },
+        { input: "Role: Laborer, Hours: 40, Wage: $30.00", expected: "Approved" },
+        { input: "Role: Laborer, Hours: 50, Wage: $30.00", expected: "Revise" },
+        { input: "Role: Laborer, Hours: 40, Wage: $20.00", expected: "Reject" }
       ];
 
       for (const scenario of scenarios) {

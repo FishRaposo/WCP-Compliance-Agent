@@ -32,8 +32,8 @@ export async function generateWcpDecision(args: {
           cycleTime: 50, // Mock fast response
           tokenUsage: 0,
           validationScore: mockDecision.findings?.length === 0 ? 1.0 : 0.8,
-          confidence: mockDecision.status === "APPROVED" ? 0.95 : 
-                     mockDecision.status === "REVISE" ? 0.85 : 0.90,
+          confidence: mockDecision.status === "Approved" ? 0.95 : 
+                     mockDecision.status === "Revise" ? 0.85 : 0.90,
         },
       },
       usage: { totalTokens: 0 }

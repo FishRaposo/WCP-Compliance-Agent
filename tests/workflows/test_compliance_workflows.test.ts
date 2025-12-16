@@ -24,7 +24,7 @@ describe("Compliance Workflow Tests", () => {
       expect(response.object.explanation).toContain("$55");
       
       // Step 2: Validation verification
-      expect(response.object.status).toBe("APPROVED");
+      expect(response.object.status).toBe("Approved");
       expect(response.object.findings).toEqual([]);
       
       // Step 3: Decision verification
@@ -45,7 +45,7 @@ describe("Compliance Workflow Tests", () => {
       
       const response = await generateWcpDecision({ content: input });
       
-      expect(response.object.status).toBe("APPROVED");
+      expect(response.object.status).toBe("Approved");
       expect(response.object.explanation).toContain("Laborer");
       expect(response.object.findings).toEqual([]);
     });
@@ -58,7 +58,7 @@ describe("Compliance Workflow Tests", () => {
       const response = await generateWcpDecision({ content: input });
       
       // Workflow steps for overtime
-      expect(response.object.status).toBe("REVISE");
+      expect(response.object.status).toBe("Revise");
       expect(response.object.findings).toHaveLength(1);
       expect(response.object.findings[0].type).toBe("Overtime");
       expect(response.object.findings[0].detail).toContain("Hours 45");
@@ -77,7 +77,7 @@ describe("Compliance Workflow Tests", () => {
       
       const response = await generateWcpDecision({ content: input });
       
-      expect(response.object.status).toBe("REVISE");
+      expect(response.object.status).toBe("Revise");
       expect(response.object.findings[0].detail).toContain("Hours 60");
     });
 
@@ -86,7 +86,7 @@ describe("Compliance Workflow Tests", () => {
       
       const response = await generateWcpDecision({ content: input });
       
-      expect(response.object.status).toBe("REVISE");
+      expect(response.object.status).toBe("Revise");
       expect(response.object.findings[0].type).toBe("Overtime");
     });
   });
@@ -98,7 +98,7 @@ describe("Compliance Workflow Tests", () => {
       const response = await generateWcpDecision({ content: input });
       
       // Workflow should detect underpayment
-      expect(response.object.status).toBe("REJECT");
+      expect(response.object.status).toBe("Reject");
       expect(response.object.findings).toHaveLength(1);
       expect(response.object.findings[0].type).toBe("Underpay");
       expect(response.object.findings[0].detail).toContain("$30/hr");
@@ -117,7 +117,7 @@ describe("Compliance Workflow Tests", () => {
       
       const response = await generateWcpDecision({ content: input });
       
-      expect(response.object.status).toBe("REJECT");
+      expect(response.object.status).toBe("Reject");
       expect(response.object.findings[0].detail).toContain("$20/hr");
       expect(response.object.findings[0].detail).toContain("$26.45/hr");
     });
@@ -128,7 +128,7 @@ describe("Compliance Workflow Tests", () => {
       const response = await generateWcpDecision({ content: input });
       
       // Should be approved when exactly at base rate
-      expect(response.object.status).toBe("APPROVED");
+      expect(response.object.status).toBe("Approved");
       expect(response.object.findings).toEqual([]);
     });
   });
@@ -140,7 +140,7 @@ describe("Compliance Workflow Tests", () => {
       const response = await generateWcpDecision({ content: input });
       
       // Should reject due to underpayment even with overtime
-      expect(response.object.status).toBe("REJECT");
+      expect(response.object.status).toBe("Reject");
       expect(response.object.findings).toHaveLength(2);
       
       const findingTypes = response.object.findings.map((f: any) => f.type);
@@ -157,7 +157,7 @@ describe("Compliance Workflow Tests", () => {
       const response = await generateWcpDecision({ content: input });
       
       // Underpayment is more severe than overtime
-      expect(response.object.status).toBe("REJECT");
+      expect(response.object.status).toBe("Reject");
     });
   });
 
@@ -167,7 +167,7 @@ describe("Compliance Workflow Tests", () => {
       
       const response = await generateWcpDecision({ content: input });
       
-      expect(response.object.status).toBe("REJECT");
+      expect(response.object.status).toBe("Reject");
       expect(response.object.findings).toHaveLength(1);
       expect(response.object.findings[0].type).toBe("Invalid Role");
       expect(response.object.findings[0].detail).toContain("Plumber");
@@ -186,7 +186,7 @@ describe("Compliance Workflow Tests", () => {
         const response = await generateWcpDecision({ content: testCase });
         // Phase 2 TODO: Support case-insensitive matching
         // Current behavior: Rejects if case doesn't match DBWD exactly ("Electrician", "Laborer")
-        expect(response.object.status).toBe("REJECT");
+        expect(response.object.status).toBe("Reject");
         expect(response.object.findings[0].type).toBe("Invalid Role");
       }
     });
@@ -198,7 +198,7 @@ describe("Compliance Workflow Tests", () => {
       
       const response = await generateWcpDecision({ content: input });
       
-      expect(response.object.status).toBe("APPROVED");
+      expect(response.object.status).toBe("Approved");
       expect(response.object.findings).toEqual([]);
     });
 
@@ -207,7 +207,7 @@ describe("Compliance Workflow Tests", () => {
       
       const response = await generateWcpDecision({ content: input });
       
-      expect(response.object.status).toBe("REVISE");
+      expect(response.object.status).toBe("Revise");
       expect(response.object.findings[0].type).toBe("Overtime");
     });
 
@@ -216,7 +216,7 @@ describe("Compliance Workflow Tests", () => {
       
       const response = await generateWcpDecision({ content: input });
       
-      expect(response.object.status).toBe("APPROVED");
+      expect(response.object.status).toBe("Approved");
       expect(response.object.explanation).toContain("$200/hr");
     });
 
@@ -229,7 +229,7 @@ describe("Compliance Workflow Tests", () => {
 
       for (const testCase of testCases) {
         const response = await generateWcpDecision({ content: testCase });
-        expect(response.object.status).toBe("APPROVED");
+        expect(response.object.status).toBe("Approved");
       }
     });
   });
@@ -237,9 +237,9 @@ describe("Compliance Workflow Tests", () => {
   describe("Audit Trail Workflow", () => {
     it("maintains complete audit trail for all decisions", async () => {
       const testCases = [
-        { input: "Role: Electrician, Hours: 40, Wage: $55.00", status: "APPROVED" },
-        { input: "Role: Electrician, Hours: 45, Wage: $55.00", status: "REVISE" },
-        { input: "Role: Electrician, Hours: 40, Wage: $30.00", status: "REJECT" }
+        { input: "Role: Electrician, Hours: 40, Wage: $55.00", status: "Approved" },
+        { input: "Role: Electrician, Hours: 45, Wage: $55.00", status: "Revise" },
+        { input: "Role: Electrician, Hours: 40, Wage: $30.00", status: "Reject" }
       ];
 
       for (const testCase of testCases) {
@@ -293,9 +293,9 @@ describe("Compliance Workflow Tests", () => {
       );
 
       expect(results).toHaveLength(3);
-      expect(results[0].object.status).toBe("APPROVED");
-      expect(results[1].object.status).toBe("REVISE");
-      expect(results[2].object.status).toBe("APPROVED");
+      expect(results[0].object.status).toBe("Approved");
+      expect(results[1].object.status).toBe("Revise");
+      expect(results[2].object.status).toBe("Approved");
     });
   });
 });
