@@ -31,7 +31,7 @@ export interface AgentConfig {
  */
 export function getAgentConfig(): AgentConfig {
   return {
-    model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
+    model: process.env.OPENAI_MODEL || 'gpt-5-nano',
     maxSteps: parseInt(process.env.MAX_STEPS || '3', 10),
     timeout: parseInt(process.env.AGENT_TIMEOUT || '30000', 10),
     temperature: parseFloat(process.env.OPENAI_TEMPERATURE || '0.7'),
@@ -43,7 +43,7 @@ export function getAgentConfig(): AgentConfig {
  * Default agent configuration
  */
 export const DEFAULT_AGENT_CONFIG: AgentConfig = {
-  model: 'gpt-4o-mini',
+  model: 'gpt-5-nano',
   maxSteps: 3,
   timeout: 30000,
   temperature: 0.7,

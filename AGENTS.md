@@ -250,7 +250,7 @@ See `docs/DOCUMENTATION-MAINTENANCE.md` for complete update guidelines and check
 
 - **Framework**: Mastra.ai v0.24.0 (TypeScript-native AI framework)
 - **Language**: TypeScript (ES modules with .js extensions)
-- **LLM**: OpenAI GPT-4o-mini (via @ai-sdk/openai v2.0.65)
+- **LLM**: OpenAI GPT-5-nano (via @ai-sdk/openai v2.0.65)
 - **Validation**: Zod v3.22.0
 - **Runtime**: Node.js v20.0.0+
 - **Build Status**: ✅ Successfully builds and compiles
@@ -335,7 +335,7 @@ export const myAgent = new Agent({
   instructions: [
     // Agent instructions
   ],
-  model: openai("gpt-4o-mini"),
+  model: openai("gpt-5-nano"),
   tools: { myTool },
   outputSchema: MyDecisionSchema,
 });
@@ -588,7 +588,7 @@ Create a test runner script in `utils/` directory:
 ### Agents
 
 - **src/mastra/agents/wcp-agent.ts**: WCP agent for compliance decision-making
-  - `wcpAgent`: Mastra Agent with OpenAI GPT-4o-mini model
+  - `wcpAgent`: Mastra Agent with OpenAI GPT-5-nano model
   - `WCPDecisionSchema`: Structured output schema (status, explanation, findings, trace)
   - Decision logic: Approved (no issues), Revise (minor fixes), Reject (major violations)
 
@@ -628,7 +628,7 @@ Create a test runner script in `utils/` directory:
   - Output: Findings array and validation status
   - Validation: Checks for overtime (>40 hours) and underpayment (< base rate)
   - Error handling: Currently returns { base: 0, fringe: 0 } for unknown roles - proper error handling planned (see TODO.md)
-- **wcpAgent**: Mastra Agent with OpenAI GPT-4o-mini model
+- **wcpAgent**: Mastra Agent with OpenAI GPT-5-nano model
   - Instructions: Compliance auditing workflow (extract → validate → decide)
   - Tools: extractWCP, validateWCP
   - Output: Structured decision (status, explanation, findings, trace)

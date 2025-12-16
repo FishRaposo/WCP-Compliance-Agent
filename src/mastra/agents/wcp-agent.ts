@@ -63,7 +63,7 @@ const WCPDecisionSchema = z.object({
  * Mastra Agent configured for WCP compliance auditing.
  * 
  * Configuration:
- * - Model: Configured via OPENAI_MODEL env var (default: gpt-4o-mini)
+ * - Model: Configured via OPENAI_MODEL env var (default: gpt-5-nano)
  * - Tools: extractWCP, validateWCP
  * - Max Steps: Configured via MAX_STEPS env var (default: 3)
  * - Output: Structured JSON (WCPDecisionSchema)

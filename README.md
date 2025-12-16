@@ -36,7 +36,7 @@ Enterprise implementations available - see [CONSULTING.md](./CONSULTING.md)
 - ✅ Bounded execution (maxSteps guardrail)
 - ⚠️ Test suite planned (see TODO.md for implementation status)
 
-**Tech Stack**: TypeScript, Mastra.ai, OpenAI GPT-4o-mini, Jest, Zod
+**Tech Stack**: TypeScript, Mastra.ai, OpenAI GPT-5-nano, Jest, Zod
 
 ---
 
@@ -77,7 +77,7 @@ The WCP AI Agent Prototype is designed to demonstrate a production-minded AI age
 #### Phase 0 (MVP) - ✅ Complete
 - **WCP Text Input Parsing**: Extract role, hours, and wage from text input using regex-based parsing
 - **DBWD Rate Validation**: Validate against hardcoded DBWD rates (Electrician, Laborer)
-- **LLM-Powered Decision Making**: Make compliance decisions (Approved/Revise/Reject) using OpenAI GPT-4o-mini
+- **LLM-Powered Decision Making**: Make compliance decisions (Approved/Revise/Reject) using OpenAI GPT-5-nano
 - **Structured Output**: Return structured JSON with audit trails (explanation, findings, trace)
 - **Type Safety**: Zod schemas throughout for type-safe data validation
 - **Bounded Execution**: maxSteps=3 prevents infinite loops
@@ -191,7 +191,7 @@ OPENAI_API_KEY=sk-...  # Your OpenAI API key
 **Optional (Phase 1 Configuration):**
 ```bash
 # Agent Configuration
-OPENAI_MODEL=gpt-4o-mini      # LLM model to use (default: gpt-4o-mini)
+OPENAI_MODEL=gpt-5-nano      # LLM model to use (default: gpt-5-nano)
 MAX_STEPS=3                    # Maximum agent steps (default: 3)
 AGENT_TIMEOUT=30000           # Agent timeout in ms (default: 30000)
 OPENAI_TEMPERATURE=0.7        # LLM temperature (default: 0.7)
@@ -472,7 +472,7 @@ wcp-agent/
 
 - **wcpAgent**: Mastra Agent configured with:
   - Instructions for compliance auditing workflow
-  - OpenAI GPT-4o-mini model
+  - OpenAI GPT-5-nano model
   - Tool integration (extractWCP, validateWCP)
   - Structured output schema (WCPDecisionSchema)
 

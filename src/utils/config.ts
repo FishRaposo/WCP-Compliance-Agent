@@ -16,7 +16,7 @@ const ConfigSchema = z.object({
   // OpenAI Configuration
   openai: z.object({
     apiKey: z.string().min(1, 'OPENAI_API_KEY is required'),
-    model: z.string().default('gpt-4o-mini'),
+    model: z.string().default('gpt-5-nano'),
     maxTokens: z.number().min(100).max(8000).default(2000),
   }),
   

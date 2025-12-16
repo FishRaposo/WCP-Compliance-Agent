@@ -44,9 +44,9 @@ const REQUIRED_VARS = {
  */
 const OPTIONAL_VARS = {
   OPENAI_MODEL: {
-    defaultValue: 'gpt-4o-mini',
+    defaultValue: 'gpt-5-nano',
     validate: (value: string) => {
-      const validModels = ['gpt-4o-mini', 'gpt-4o', 'gpt-3.5-turbo'];
+      const validModels = ['gpt-5-nano', 'gpt-4o-mini', 'gpt-4o', 'gpt-3.5-turbo'];
       return validModels.includes(value);
     }
   },

@@ -120,7 +120,7 @@ async function checkOpenAIHealth(): Promise<CheckResult> {
       message: 'OpenAI API configured',
       duration: Date.now() - start,
       details: {
-        model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
+        model: process.env.OPENAI_MODEL || 'gpt-5-nano',
         keyPrefix: apiKey.substring(0, 7) + '...',
       },
     };
