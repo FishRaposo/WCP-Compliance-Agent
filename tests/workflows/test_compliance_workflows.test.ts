@@ -174,20 +174,18 @@ describe("Compliance Workflow Tests", () => {
       expect(response.object.findings[0].detail).toContain("Electrician or Laborer");
     });
 
-    it("rejects incorrect case in roles (pending Phase 2)", async () => {
+    it("accepts case-insensitive role matching", async () => {
       const testCases = [
-        "Role: electrician, Hours: 40, Wage: $55.00",
-        "Role: ELECTRICIAN, Hours: 40, Wage: $55.00",
-        "Role: laborer, Hours: 40, Wage: $30.00",
-        "Role: LABORER, Hours: 40, Wage: $30.00"
+        { input: "Role: electrician, Hours: 40, Wage: $55.00", expected: "Approved" },
+        { input: "Role: ELECTRICIAN, Hours: 45, Wage: $55.00", expected: "Revise" },
+        { input: "Role: laborer, Hours: 40, Wage: $30.00", expected: "Approved" },
+        { input: "Role: LABORER, Hours: 50, Wage: $30.00", expected: "Revise" }
       ];
 
       for (const testCase of testCases) {
-        const response = await generateWcpDecision({ content: testCase });
-        // Phase 2 TODO: Support case-insensitive matching
-        // Current behavior: Rejects if case doesn't match DBWD exactly ("Electrician", "Laborer")
-        expect(response.object.status).toBe("Reject");
-        expect(response.object.findings[0].type).toBe("Invalid Role");
+        const response = await generateWcpDecision({ content: testCase.input });
+        // Case-insensitive matching is now supported
+        expect(response.object.status).toBe(testCase.expected);
       }
     });
   });
