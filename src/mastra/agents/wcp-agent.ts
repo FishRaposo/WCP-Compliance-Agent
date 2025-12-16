@@ -24,6 +24,12 @@ import { z } from "zod";
 // Internal dependencies
 import { extractWCPTool, validateWCPTool } from "../tools/wcp-tools.js";
 import { WCPDecision, Finding } from "../../types/index.js";
+import { getAgentConfig } from "../../config/agent-config.js";
+
+/**
+ * Load agent configuration
+ */
+const agentConfig = getAgentConfig();
 
 /**
  * WCP Decision Schema
@@ -57,9 +63,9 @@ const WCPDecisionSchema = z.object({
  * Mastra Agent configured for WCP compliance auditing.
  * 
  * Configuration:
- * - Model: OpenAI GPT-4o-mini (cost-effective reasoning)
+ * - Model: Configured via OPENAI_MODEL env var (default: gpt-4o-mini)
  * - Tools: extractWCP, validateWCP
- * - Max Steps: 3 (bounded execution)
+ * - Max Steps: Configured via MAX_STEPS env var (default: 3)
  * - Output: Structured JSON (WCPDecisionSchema)
  * 
  * Decision Logic:
@@ -81,7 +87,7 @@ export const wcpAgent = new Agent({
     "5. Include health metrics: cycleTime (processing time), tokenUsage (tokens consumed), validationScore (0-1), confidence (0-1).",
     "Handle errors gracefully (e.g., unknown role → Reject with note).",
   ],
-  model: openai("gpt-4o-mini"),
+  model: openai(agentConfig.model),
   tools: { extractWCP: extractWCPTool, validateWCP: validateWCPTool },
 });
 
