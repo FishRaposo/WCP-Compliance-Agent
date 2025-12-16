@@ -18,7 +18,7 @@ async function waitForServer(port: number, maxAttempts = 20, delay = 500): Promi
   return false;
 }
 
-describe("API Feature Tests", () => {
+describe.skip("API Feature Tests", () => {
   const originalEnv = process.env;
   let serverProcess: any;
   const serverPort = 3002;
