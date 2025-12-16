@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
-  "outputDirectory": "public",
+  "buildCommand": "npm run build:frontend",
+  "outputDirectory": "frontend/dist",
   "installCommand": "npm install --no-audit --no-fund",
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/$1"
+      "destination": "/api/index"
     }
   ]
 }

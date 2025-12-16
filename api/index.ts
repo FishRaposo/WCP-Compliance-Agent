@@ -1,15 +1,16 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
+import { handle } from 'hono/vercel';
 
 // Import from source for Vercel, it will handle TypeScript compilation
 import { generateWcpDecision } from '../src/entrypoints/wcp-entrypoint';
 import { formatApiError } from '../src/utils/errors';
 
-const app = new Hono();
+const app = new Hono().basePath('/api');
 
 // Enable CORS
 app.use('/*', cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000'],
+  origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000', 'http://localhost:5173'],
   credentials: true
 }));
 
@@ -126,4 +127,4 @@ app.get('/debug', (c) => {
 });
 
 // Export for Vercel
-export default app;
+export default handle(app);
