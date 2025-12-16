@@ -53,6 +53,16 @@ const appConfig = getAppConfig();
 const isDev = appConfig.environment === 'development' || appConfig.environment === 'test';
 
 /**
+ * Get log level from environment with validation
+ * Returns a valid log level that PinoLogger accepts, defaults to 'info'
+ */
+function getLogLevel() {
+  const level = process.env.LOG_LEVEL?.toLowerCase();
+  const validLevels = ['trace', 'debug', 'info', 'warn', 'error', 'fatal'];
+  return validLevels.includes(level || '') ? level : 'info';
+}
+
+/**
  * Ensure database directory exists
  * LibSQLStore requires the directory to exist before creating the database file
  */
@@ -64,8 +74,11 @@ function ensureDatabaseDirectory(dbUrl: string): void {
     const dir = dirname(dbPath);
     try {
       mkdirSync(dir, { recursive: true });
-    } catch (error) {
-      // Directory might already exist, ignore error
+    } catch (error: any) {
+      // Only ignore if directory already exists, log other errors
+      if (error.code !== 'EEXIST') {
+        console.error(`Failed to create database directory: ${dir}`, error);
+      }
     }
   }
 }
@@ -88,7 +101,7 @@ export const mastra = new Mastra({
   
   // Structured logging with Pino
   logger: new PinoLogger({
-    level: (process.env.LOG_LEVEL as any) || 'info',
+    level: getLogLevel() as any, // Validated above, safe to cast
   }),
   
   // Persistent storage with SQLite
