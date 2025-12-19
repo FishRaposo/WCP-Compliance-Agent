@@ -9,7 +9,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Verified
+- **Frontend Showcase Complete Validation** (2025-12-16):
+  - All 6 demonstration scenarios verified working correctly:
+    - ✅ Approved - Valid WCP (Electrician): PASSED
+    - ⚠️ Revise - Overtime Issue (Electrician): PASSED
+    - ❌ Reject - Underpayment (Electrician): PASSED
+    - ✅ Approved - Laborer Valid: PASSED
+    - ⚠️ Revise - Laborer Overtime: PASSED
+    - ❌ Reject - Laborer Underpayment: PASSED
+  - Manual text input functionality verified working
+  - All scenarios display correct status, findings, and audit traces
+  - Health metrics properly displayed (confidence, validation, tokens, latency)
+  - "Test Passed" indicators correctly shown for all scenarios
+  - Frontend properly proxies to backend API via Vite development server
+  - Mock mode working correctly for testing without OpenAI API key
+
 ### Fixed
+- **Frontend Vite Proxy Configuration** (2025-12-16):
+  - Simplified Vite proxy configuration to forward `/api/*` requests to backend without path rewriting
+  - Ensures frontend `/api/analyze` requests correctly reach backend `/api/analyze` endpoint
 - **Vercel Deployment Routing** (2025-12-16):
   - Root URL was serving compiled backend test script instead of React frontend
   - Updated `vercel.json` to build frontend first, then copy built assets to dist/
